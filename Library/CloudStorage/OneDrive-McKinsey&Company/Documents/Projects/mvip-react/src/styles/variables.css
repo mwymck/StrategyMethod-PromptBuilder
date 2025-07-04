@@ -1,0 +1,148 @@
+/* MVIP Design System Variables */
+/* Based on McKinsey Brand Guidelines and prototype analysis */
+
+:root {
+  /* === TYPOGRAPHY === */
+  --font-family-primary: 'McKinsey Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-family-display: 'Bower', 'McKinsey Sans', sans-serif;
+  
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* === COLORS === */
+  /* McKinsey Brand Colors */
+  --color-primary: #0066cc;
+  --color-primary-light: #4d94db;
+  --color-primary-dark: #004d99;
+  
+  /* Text Colors */
+  --color-text-primary: #333333;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+  --color-text-inverse: #ffffff;
+  
+  /* Background Colors */
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f8f9fa;
+  --color-background-tertiary: #f1f3f5;
+  --color-background-dark: #1a1a1a;
+  
+  /* Border Colors */
+  --color-border-light: #e9ecef;
+  --color-border-medium: #dee2e6;
+  --color-border-dark: #adb5bd;
+  
+  /* Status Colors */
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-error: #dc3545;
+  --color-info: #17a2b8;
+  
+  /* === SPACING === */
+  --spacing-xs: 0.25rem;   /* 4px */
+  --spacing-sm: 0.5rem;    /* 8px */
+  --spacing-md: 1rem;      /* 16px */
+  --spacing-lg: 1.5rem;    /* 24px */
+  --spacing-xl: 2rem;      /* 32px */
+  --spacing-2xl: 3rem;     /* 48px */
+  --spacing-3xl: 4rem;     /* 64px */
+  
+  /* === LAYOUT === */
+  /* Header System */
+  --header-height-main: 88px;
+  --header-height-sub: 56px;
+  --header-z-index: 1000;
+  
+  /* Container Widths */
+  --container-max-width: 1280px;
+  --container-padding: var(--spacing-md);
+  
+  /* === BREAKPOINTS === */
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1280px;
+  
+  /* === ANIMATION === */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+  
+  /* Component-specific animations */
+  --search-dropdown-transition: 200ms ease;
+  --driver-animation-duration: 300ms;
+  --modal-backdrop-transition: 200ms ease;
+  
+  /* === BORDER RADIUS === */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  --border-radius-pill: 9999px;
+  
+  /* === SHADOWS === */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  
+  /* === SEARCH COMPONENT VARIABLES === */
+  --search-input-height: 48px;
+  --search-input-padding: var(--spacing-md);
+  --search-dropdown-max-height: 320px;
+  --search-result-height: 56px;
+  
+  /* === PEER SELECTOR VARIABLES === */
+  --peer-chip-height: 32px;
+  --peer-chip-padding: var(--spacing-sm) var(--spacing-md);
+  --peer-max-display: 5;
+  
+  /* === Z-INDEX SCALE === */
+  --z-index-dropdown: 100;
+  --z-index-modal: 200;
+  --z-index-header: 300;
+  --z-index-overlay: 400;
+}
+
+/* === RESPONSIVE FONT SCALING === */
+@media (max-width: 768px) {
+  :root {
+    --font-size-base: 0.875rem;  /* 14px on mobile */
+    --font-size-lg: 1rem;        /* 16px on mobile */
+    --font-size-xl: 1.125rem;    /* 18px on mobile */
+    --font-size-2xl: 1.25rem;    /* 20px on mobile */
+    --font-size-3xl: 1.5rem;     /* 24px on mobile */
+    --font-size-4xl: 1.875rem;   /* 30px on mobile */
+  }
+}
+
+/* === DARK MODE VARIABLES === */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #cccccc;
+    --color-text-tertiary: #999999;
+    --color-text-inverse: #333333;
+    
+    --color-background-primary: #1a1a1a;
+    --color-background-secondary: #2d2d2d;
+    --color-background-tertiary: #404040;
+    
+    --color-border-light: #404040;
+    --color-border-medium: #525252;
+    --color-border-dark: #666666;
+  }
+}

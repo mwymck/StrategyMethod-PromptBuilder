@@ -1,0 +1,2237 @@
+{
+    "config": {
+      "filtersEnabled": false,
+      "shimmerDuration": 4000,
+      "productName": "Operational Performance Assistant"
+    },
+    "subject": {
+      "name": "Facility A"
+    },
+    "peers": {
+      "initial": [
+        "Seattle Grace",
+        "Grey Sloan Memorial",
+        "Gotham General",
+        "Hope Zion",
+        "St. Eligius"
+      ],
+      "secondary": [
+        "AscendCare Hospitals",
+        "BlueRidge Health Collaborative",
+        "Evergreen Clinical Network",
+        "Oakstone Medical Centers",
+        "NorthShore Integrated Health"
+      ],
+      "suggested": [
+        "Southeast Health Partners",
+        "Riverbend Medical System",
+        "Lakeshore Regional Network",
+        "HeritageCare Health System",
+        "VistaPoint Medical Group"
+      ],
+      "secondarySuggested": []
+    },
+    "pages": {
+      "overview": {
+        "pageId": "overview",
+        "pageName": "Performance Overview",
+        "pageSubheadline": null,
+        "pageDescription": null,
+        "layoutType": "standard",
+        "showDriverButtons": true,
+        "showFilters": false
+      },
+      "peer-comparison": {
+        "pageId": "peer-comparison",
+        "pageName": "Peer Comparison",
+        "pageSubheadline": null,
+        "pageDescription": null,
+        "layoutType": "standard",
+        "showDriverButtons": true,
+        "showFilters": false
+      },
+      "questions": {
+        "pageId": "questions",
+        "pageName": "Prep Questions",
+        "pageSubheadline": null,
+        "pageDescription": null,
+        "layoutType": "single-column",
+        "showDriverButtons": false,
+        "showFilters": false
+      }
+    },
+    "kpis": [
+      {
+        "id": "ov1",
+        "pageId": "overview",
+        "index": 1,
+        "name": "Acute Admissions Trend",
+        "description": "Acute admissions have increased by 5% compared to the same period last year, reflecting strong underlying operational performance.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": 0.006
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "bar",
+            "title": "Acute Admissions Trend",
+            "subtitle": "Current Period, Cases vs. Peers"
+          },
+          "driverItems": [
+            {
+              "headline": "Increased demand for elective procedures",
+              "description": "Elective procedures have increased by 2% over the past year."
+            },
+            {
+              "headline": "Increased number of referrals from primary care providers",
+              "description": "Referrals have increased by 1.5% over the past year."
+            },
+            {
+              "headline": "Regional population growth",
+              "description": "The region has experienced a 1% population growth over the past year."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Marketing spend - Marketing efforts have not significantly impacted the increase in acute admissions."
+            }
+          ],
+          "sources": [
+            {
+              "label": "Revenue Analysis Report - Q2 2025",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Revenue Analysis Report",
+                "subtitle": "Q2 2025"
+              }
+            },
+            {
+              "label": "volume-growth",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "OR Utilization Review",
+                "subtitle": "FY2024"
+              }
+            },
+            {
+              "label": "Service Line Analysis - FY2024",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Service Line Analysis",
+                "subtitle": "FY2024"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "Revenue Analysis Report - Q2 2025",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Revenue Analysis Report",
+              "subtitle": "Q2 2025"
+            }
+          },
+          {
+            "label": "volume-growth",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "OR Utilization Review",
+              "subtitle": "FY2024"
+            }
+          },
+          {
+            "label": "Service Line Analysis - FY2024",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Service Line Analysis",
+              "subtitle": "FY2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ov2",
+        "pageId": "overview",
+        "index": 2,
+        "name": "Observed/Expected LOS",
+        "description": "The system's observed/expected LOS ratio was 1.0, matching the peer average.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": 0.069
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "bar",
+            "title": "Observed/Expected LOS",
+            "subtitle": "Current Period, Cases vs. Peers"
+          },
+          "driverItems": [
+            {
+              "headline": "Time to first diagnostic test",
+              "description": "The average time to first diagnostic test (CT, MRI, echo, etc.) has decreased by 10% over the past year."
+            },
+            {
+              "headline": "% of patients with discharge disposition identified within 24 hours of admission",
+              "description": "This percentage has increased by 15% over the past year."
+            },
+            {
+              "headline": "% of patients with LOS > expected x 2 StDev (outlier patients)",
+              "description": "The percentage of outlier patients has decreased by 5% over the past year."
+            }
+          ],
+          "sources": [
+            {
+              "label": "productivity-lag",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Budget vs. Actuals Analysis",
+                "subtitle": "Q2 2024 Update"
+              }
+            },
+            {
+              "label": "case-mix",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Vendor Contract Summary",
+                "subtitle": "Q2 2024"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "Observes/Expected LOS",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "O/E across facilities",
+              "subtitle": "Q2 2024 Update"
+            }
+          },
+          {
+            "label": "case-mix",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Vendor Contract Summary",
+              "subtitle": "Q2 2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ov3",
+        "pageId": "overview",
+        "index": 3,
+        "name": "Primetime OR Utilization Rate",
+        "description": "Primetime OR utilization rate has increased by 5% compared to the same period last year, reflecting improved surgical operations efficiency.",
+        "isPositive": false,
+        "benchmark": {
+          "isPositive": false,
+          "value": 0.025
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "bar",
+            "title": "Primetime OR Utilization Rate",
+            "subtitle": "Current Period vs. Budget, Hours"
+          },
+          "driverItems": [
+            {
+              "headline": "First case on-time start %",
+              "description": "The percentage of first cases starting on time has increased by 8% over the past year."
+            },
+            {
+              "headline": "Average case delay (minutes)",
+              "description": "The average case delay has decreased by 10 minutes over the past year."
+            },
+            {
+              "headline": "Block utilization rate",
+              "description": "The block utilization rate has increased by 7% over the past year."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Case cancellation rates - Case cancellation rates have not significantly impacted the primetime OR utilization rate. "
+            }
+          ],
+          "sources": [
+            {
+              "label": "productivity-lag",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Budget vs. Actuals Analysis",
+                "subtitle": "Q2 2024 Update"
+              }
+            },
+            {
+              "label": "rn-gains",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Departmental Budget Review",
+                "subtitle": "Q3 2024"
+              }
+            },
+            {
+              "label": "contract-labor",
+              "page": null,
+              "chart": {
+                "type": "metrics-table",
+                "title": "Investor Relations Briefing",
+                "subtitle": "Q2 2024 Update"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "productivity-lag",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Budget vs. Actuals Analysis",
+              "subtitle": "Q2 2024 Update"
+            }
+          },
+          {
+            "label": "rn-gains",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Departmental Budget Review",
+              "subtitle": "Q3 2024"
+            }
+          },
+          {
+            "label": "contract-labor",
+            "page": null,
+            "chart": {
+              "type": "metrics-table",
+              "title": "Investor Relations Briefing",
+              "subtitle": "Q2 2024 Update"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ov4",
+        "pageId": "overview",
+        "index": 4,
+        "name": "Full Time Equivalents per AA",
+        "description": "Full time equivalents per AA have decreased by 3% compared to the same period last year, indicating improved workforce efficiency.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": 0.075
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "peers-table",
+            "title": "Full Time Equivalents per AA",
+            "subtitle": "Current Period vs. Prior Year, Cases"
+          },
+          "driverItems": [
+            {
+              "headline": "Increased productivity",
+              "description": "Productivity has increased by 4% over the past year."
+            },
+            {
+              "headline": "Staffing ratios by department",
+              "description": "Staffing ratios have improved by 2% in key departments over the past year."
+            },
+            {
+              "headline": "Average span of control",
+              "description": "The average number of direct reports per manager has increased by 1.5% over the past year."
+            }
+          ],
+          "sources": [
+            {
+              "label": "Departmental Budget Review - Q3 2024",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Departmental Budget Review",
+                "subtitle": "Q3 2024"
+              }
+            },
+            {
+              "label": "contract-labor",
+              "page": null,
+              "chart": {
+                "type": "metrics-table",
+                "title": "Investor Relations Briefing",
+                "subtitle": "Q2 2024 Update"
+              }
+            },
+            {
+              "label": "productivity-lag",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Budget vs. Actuals Analysis",
+                "subtitle": "Q2 2024 Update"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "Departmental Budget Review - Q3 2024",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Departmental Budget Review",
+              "subtitle": "Q3 2024"
+            }
+          },
+          {
+            "label": "contract-labor",
+            "page": null,
+            "chart": {
+              "type": "metrics-table",
+              "title": "Investor Relations Briefing",
+              "subtitle": "Q2 2024 Update"
+            }
+          },
+          {
+            "label": "productivity-lag",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Budget vs. Actuals Analysis",
+              "subtitle": "Q2 2024 Update"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ov5",
+        "pageId": "overview",
+        "index": 5,
+        "name": "Labor Cost per Full Time Equivalent / AA",
+        "description": "Labor cost per full time equivalent / AA has decreased by 4% compared to the same period last year, reflecting cost-saving measures.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": -0.126
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "peers-table",
+            "title": "Labor Cost per Full Time Equivalent / AA",
+            "subtitle": "Current Period vs. Budget, $USD"
+          },
+          "driverItems": [
+            {
+              "headline": "Overtime hours as a percentage of total hours",
+              "description": "Overtime hours have decreased by 1.5% over the past year."
+            },
+            {
+              "headline": "Average hourly rate",
+              "description": "The average hourly rate has decreased by 2% over the past year."
+            },
+            {
+              "headline": "Fringe benefit rate",
+              "description": "The fringe benefit rate has decreased by 0.5% over the past year."
+            }
+          ],
+          "sources": [
+            {
+              "label": "Vendor Contract Summary - Q2 2024",
+              "page": null,
+              "chart": {
+                "type": "metrics-table",
+                "title": "Efficiency and Productivity Report",
+                "subtitle": "Q3 2024"
+              }
+            },
+            {
+              "label": "Budget vs. Actuals Analysis - Q2 2024 Update",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Budget vs. Actuals Analysis",
+                "subtitle": "Q2 2024 Update"
+              }
+            },
+            {
+              "label": "supply-cost",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Cost Management Report",
+                "subtitle": "FY2024"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "Vendor Contract Summary - Q2 2024",
+            "page": null,
+            "chart": {
+              "type": "metrics-table",
+              "title": "Efficiency and Productivity Report",
+              "subtitle": "Q3 2024"
+            }
+          },
+          {
+            "label": "Budget vs. Actuals Analysis - Q2 2024 Update",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Budget vs. Actuals Analysis",
+              "subtitle": "Q2 2024 Update"
+            }
+          },
+          {
+            "label": "supply-cost",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Cost Management Report",
+              "subtitle": "FY2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ov6",
+        "pageId": "overview",
+        "index": 6,
+        "name": "Purchased Services Expenses per Equivalent Discharge",
+        "description": "Purchased services expenses per equivalent discharge have decreased by 3% compared to the same period last year, reflecting cost-saving measures.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": false,
+          "value": "0.019"
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "metrics-table",
+            "title": "Purchased Services Expenses per Equivalent Discharge",
+            "subtitle": "Current Period vs. Budget, Cases"
+          },
+          "driverItems": [
+            {
+              "headline": "Vendor contract renegotiations",
+              "description": "Renegotiated contracts have reduced expenses by 2% over the past year."
+            },
+            {
+              "headline": "Increased use of in-house services",
+              "description": "Shifting services in-house has reduced expenses by 1% over the past year."
+            },
+            {
+              "headline": "Improved vendor management",
+              "description": "Enhanced vendor management practices have reduced expenses by 0.5% over the past year."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "External economic conditions - Economic conditions have not significantly impacted purchased services expenses per equivalent discharge. "
+            }
+          ],
+          "sources": [
+            {
+              "label": "supply-cost",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Cost Management Report",
+                "subtitle": "FY2024"
+              }
+            },
+            {
+              "label": "Budget vs. Actuals Analysis - Q2 2024 Update",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Budget vs. Actuals Analysis",
+                "subtitle": "Q2 2024 Update"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "supply-cost",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Cost Management Report",
+              "subtitle": "FY2024"
+            }
+          },
+          {
+            "label": "Budget vs. Actuals Analysis - Q2 2024 Update",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Budget vs. Actuals Analysis",
+              "subtitle": "Q2 2024 Update"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ov7",
+        "pageId": "overview",
+        "index": 7,
+        "name": "Supplies Expenses per Equivalent Discharge",
+        "description": "Supplies expenses per equivalent discharge have decreased by 2% compared to the same period last year, reflecting cost-saving measures.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": false,
+          "value": -0.022
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "metrics-table",
+            "title": "Supplies Expenses per Equivalent Discharge",
+            "subtitle": "Current Period vs. Prior Year, Index"
+          },
+          "driverItems": [
+            {
+              "headline": "Bulk purchasing agreements",
+              "description": "Bulk purchasing has reduced supplies expenses by 1% over the past year."
+            },
+            {
+              "headline": "Supply waste rate",
+              "description": "The cost of expired/discarded items as a percentage of total cost has decreased by 0.5% over the past year."
+            },
+            {
+              "headline": "% of supply spend on preferred items/contracts",
+              "description": "The percentage of supply spend on preferred items/contracts has increased by 0.5% over the past year."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Supplier price fluctuations - Price fluctuations from suppliers have not significantly impacted supplies"
+            }
+          ],
+          "sources": [
+            {
+              "label": "rate-effectiveness",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Service Line Analysis",
+                "subtitle": "FY2024"
+              }
+            },
+            {
+              "label": "income-growth",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Revenue Analysis Report",
+                "subtitle": "Q2 2025"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "rate-effectiveness",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Service Line Analysis",
+              "subtitle": "FY2024"
+            }
+          },
+          {
+            "label": "income-growth",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Revenue Analysis Report",
+              "subtitle": "Q2 2025"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ov8",
+        "pageId": "overview",
+        "index": 8,
+        "name": "Pharmacy Expenses per Equivalent Discharge",
+        "description": "Pharmacy expenses per equivalent discharge have decreased by 1.5% compared to the same period last year, reflecting cost-saving measures.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": false,
+          "value": 0.021
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "bar",
+            "title": "Pharmacy Expenses per Equivalent Discharge",
+            "subtitle": "Current Period vs. Budget, $USD per Adjusted Admission"
+          },
+          "driverItems": [
+            {
+              "headline": "Use of generic drugs",
+              "description": "The use of generic drugs has increased by 10% over the past year."
+            },
+            {
+              "headline": "Negotiated drug prices",
+              "description": "Better pricing agreements with suppliers have improved by 5% over the past year."
+            },
+            {
+              "headline": "Improved formulary management",
+              "description": "Formulary management has improved by 8% over the past year, optimizing drug usage."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Drug shortages - Drug shortages have not significantly impacted pharmacy expenses per equivalent discharge. "
+            }
+          ],
+          "sources": [
+            {
+              "label": "surgical-growth",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Sales Performance Review",
+                "subtitle": "Q1 2024"
+              }
+            },
+            {
+              "label": "Service Line Analysis - FY2024",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Service Line Analysis",
+                "subtitle": "FY2024"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "surgical-growth",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Sales Performance Review",
+              "subtitle": "Q1 2024"
+            }
+          },
+          {
+            "label": "Service Line Analysis - FY2024",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Service Line Analysis",
+              "subtitle": "FY2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ov9",
+        "pageId": "overview",
+        "index": 9,
+        "name": "AR Days",
+        "description": "AR days have decreased by 4% compared to the same period last year, reflecting improved revenue cycle management.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": 0.06
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": true,
+            "type": "bar",
+            "title": "AR Days",
+            "subtitle": "Current Period vs. Budget, Days"
+          },
+          "driverItems": [
+            {
+              "headline": "Percentage of AR > 90 days",
+              "description": "The percentage of AR > 90 days has decreased by 6% over the past year."
+            },
+            {
+              "headline": "Percentage of bad debt and charity write-offs",
+              "description": "The percentage of bad debt and charity write-offs has decreased by 3% over the past year."
+            },
+            {
+              "headline": "Denial rate",
+              "description": "The denial rate has decreased by 2% over the past year."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "DNFB days (discharged, not final billed) - DNFB days have not significantly impacted AR days. "
+            }
+          ],
+          "sources": [
+            {
+              "label": "Revenue Analysis Report - Q2 2025",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Revenue Analysis Report",
+                "subtitle": "Q2 2025"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "Revenue Analysis Report - Q2 2025",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Revenue Analysis Report",
+              "subtitle": "Q2 2025"
+            }
+          }
+        ]
+      },
+      {
+        "id": "hhq1",
+        "pageId": "questions",
+        "index": 1,
+        "name": "Acute Admissions Trend:",
+        "description": "What specific factors and initiatives have contributed to the 5% increase in acute admissions compared to the same period last year? How can we replicate these successful strategies across other departments and facilities to sustain and further enhance this growth? Are there particular service lines or patient demographics that have shown the most significant improvement, and what can we learn from them to apply to underperforming areas?",
+        "isPositive": null,
+        "benchmark": {
+          "isPositive": null,
+          "value": null
+        },
+        "chart": {
+          "enabled": false,
+          "type": null,
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": null,
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [],
+          "sources": []
+        },
+        "sources": [
+          {
+            "label": "Vendor Contract Summary - Q2 2024",
+            "page": null,
+            "chart": {
+              "type": "metrics-table",
+              "title": "Efficiency and Productivity Report",
+              "subtitle": "Q3 2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "hhq2",
+        "pageId": "questions",
+        "index": 2,
+        "name": "Observed/Expected LOS",
+        "description": "What operational changes and clinical practices have led to the observed/expected LOS ratio matching the peer average at 1.0? How can we ensure these practices are standardized and implemented across all facilities to maintain and improve this performance? Are there specific departments or patient groups where these improvements are most pronounced, and what lessons can be applied to areas with higher LOS?",
+        "isPositive": null,
+        "benchmark": {
+          "isPositive": null,
+          "value": null
+        },
+        "chart": {
+          "enabled": false,
+          "type": null,
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": null,
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [],
+          "sources": []
+        },
+        "sources": [
+          {
+            "label": "Budget vs. Actuals Analysis - Q3 2024",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Cost Management Report",
+              "subtitle": "FY2024"
+            }
+          },
+          {
+            "label": "Outpatient Revenue Report",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Cost Management Report",
+              "subtitle": "Operating room usage rates and scheduling efficiency"
+            }
+          },
+          {
+            "label": "Benefits Expense Peer Comparison",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Benefits Expense Peer Comparison",
+              "subtitle": "Current Period vs. Budget, $USD"
+            }
+          }
+        ]
+      },
+      {
+        "id": "hhq3",
+        "pageId": "questions",
+        "index": 3,
+        "name": "Full Time Equivalents per AA",
+        "description": "What factors have contributed to the 3% decrease in full-time equivalents per AA over the past year? How can we balance this reduction with maintaining or improving patient care quality and staff satisfaction? Are there specific departments or roles where this reduction has been most effective, and how can we replicate these efficiencies across the organization?",
+        "isPositive": null,
+        "benchmark": {
+          "isPositive": null,
+          "value": null
+        },
+        "chart": {
+          "enabled": false,
+          "type": null,
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": null,
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [],
+          "sources": []
+        },
+        "sources": [
+          {
+            "label": "income-growth",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Revenue Analysis Report",
+              "subtitle": "Q2 2025"
+            }
+          },
+          {
+            "label": "Net Patient Revenue Report",
+            "page": null,
+            "chart": {
+              "type": "metrics-table",
+              "title": "Revenue Analysis Report",
+              "subtitle": "Uncompensated care trends and write-off rates"
+            }
+          },
+          {
+            "label": "Hospital Operating Income Key Performance Metrics",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Hospital Operating Income Key Performance Metrics",
+              "subtitle": "Current Period, $USD"
+            }
+          }
+        ]
+      },
+      {
+        "id": "hhq4",
+        "pageId": "questions",
+        "index": 4,
+        "name": "Labor Cost per Full Time Equivalent / AA",
+        "description": "What strategies and initiatives have led to the 4% decrease in labor cost per full-time equivalent / AA over the past year? How can we ensure these cost-saving measures do not negatively impact staff morale and patient care quality? Are there specific areas where these cost reductions have been most effective, and what best practices can be shared across the organization?",
+        "isPositive": null,
+        "benchmark": {
+          "isPositive": null,
+          "value": null
+        },
+        "chart": {
+          "enabled": false,
+          "type": null,
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": null,
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [],
+          "sources": []
+        },
+        "sources": [
+          {
+            "label": "volume-growth",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "OR Utilization Review",
+              "subtitle": "FY2024"
+            }
+          },
+          {
+            "label": "Accounts Receivable Aging Report",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "OR Utilization Review",
+              "subtitle": "Usage and cost of temporary staffing by unit"
+            }
+          }
+        ]
+      },
+      {
+        "id": "hhq5",
+        "pageId": "questions",
+        "index": 5,
+        "name": "Purchased Services Expenses per Equivalent Discharge",
+        "description": "What specific actions and negotiations have resulted in the 3% decrease in purchased services expenses per equivalent discharge over the past year? How can we continue to optimize these expenses while maintaining high-quality service delivery? Are there particular vendors or service categories where we have achieved the most significant savings, and how can we apply these strategies to other areas?",
+        "isPositive": null,
+        "benchmark": {
+          "isPositive": null,
+          "value": null
+        },
+        "chart": {
+          "enabled": false,
+          "type": null,
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": null,
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [],
+          "sources": []
+        },
+        "sources": [
+          {
+            "label": "contract-labor",
+            "page": null,
+            "chart": {
+              "type": "metrics-table",
+              "title": "Investor Relations Briefing",
+              "subtitle": "Q2 2024 Update"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc1",
+        "pageId": "peer-comparison",
+        "index": 1,
+        "name": "Acute Admissions Growth Exceeding Peers",
+        "description": "Our facility's 5% increase in acute admissions outperforms the peer average growth of 2.3%, placing us in the top quartile of comparable facilities through strategic service line expansion and enhanced referral networks.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": 0.023
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Strategic service line optimization",
+              "description": "Expanded elective procedure capacity resulting in 8.5% growth compared to peer average of 3.2% in surgical specialties."
+            },
+            {
+              "headline": "Enhanced primary care network",
+              "description": "Implemented direct referral system with 42 affiliated practices, generating 15% more referrals than peer average."
+            },
+            {
+              "headline": "Outreach program effectiveness",
+              "description": "Community health initiatives drove 12% increase in new patient acquisitions versus peer benchmark of 7%."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Emergency department utilization was not a significant driver, with ED admissions at peer average (+0.2%). (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "income-growth",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Revenue Analysis Report",
+                "subtitle": "Q2 2025"
+              }
+            },
+            {
+              "label": "Net Patient Revenue Report",
+              "page": null,
+              "chart": {
+                "type": "metrics-table",
+                "title": "Revenue Analysis Report",
+                "subtitle": "Uncompensated care trends and write-off rates"
+              }
+            },
+            {
+              "label": "Hospital Operating Income Key Performance Metrics",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Hospital Operating Income Key Performance Metrics",
+                "subtitle": "Current Period, $USD"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "income-growth",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Revenue Analysis Report",
+              "subtitle": "Q2 2025"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc2",
+        "pageId": "peer-comparison",
+        "index": 2,
+        "name": "LOS Performance At Peer Benchmark",
+        "description": "Our observed/expected LOS ratio of 1.0 matches the peer benchmark exactly, representing significant improvement from our previous performance through optimized discharge planning and case management.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": 1
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Discharge planning improvements",
+              "description": "Implemented multidisciplinary rounds within 24 hours of admission, matching best-in-class peer practice implemented in 85% of cases versus peer average of 72%."
+            },
+            {
+              "headline": "Diagnostic testing efficiency",
+              "description": "Reduced average time to first diagnostic test to 5.2 hours versus peer average of 6.8 hours, decreasing overall length of stay."
+            },
+            {
+              "headline": "Case management optimization",
+              "description": "Improved case manager to patient ratio to 1:18 versus peer benchmark of 1:22, enabling earlier intervention for complex cases."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Patient acuity was not a significant factor, with case mix index 2% above peer average. (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "volume-growth",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "OR Utilization Review",
+                "subtitle": "FY2024"
+              }
+            },
+            {
+              "label": "Accounts Receivable Aging Report",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "OR Utilization Review",
+                "subtitle": "Usage and cost of temporary staffing by unit"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "volume-growth",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "OR Utilization Review",
+              "subtitle": "FY2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc3",
+        "pageId": "peer-comparison",
+        "index": 3,
+        "name": "Workforce Efficiency Above Peer Average",
+        "description": "Our 3% reduction in FTEs per AA exceeds peer average improvement of 1.5%, demonstrating superior workforce optimization through redesigned care models and effective cross-training programs.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": -0.015
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Care model redesign",
+              "description": "Implemented team-based nursing model resulting in 5% lower RN hours per patient day compared to peer median."
+            },
+            {
+              "headline": "Technology-enabled productivity",
+              "description": "Deployed AI-assisted clinical documentation in 85% of units versus peer adoption of 62%, reducing administrative time by 0.8 FTEs per unit."
+            },
+            {
+              "headline": "Cross-training effectiveness",
+              "description": "Cross-trained 38% of support staff versus peer benchmark of 25%, enabling flexible deployment across departments."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Staff experience levels did not negatively impact efficiency, with average tenure matching peer median at 6.3 years. (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "contract-labor",
+              "page": null,
+              "chart": {
+                "type": "metrics-table",
+                "title": "Investor Relations Briefing",
+                "subtitle": "Q2 2024 Update"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "contract-labor",
+            "page": null,
+            "chart": {
+              "type": "metrics-table",
+              "title": "Investor Relations Briefing",
+              "subtitle": "Q2 2024 Update"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc4",
+        "pageId": "peer-comparison",
+        "index": 4,
+        "name": "Labor Cost Management Outperforming Peers",
+        "description": "Labor cost per FTE/AA has decreased by 4% compared to peer average reduction of 1.8%, placing us in the top 20% through premium pay reduction and skill mix optimization.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": -0.018
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Premium pay reduction",
+              "description": "Reduced overtime to 3.2% of total hours versus peer benchmark of 4.7% through predictive scheduling algorithms."
+            },
+            {
+              "headline": "Skill mix optimization",
+              "description": "Adjusted RN to support staff ratio to 65:35 versus peer average of 70:30, aligning with best practice benchmarks while maintaining quality outcomes."
+            },
+            {
+              "headline": "Benefits structure efficiency",
+              "description": "Implemented tiered benefits program yielding 3.8% lower benefit costs per FTE compared to peer average."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Base compensation rates were not a driver, as they remained aligned with market at 58th percentile versus peer median of 55th percentile. (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "surgical-growth",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Sales Performance Review",
+                "subtitle": "Q1 2024"
+              }
+            },
+            {
+              "label": "Contract Labor Utilization Review",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Sales Performance Review",
+                "subtitle": "Bed occupancy, procedure room use, and throughput metrics"
+              }
+            },
+            {
+              "label": "Admissions Key Performance Metrics",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Admissions Key Performance Metrics",
+                "subtitle": "Current Period vs. Prior Year, Cases"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "surgical-growth",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Sales Performance Review",
+              "subtitle": "Q1 2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc6",
+        "pageId": "peer-comparison",
+        "index": 5,
+        "name": "Purchased Services Expense Reduction Leading Peers",
+        "description": "Our 3% reduction in purchased services expenses exceeds the peer benchmark of 1.2%, delivering superior expense management through contract consolidation and strategic insourcing decisions.",
+        "isPositive": true,
+        "benchmark": {
+          "isPositive": true,
+          "value": -0.012
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Contract consolidation",
+              "description": "Reduced number of service vendors by 28% compared to peer average reduction of 15%, enhancing negotiating leverage and standardizing service levels."
+            },
+            {
+              "headline": "Insourcing strategic services",
+              "description": "Brought environmental services and select IT functions in-house, generating 12% savings versus peer benchmark of 8%."
+            },
+            {
+              "headline": "Vendor performance management",
+              "description": "Implemented performance-based contract terms with 85% of vendors versus peer average of 62%, linking payment to quality and service metrics."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Service quality was not compromised, with satisfaction scores for outsourced services at 92nd percentile versus peer median of 78th percentile. (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "rn-gains",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Departmental Budget Review",
+                "subtitle": "Q3 2024"
+              }
+            },
+            {
+              "label": "Facility Utilization Summary",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Departmental Budget Review",
+                "subtitle": "Rate schedules and performance by major payer"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "rn-gains",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Departmental Budget Review",
+              "subtitle": "Q3 2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc7",
+        "pageId": "peer-comparison",
+        "index": 6,
+        "name": "Supply Expense Management Ahead of Benchmarks",
+        "description": "Supplies expenses have decreased by 2% compared to peer average increase of 0.5%, placing us in the top 15% through standardization initiatives and enhanced group purchasing leverage.",
+        "isPositive": false,
+        "benchmark": {
+          "isPositive": false,
+          "value": 0.005
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Standardization initiatives",
+              "description": "Achieved 82% compliance with standardized preference cards versus peer average of 67%, reducing variation and waste."
+            },
+            {
+              "headline": "Group purchasing leverage",
+              "description": "Consolidated 94% of spend through prime vendor agreements versus peer benchmark of 86%, enhancing volume-based discounts."
+            },
+            {
+              "headline": "Inventory management excellence",
+              "description": "Reduced supply days on hand to 20.3 days versus peer average of 24.7 days, optimizing working capital."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Clinical outcomes were not negatively impacted, with quality indicators in the top quartile compared to peers. (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "productivity-lag",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Budget vs. Actuals Analysis",
+                "subtitle": "Q2 2024 Update"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "productivity-lag",
+            "page": null,
+            "chart": {
+              "type": "bar",
+              "title": "Budget vs. Actuals Analysis",
+              "subtitle": "Q2 2024 Update"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc8",
+        "pageId": "peer-comparison",
+        "index": 7,
+        "name": "Pharmacy Cost Control Exceeding Peer Performance",
+        "description": "Our 1.5% reduction in pharmacy expenses contrasts with peer average increase of 0.8%, representing industry-leading cost management through formulary compliance and biosimilar adoption.",
+        "isPositive": false,
+        "benchmark": {
+          "isPositive": false,
+          "value": 0.008
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Formulary management",
+              "description": "Achieved 96% formulary compliance versus peer benchmark of 88%, optimizing therapeutic substitutions."
+            },
+            {
+              "headline": "Biosimilar adoption",
+              "description": "Implemented biosimilars for 78% of eligible therapies versus peer average of 59%, generating 14% cost reduction in targeted categories."
+            },
+            {
+              "headline": "340B program optimization",
+              "description": "Expanded capture rate to 92% of eligible prescriptions versus peer average of 84%, maximizing program benefits."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Medication safety was maintained with adverse drug events at 0.8 per 1,000 patient days versus peer average of 1.2. (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "case-mix",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Vendor Contract Summary",
+                "subtitle": "Q2 2024"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "case-mix",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Vendor Contract Summary",
+              "subtitle": "Q2 2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc9",
+        "pageId": "peer-comparison",
+        "index": 8,
+        "name": "OR Utilization Outperforming Peer Facilities",
+        "description": "Primetime OR utilization has increased by 5% versus peer average of 2.1%, placing us in the top quartile through block schedule optimization and turnover time reduction.",
+        "isPositive": false,
+        "benchmark": {
+          "isPositive": false,
+          "value": 0.021
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Block schedule optimization",
+              "description": "Implemented data-driven block allocation with 14-day release policy versus peer average of 21 days, increasing utilization by 3.2 percentage points."
+            },
+            {
+              "headline": "Turnover time reduction",
+              "description": "Achieved average turnover of 22 minutes versus peer benchmark of 28 minutes through parallel processing and dedicated teams."
+            },
+            {
+              "headline": "First case on-time start improvement",
+              "description": "Improved first case on-time starts to 87% versus peer average of 74% through standardized pre-operative protocols."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Case duration accuracy was not a significant factor, with actual-to-scheduled time variance matching peer median at 12%. (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "ed-visits",
+              "page": null,
+              "chart": {
+                "type": "metrics-table",
+                "title": "Efficiency and Productivity Report",
+                "subtitle": "Q3 2024"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "ed-visits",
+            "page": null,
+            "chart": {
+              "type": "metrics-table",
+              "title": "Efficiency and Productivity Report",
+              "subtitle": "Q3 2024"
+            }
+          }
+        ]
+      },
+      {
+        "id": "pc10",
+        "pageId": "peer-comparison",
+        "index": 9,
+        "name": "Revenue Cycle Effectiveness Leading Peer Group",
+        "description": "AR days have decreased by 4% compared to peer average of 1.5%, positioning us among the top 10% through front-end process improvements and denial management excellence.",
+        "isPositive": false,
+        "benchmark": {
+          "isPositive": false,
+          "value": -0.015
+        },
+        "chart": {
+          "enabled": false,
+          "type": "bar",
+          "title": null,
+          "subtitle": null
+        },
+        "driver": {
+          "headline": "Potential Key Drivers",
+          "description": null,
+          "chart": {
+            "enabled": false,
+            "type": null,
+            "title": null,
+            "subtitle": null
+          },
+          "driverItems": [
+            {
+              "headline": "Front-end process improvement",
+              "description": "Achieved 95% point-of-service collections for scheduled services versus peer benchmark of 87%, accelerating cash flow."
+            },
+            {
+              "headline": "Denial management excellence",
+              "description": "Reduced initial denial rate to 4.2% versus peer average of 6.8% through pre-submission claim scrubbing and clinical documentation initiatives."
+            },
+            {
+              "headline": "Payer contract optimization",
+              "description": "Renegotiated payment terms with top three payers, reducing payment lag by 5.2 days compared to peer average."
+            },
+            {
+              "headline": "Non-issue",
+              "description": "Payer mix complexity was not a significant factor, with government payer percentage aligning with peer median at 67%. (pX)"
+            }
+          ],
+          "sources": [
+            {
+              "label": "supply-cost",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Cost Management Report",
+                "subtitle": "FY2024"
+              }
+            },
+            {
+              "label": "Outpatient Revenue Report",
+              "page": null,
+              "chart": {
+                "type": "peers-table",
+                "title": "Cost Management Report",
+                "subtitle": "Operating room usage rates and scheduling efficiency"
+              }
+            },
+            {
+              "label": "Benefits Expense Peer Comparison",
+              "page": null,
+              "chart": {
+                "type": "bar",
+                "title": "Benefits Expense Peer Comparison",
+                "subtitle": "Current Period vs. Budget, $USD"
+              }
+            }
+          ]
+        },
+        "sources": [
+          {
+            "label": "supply-cost",
+            "page": null,
+            "chart": {
+              "type": "peers-table",
+              "title": "Cost Management Report",
+              "subtitle": "FY2024"
+            }
+          }
+        ]
+      }
+    ],
+    "staticSearchResults": [
+      {
+        "name": "Akamai Technologies, Inc.",
+        "available": true
+      },
+      {
+        "name": "Align Technology, Inc.",
+        "available": false
+      },
+      {
+        "name": "Alnylam Pharmaceuticals, Inc.",
+        "available": true
+      },
+      {
+        "name": "Amazon.com, Inc.",
+        "available": true
+      },
+      {
+        "name": "Advanced Micro Devices, Inc.",
+        "available": true
+      },
+      {
+        "name": "Amgen Inc.",
+        "available": true
+      },
+      {
+        "name": "Analog Devices, Inc.",
+        "available": true
+      },
+      {
+        "name": "ANSYS, Inc.",
+        "available": true
+      },
+      {
+        "name": "Apple Inc.",
+        "available": true
+      },
+      {
+        "name": "ASML Holding N.V.",
+        "available": true
+      },
+      {
+        "name": "Atlassian Corporation",
+        "available": false
+      },
+      {
+        "name": "Autodesk, Inc.",
+        "available": true
+      },
+      {
+        "name": "Automatic Data Processing, Inc.",
+        "available": true
+      },
+      {
+        "name": "Biogen Inc.",
+        "available": true
+      },
+      {
+        "name": "BioMarin Pharmaceutical Inc.",
+        "available": false
+      },
+      {
+        "name": "Booking Holdings Inc.",
+        "available": false
+      },
+      {
+        "name": "Broadcom Inc.",
+        "available": true
+      },
+      {
+        "name": "Cadence Design Systems, Inc.",
+        "available": true
+      },
+      {
+        "name": "Carvana Co.",
+        "available": true
+      },
+      {
+        "name": "Cintas Corporation",
+        "available": false
+      },
+      {
+        "name": "Cisco Systems, Inc.",
+        "available": false
+      },
+      {
+        "name": "Cognex Corporation",
+        "available": true
+      },
+      {
+        "name": "Coinbase Global, Inc.",
+        "available": true
+      },
+      {
+        "name": "Comcast Corporation",
+        "available": true
+      },
+      {
+        "name": "Copart, Inc.",
+        "available": false
+      },
+      {
+        "name": "CrowdStrike Holdings, Inc.",
+        "available": false
+      },
+      {
+        "name": "CSG Systems International, Inc.",
+        "available": true
+      },
+      {
+        "name": "Datadog, Inc.",
+        "available": true
+      },
+      {
+        "name": "DexCom, Inc.",
+        "available": true
+      },
+      {
+        "name": "DocuSign, Inc.",
+        "available": false
+      },
+      {
+        "name": "DraftKings Inc.",
+        "available": false
+      },
+      {
+        "name": "Dropbox, Inc.",
+        "available": true
+      },
+      {
+        "name": "eBay Inc.",
+        "available": true
+      },
+      {
+        "name": "Enphase Energy, Inc.",
+        "available": true
+      },
+      {
+        "name": "Exact Sciences Corporation",
+        "available": false
+      },
+      {
+        "name": "Expedia Group, Inc.",
+        "available": false
+      },
+      {
+        "name": "Fastenal Company",
+        "available": true
+      },
+      {
+        "name": "Fiverr International Ltd.",
+        "available": true
+      },
+      {
+        "name": "Fortinet, Inc.",
+        "available": true
+      },
+      {
+        "name": "Fox Corporation",
+        "available": false
+      },
+      {
+        "name": "Gilead Sciences, Inc.",
+        "available": false
+      },
+      {
+        "name": "GlobalFoundries Inc.",
+        "available": true
+      },
+      {
+        "name": "Hasbro, Inc.",
+        "available": true
+      },
+      {
+        "name": "Illumina, Inc.",
+        "available": true
+      },
+      {
+        "name": "Intel Corporation",
+        "available": false
+      },
+      {
+        "name": "Intuit Inc.",
+        "available": false
+      },
+      {
+        "name": "JD.com, Inc.",
+        "available": true
+      },
+      {
+        "name": "JetBlue Airways Corporation",
+        "available": true
+      },
+      {
+        "name": "KLA Corporation",
+        "available": true
+      },
+      {
+        "name": "Lam Research Corporation",
+        "available": false
+      },
+      {
+        "name": "Liberty Global plc",
+        "available": false
+      },
+      {
+        "name": "Live Nation Entertainment, Inc.",
+        "available": true
+      },
+      {
+        "name": "Lyft, Inc.",
+        "available": true
+      },
+      {
+        "name": "Marvell Technology, Inc.",
+        "available": true
+      },
+      {
+        "name": "Match Group, Inc.",
+        "available": false
+      },
+      {
+        "name": "MercadoLibre, Inc.",
+        "available": false
+      },
+      {
+        "name": "Meta Platforms, Inc.",
+        "available": true
+      },
+      {
+        "name": "Microchip Technology Incorporated",
+        "available": true
+      },
+      {
+        "name": "Micron Technology, Inc.",
+        "available": true
+      },
+      {
+        "name": "Moderna, Inc.",
+        "available": false
+      },
+      {
+        "name": "MongoDB, Inc.",
+        "available": false
+      },
+      {
+        "name": "Monolithic Power Systems, Inc.",
+        "available": true
+      },
+      {
+        "name": "Motorola Solutions, Inc.",
+        "available": true
+      },
+      {
+        "name": "Netflix, Inc.",
+        "available": true
+      },
+      {
+        "name": "NetApp, Inc.",
+        "available": false
+      },
+      {
+        "name": "NVIDIA Corporation",
+        "available": false
+      },
+      {
+        "name": "NXP Semiconductors N.V.",
+        "available": true
+      },
+      {
+        "name": "Okta, Inc.",
+        "available": true
+      },
+      {
+        "name": "Old Dominion Freight Line, Inc.",
+        "available": true
+      },
+      {
+        "name": "ON Semiconductor Corporation",
+        "available": false
+      },
+      {
+        "name": "PACCAR Inc",
+        "available": false
+      },
+      {
+        "name": "Palo Alto Networks, Inc.",
+        "available": true
+      },
+      {
+        "name": "Paychex, Inc.",
+        "available": true
+      },
+      {
+        "name": "PayPal Holdings, Inc.",
+        "available": true
+      },
+      {
+        "name": "PepsiCo, Inc.",
+        "available": false
+      },
+      {
+        "name": "Pinterest, Inc.",
+        "available": false
+      },
+      {
+        "name": "Qualcomm Incorporated",
+        "available": true
+      },
+      {
+        "name": "Regeneron Pharmaceuticals, Inc.",
+        "available": true
+      },
+      {
+        "name": "Roku, Inc.",
+        "available": true
+      },
+      {
+        "name": "Ross Stores, Inc.",
+        "available": false
+      },
+      {
+        "name": "Sarepta Therapeutics, Inc.",
+        "available": false
+      },
+      {
+        "name": "Seagen Inc.",
+        "available": true
+      },
+      {
+        "name": "Sirius XM Holdings Inc.",
+        "available": true
+      },
+      {
+        "name": "Skyworks Solutions, Inc.",
+        "available": true
+      },
+      {
+        "name": "Splunk Inc.",
+        "available": false
+      },
+      {
+        "name": "Spotify Technology S.A.",
+        "available": false
+      },
+      {
+        "name": "Synopsys, Inc.",
+        "available": true
+      },
+      {
+        "name": "Take-Two Interactive Software, Inc.",
+        "available": true
+      },
+      {
+        "name": "T-Mobile US, Inc.",
+        "available": true
+      },
+      {
+        "name": "Tesla, Inc.",
+        "available": false
+      },
+      {
+        "name": "Texas Instruments Incorporated",
+        "available": false
+      },
+      {
+        "name": "The Trade Desk, Inc.",
+        "available": true
+      },
+      {
+        "name": "Tripadvisor, Inc.",
+        "available": true
+      },
+      {
+        "name": "Tyler Technologies, Inc.",
+        "available": true
+      },
+      {
+        "name": "Ulta Beauty, Inc.",
+        "available": false
+      },
+      {
+        "name": "United Airlines Holdings, Inc.",
+        "available": false
+      },
+      {
+        "name": "VeriSign, Inc.",
+        "available": true
+      },
+      {
+        "name": "Verisk Analytics, Inc.",
+        "available": true
+      },
+      {
+        "name": "Vertex Pharmaceuticals Incorporated",
+        "available": true
+      },
+      {
+        "name": "Warner Bros. Discovery, Inc.",
+        "available": false
+      },
+      {
+        "name": "Workday, Inc.",
+        "available": false
+      },
+      {
+        "name": "Xilinx, Inc.",
+        "available": true
+      },
+      {
+        "name": "Zebra Technologies Corporation",
+        "available": true
+      },
+      {
+        "name": "Zillow Group, Inc.",
+        "available": true
+      },
+      {
+        "name": "Zoom Video Communications, Inc.",
+        "available": false
+      }
+    ]
+  }

@@ -1,0 +1,170 @@
+/* McKinsey Design System Overrides */
+/* Custom variants and modifications for MDS components */
+
+/* === BUTTON OVERRIDES === */
+/* Make MDS square buttons rounded */
+.mds-button-rounded {
+  border-radius: var(--border-radius-lg) !important;
+}
+
+.mds-button-pill {
+  border-radius: var(--border-radius-pill) !important;
+}
+
+/* Custom button sizes */
+.mds-button-sm {
+  padding: var(--spacing-xs) var(--spacing-sm) !important;
+  font-size: var(--font-size-sm) !important;
+  height: 32px !important;
+}
+
+.mds-button-lg {
+  padding: var(--spacing-md) var(--spacing-xl) !important;
+  font-size: var(--font-size-lg) !important;
+  height: 56px !important;
+}
+
+/* === INPUT OVERRIDES === */
+/* Make MDS inputs consistent with design system */
+.mds-input-custom {
+  border-radius: var(--border-radius-md) !important;
+  border: 1px solid var(--color-border-medium) !important;
+  font-family: var(--font-family-primary) !important;
+  transition: border-color var(--transition-fast) !important;
+}
+
+.mds-input-custom:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1) !important;
+}
+
+/* === DROPDOWN OVERRIDES === */
+.mds-dropdown-custom {
+  border-radius: var(--border-radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+  border: 1px solid var(--color-border-light) !important;
+}
+
+.mds-dropdown-item-custom {
+  padding: var(--spacing-sm) var(--spacing-md) !important;
+  transition: background-color var(--transition-fast) !important;
+}
+
+.mds-dropdown-item-custom:hover {
+  background-color: var(--color-background-secondary) !important;
+}
+
+/* === TYPOGRAPHY OVERRIDES === */
+/* Ensure MDS typography uses our font stack */
+.mds-text-custom {
+  font-family: var(--font-family-primary) !important;
+}
+
+.mds-heading-custom {
+  font-family: var(--font-family-display) !important;
+  font-weight: var(--font-weight-medium) !important;
+}
+
+/* === COLOR OVERRIDES === */
+/* Apply MVIP brand colors to MDS components */
+.mds-primary-custom {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-text-inverse) !important;
+}
+
+.mds-primary-custom:hover {
+  background-color: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
+}
+
+.mds-secondary-custom {
+  background-color: transparent !important;
+  border-color: var(--color-border-medium) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.mds-secondary-custom:hover {
+  background-color: var(--color-background-secondary) !important;
+  border-color: var(--color-border-dark) !important;
+}
+
+/* === SPACING OVERRIDES === */
+/* Consistent spacing with design system */
+.mds-spacing-sm { margin: var(--spacing-sm) !important; }
+.mds-spacing-md { margin: var(--spacing-md) !important; }
+.mds-spacing-lg { margin: var(--spacing-lg) !important; }
+
+.mds-padding-sm { padding: var(--spacing-sm) !important; }
+.mds-padding-md { padding: var(--spacing-md) !important; }
+.mds-padding-lg { padding: var(--spacing-lg) !important; }
+
+/* === RESPONSIVE OVERRIDES === */
+@media (max-width: 768px) {
+  .mds-button-responsive {
+    width: 100% !important;
+    margin-bottom: var(--spacing-sm) !important;
+  }
+  
+  .mds-input-responsive {
+    width: 100% !important;
+  }
+}
+
+/* === ANIMATION OVERRIDES === */
+/* Consistent transitions with design system */
+.mds-transition-custom {
+  transition: all var(--transition-base) !important;
+}
+
+.mds-transition-fast {
+  transition: all var(--transition-fast) !important;
+}
+
+.mds-transition-slow {
+  transition: all var(--transition-slow) !important;
+}
+
+/* === ACCESSIBILITY OVERRIDES === */
+/* Enhanced focus states */
+.mds-focus-custom:focus-visible {
+  outline: 2px solid var(--color-primary) !important;
+  outline-offset: 2px !important;
+}
+
+/* === COMPONENT-SPECIFIC OVERRIDES === */
+
+/* Search Component MDS Integration */
+.search-mds-input {
+  height: var(--search-input-height) !important;
+  border-radius: var(--border-radius-lg) !important;
+  padding: 0 var(--spacing-lg) !important;
+  font-size: var(--font-size-base) !important;
+}
+
+.search-mds-button {
+  height: var(--search-input-height) !important;
+  border-radius: var(--border-radius-lg) !important;
+  min-width: 120px !important;
+}
+
+/* Peer Selector MDS Integration */
+.peer-mds-chip {
+  height: var(--peer-chip-height) !important;
+  padding: var(--peer-chip-padding) !important;
+  border-radius: var(--border-radius-pill) !important;
+  font-size: var(--font-size-sm) !important;
+}
+
+/* Modal MDS Integration */
+.modal-mds-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.modal-mds-container {
+  border-radius: var(--border-radius-xl) !important;
+  box-shadow: var(--shadow-xl) !important;
+  max-width: 90vw !important;
+  max-height: 90vh !important;
+}
