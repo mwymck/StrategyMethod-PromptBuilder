@@ -100,3 +100,52 @@ temp/
 
 # Claude Code specific
 .claude/cache/
+
+# OneDrive specific files
+*.ini
+.tmp/
+*~$*
+~$*
+Icon*
+.dropbox
+.dropbox.attr
+.dropbox.cache
+
+# OneDrive sync files
+*_files/
+*.lnk
+
+# Microsoft Office temporary files
+~$*.doc*
+~$*.xls*
+~$*.ppt*
+
+# OneDrive for Business sync files
+*.tmp
+*.temp
+
+# OneDrive sync conflict files
+*-conflict-*
+* - Copy.*
+* - Copy (*).*
+
+# OneDrive Icon cache
+Icon\r
+
+# Thumbs.db files (already covered but ensuring)
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# System files that may appear in OneDrive
+desktop.ini
+$RECYCLE.BIN/
+
+# Cloud storage metadata
+.fuse_hidden*
+.directory
+.Trash-*
+
+# OneDrive business specific
+*.localized
