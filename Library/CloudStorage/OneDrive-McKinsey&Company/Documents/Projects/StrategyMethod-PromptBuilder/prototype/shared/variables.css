@@ -1,82 +1,209 @@
 :root {
-    /* Colors */
-    --color-primary: #2563eb;
-    --color-primary-hover: #1d4ed8;
-    --color-secondary: #64748b;
-    --color-text: #1e293b;
-    --color-text-muted: #64748b;
-    --color-bg: #ffffff;
-    --color-bg-card: #f8fafc;
-    --color-border: #e2e8f0;
-    --color-error: #dc2626;
-    --color-success: #059669;
-    --color-warning: #d97706;
-    --color-info: #0ea5e9;
-    
-    /* Typography */
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.875rem;
-    --font-size-base: 1rem;
-    --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
-    --font-size-2xl: 1.5rem;
-    --font-size-3xl: 1.875rem;
-    --font-weight-normal: 400;
-    --font-weight-medium: 500;
-    --font-weight-semibold: 600;
-    --font-weight-bold: 700;
-    --line-height-tight: 1.25;
-    --line-height-base: 1.5;
-    --line-height-relaxed: 1.75;
-    
-    /* Spacing */
-    --space-xs: 0.25rem;
-    --space-sm: 0.5rem;
-    --space-md: 1rem;
-    --space-lg: 1.5rem;
-    --space-xl: 2rem;
-    --space-2xl: 3rem;
-    --space-3xl: 4rem;
-    
-    /* Layout */
-    --container-sm: 640px;
-    --container-md: 768px;
-    --container-lg: 1024px;
-    --container-xl: 1280px;
-    
-    /* Border Radius */
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --radius-full: 9999px;
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
-    --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-    
-    /* Transitions */
-    --transition-fast: 150ms ease;
-    --transition-base: 300ms ease;
-    --transition-slow: 500ms ease;
-    
-    /* Z-Index Scale */
-    --z-dropdown: 10;
-    --z-sticky: 20;
-    --z-modal: 30;
-    --z-popover: 40;
-    --z-tooltip: 50;
-    
-    /* Prompt Builder Specific Colors */
-    --color-electric-blue-500: #0ea5e9;
-    --color-electric-blue-600: #0284c7;
-    --color-chip-bg: #dbeafe;
-    --color-chip-text: #1e40af;
-    --color-alert-bg: #eff6ff;
-    --color-alert-border: #bfdbfe;
-    --color-badge-bg: #f3f4f6;
-    --color-badge-text: #374151;
+  --deep-blue-900-c: rgb(5, 28, 44);
+  --electric-blue-500-c: rgb(34, 81, 255);
+  --cyan-500-c: rgb(0, 169, 244);
+  --deep-blue-200: rgb(130, 166, 201);
+  --deep-blue-300: rgb(83, 128, 172);
+  --deep-blue-400: rgb(56, 102, 148);
+  --deep-blue-500: rgb(43, 85, 128);
+  --deep-blue-600: rgb(27, 69, 110);
+  --deep-blue-700: rgb(16, 53, 89);
+  --deep-blue-800: rgb(8, 38, 68);
+  --deep-blue-900: rgb(5, 28, 44);
+  --electric-blue-100: rgb(204, 225, 255);
+  --electric-blue-200: rgb(153, 196, 255);
+  --electric-blue-300: rgb(94, 157, 255);
+  --electric-blue-400: rgb(41, 114, 255);
+  --electric-blue-500: rgb(34, 81, 255);
+  --electric-blue-600: rgb(28, 68, 220);
+  --electric-blue-700: rgb(21, 55, 186);
+  --electric-blue-800: rgb(14, 43, 153);
+  --electric-blue-900: rgb(6, 31, 121);
+  --cyan-100: rgb(204, 242, 255);
+  --cyan-200: rgb(153, 230, 255);
+  --cyan-300: rgb(110, 203, 247);
+  --cyan-400: rgb(52, 180, 244);
+  --cyan-500: rgb(0, 169, 244);
+  --cyan-600: rgb(2, 145, 220);
+  --cyan-700: rgb(6, 121, 195);
+  --cyan-800: rgb(8, 99, 170);
+  --cyan-900: rgb(8, 77, 145);
+  --gray-5%: rgb(242, 242, 242);
+  --gray-10%: rgb(230, 230, 230);
+  --gray-20%: rgb(204, 204, 204);
+  --gray-30%: rgb(179, 179, 179);
+  --gray-54%: rgb(117, 117, 117);
+  --gray-60%: rgb(101, 101, 101);
+  --gray-70%: rgb(77, 77, 77);
+  --gray-80%: rgb(51, 51, 51);
+  --marine-green-200: rgb(163, 245, 239);
+  --marine-green-300: rgb(117, 240, 231);
+  --marine-green-400: rgb(32, 233, 218);
+  --marine-green-500: rgb(11, 218, 203);
+  --marine-green-600: rgb(16, 203, 188);
+  --marine-green-700: rgb(20, 184, 171);
+  --marine-green-800: rgb(18, 161, 149);
+  --marine-green-900: rgb(16, 137, 128);
+  --amber-yellow-200: rgb(255, 228, 179);
+  --amber-yellow-300: rgb(255, 205, 117);
+  --amber-yellow-400: rgb(255, 187, 72);
+  --amber-yellow-500: rgb(255, 168, 0);
+  --amber-yellow-600: rgb(235, 155, 0);
+  --amber-yellow-700: rgb(216, 143, 0);
+  --amber-yellow-800: rgb(197, 130, 0);
+  --amber-yellow-900: rgb(179, 118, 0);
+  --orchid-pink-200: rgb(247, 186, 246);
+  --orchid-pink-300: rgb(237, 151, 236);
+  --orchid-pink-400: rgb(228, 121, 228);
+  --orchid-pink-500: rgb(219, 87, 219);
+  --orchid-pink-600: rgb(204, 73, 194);
+  --orchid-pink-700: rgb(189, 59, 170);
+  --orchid-pink-800: rgb(173, 46, 147);
+  --orchid-pink-900: rgb(156, 33, 125);
+  --crimson-red-200: rgb(250, 168, 168);
+  --crimson-red-300: rgb(241, 126, 126);
+  --crimson-red-400: rgb(230, 86, 86);
+  --crimson-red-500: rgb(227, 59, 59);
+  --crimson-red-600: rgb(205, 48, 48);
+  --crimson-red-700: rgb(184, 37, 37);
+  --crimson-red-800: rgb(163, 25, 25);
+  --crimson-red-900: rgb(142, 11, 11);
+  --sand-neutral-200: rgb(245, 234, 214);
+  --sand-neutral-300: rgb(230, 215, 188);
+  --sand-neutral-400: rgb(216, 198, 166);
+  --sand-neutral-500: rgb(206, 186, 151);
+  --sand-neutral-600: rgb(192, 171, 133);
+  --sand-neutral-700: rgb(179, 156, 116);
+  --sand-neutral-800: rgb(165, 141, 99);
+  --sand-neutral-900: rgb(152, 127, 82);
+  --light-pink: rgb(249, 216, 197);
+  --light-pink_shadow: rgb(198, 158, 135);
+  --light-yellow: rgb(255, 220, 166);
+  --light-yellow_shadow: rgb(201, 161, 103);
+  --medium-pink: rgb(217, 176, 148);
+  --medium-pink_shadow: rgb(163, 127, 102);
+  --medium-olive: rgb(218, 168, 114);
+  --medium-olive_shadow: rgb(163, 126, 82);
+  --medium-deep-olive: rgb(179, 124, 82);
+  --medium-deep-olive_shadow: rgb(94, 66, 46);
+  --medium-deep-bronze: rgb(179, 115, 61);
+  --medium-deep-bronze_shadow: rgb(108, 61, 36);
+  --deep-brown-red: rgb(153, 86, 65);
+  --deep-brown-red_shadow: rgb(81, 40, 32);
+  --deep-brown-: rgb(109, 77, 70);
+  --deep-brown_shadow: rgb(56, 34, 31);
+  
+  /* ===== SECTION CARD COMPONENT MAPPING ===== */
+  /* Using your beautiful custom colors for the Section Card */
+  
+  /* Primary Colors - Using Electric Blue */
+  --color-primary: var(--electric-blue-500);
+  --color-primary-hover: var(--electric-blue-600);
+  
+  /* Text Colors - Using Deep Blue and Gray */
+  --color-text: var(--deep-blue-900);
+  --color-text-muted: var(--gray-60%);
+  
+  /* Background Colors */
+  --color-bg: #ffffff;
+  --color-bg-card: var(--gray-5%);
+  --color-white: #ffffff;
+  
+  /* Border Colors */
+  --color-border: var(--gray-20%);
+  
+  /* Status Colors */
+  --color-error: var(--crimson-red-500);
+  --color-error-bg-subtle: var(--crimson-red-200);
+  --color-warning: var(--amber-yellow-500);
+  --color-success: var(--marine-green-500);
+  --color-info: var(--cyan-500);
+  
+  /* Component Specific Colors */
+  --color-chip-bg: var(--electric-blue-100);
+  --color-chip-text: var(--electric-blue-700);
+  --color-alert-bg: var(--cyan-100);
+  --color-alert-border: var(--cyan-300);
+  --color-badge-bg: var(--gray-10%);
+  --color-badge-text: var(--gray-70%);
+  
+  /* Typography Scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.25;
+  --line-height-base: 1.5;
+  --line-height-relaxed: 1.75;
+  
+  /* Spacing Scale */
+  --space-xxs: 0.125rem;  /* 2px */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 3rem;      /* 48px */
+  --space-3xl: 4rem;      /* 64px */
+  
+  /* Layout Containers */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  
+  /* Border Radius */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  
+  /* Icon and Element Sizes */
+  --size-icon-sm: 14px;
+  --size-icon-base: 16px;
+  --size-icon-md: 20px;
+  --size-button-square: 32px;
+  
+  /* Component Heights */
+  --min-height-textarea-sm: 80px;
+  --min-height-textarea-base: 120px;
+  --min-height-textarea-lg: 200px;
+  --max-height-dropdown: 200px;
+  --min-width-button: 40px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 300ms ease;
+  --transition-slow: 500ms ease;
+  
+  /* Opacity Scale */
+  --opacity-subtle: 0.7;
+  --opacity-visible: 1;
+  
+  /* Z-Index Scale */
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-modal: 30;
+  --z-popover: 40;
+  --z-tooltip: 50;
+  
+  /* Outline Specifications */
+  --outline-width: 2px;
+  --outline-offset: 0;
 }

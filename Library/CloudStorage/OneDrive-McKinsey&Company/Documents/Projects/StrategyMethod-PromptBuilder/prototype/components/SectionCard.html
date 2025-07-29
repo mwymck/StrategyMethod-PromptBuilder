@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section Card Component - Phase 1 Demo</title>
+    <link rel="stylesheet" href="../shared/variables.css">
+    <link rel="stylesheet" href="../shared/base.css">
+    <style>
+        /* ===== PHASE 1 SECTION CARD COMPONENT STYLES ===== */
+        
+        /* 
+         * Phase 2 Extraction Notes:
+         * - Extract all .section-card* classes to SectionCard.module.css
+         * - Convert HTML structure to React component with props
+         * - Move interactive state to React hooks
+         * - Create configuration system for 7 section types
+         * - Implement template-based approach with section-specific features
+         */
+
+        /* Demo Page Layout */
+        .demo-container {
+            min-height: 100vh;
+            background: var(--color-bg);
+            padding: var(--space-xl);
+        }
+        
+        .demo-grid {
+            display: grid;
+            gap: var(--space-xl);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .demo-title {
+            text-align: center;
+            color: var(--color-text);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .demo-section {
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .demo-section h2 {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-md);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: var(--space-sm);
+        }
+
+        /* ===== SECTION CARD COMPONENT ===== */
+        
+        .section-card {
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: box-shadow var(--transition-base);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .section-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Card Header - Single Row Layout */
+        .section-card__header {
+            padding: var(--space-lg);
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .section-card__header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+        
+        .section-card__title-group {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .section-card__title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0;
+        }
+        
+        .section-card__badge {
+            background: var(--color-badge-bg);
+            color: var(--color-badge-text);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+            text-transform: uppercase;
+        }
+        
+        .section-card__badge--required {
+            background: var(--color-error);
+            color: white;
+        }
+        
+        .section-card__badge--optional {
+            background: var(--color-info);
+            color: white;
+        }
+        
+        .section-card__controls {
+            display: flex;
+            gap: var(--space-sm);
+            align-items: center;
+        }
+        
+        .section-card__description {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
+            line-height: var(--line-height-relaxed);
+            margin: 0 0 var(--space-sm) 0;
+        }
+        
+        .section-card__description-list {
+            list-style: disc;
+            margin: 0;
+            padding-left: var(--space-lg);
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
+        }
+        
+        .section-card__description-list li {
+            margin-bottom: var(--space-xs);
+        }
+
+        /* Control Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+        
+        .btn--primary {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .btn--primary:hover {
+            background: var(--color-primary-hover);
+        }
+        
+        .btn--secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: none;
+            padding: var(--space-sm);
+        }
+        
+        .btn--secondary:hover {
+            text-decoration: underline;
+        }
+
+        /* Card Content */
+        .section-card__content {
+            padding: var(--space-lg);
+        }
+
+        /* Alert Component */
+        .alert {
+            background: var(--color-alert-bg);
+            border: 1px solid var(--color-alert-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-md);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+        }
+        
+        .alert__icon {
+            width: 20px;
+            height: 20px;
+            color: var(--color-info);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .alert__content {
+            flex: 1;
+        }
+        
+        .alert__title {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+            margin: 0 0 var(--space-xs) 0;
+        }
+        
+        .alert__description {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
+            margin: 0;
+        }
+        
+        .alert__close {
+            width: 20px;
+            height: 20px;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            flex-shrink: 0;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .alert__close:hover {
+            color: var(--color-text);
+        }
+
+        /* Reference Controls Section */
+        .reference-controls-section {
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .add-reference-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--color-primary);
+            font-size: var(--font-size-sm);
+            text-decoration: none;
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--color-primary);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .add-reference-btn:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .reference-chips {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+        
+        .reference-chip {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: var(--color-chip-bg);
+            color: var(--color-chip-text);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .reference-chip__edit {
+            background: none;
+            border: none;
+            color: inherit;
+            cursor: pointer;
+            padding: 2px;
+            opacity: 0.7;
+            transition: opacity var(--transition-fast);
+        }
+        
+        .reference-chip__edit:hover {
+            opacity: 1;
+        }
+
+        /* Input Field */
+        .input-field {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .input-field:last-child {
+            margin-bottom: 0;
+        }
+        
+        .field-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .field-label {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+            font-size: var(--font-size-sm);
+        }
+        
+        .field-label--editable {
+            border: none;
+            background: transparent;
+            padding: 2px 4px;
+            border-radius: var(--radius-sm);
+            transition: background-color var(--transition-fast);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+            font-size: var(--font-size-sm);
+        }
+        
+        .field-label--editable:hover {
+            background: var(--color-bg-card);
+        }
+        
+        .field-label--editable:focus {
+            background: white;
+            outline: 2px solid var(--color-primary);
+            outline-offset: 0;
+        }
+        
+        .field-remove {
+            background: none;
+            border: none;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            padding: var(--space-xs);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .field-remove:hover {
+            color: var(--color-error);
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        /* Input Controls (Toolbar + Size) */
+        .input-controls {
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            background: var(--color-bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-sm) var(--space-md);
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+        
+        .rich-text-toolbar {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .rich-text-toolbar__group {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .rich-text-toolbar__group::after {
+            content: '';
+            width: 1px;
+            height: 16px;
+            background: var(--color-border);
+            margin-left: var(--space-sm);
+        }
+        
+        .rich-text-toolbar__group:last-child::after {
+            display: none;
+        }
+        
+        .formatting-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            border: none;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .formatting-btn:hover {
+            background: var(--color-bg);
+            color: var(--color-text);
+        }
+        
+        .formatting-btn--active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Text Field Size Controls */
+        .text-field-size-controls {
+            display: flex;
+            background: var(--color-bg);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--color-border);
+            padding: 2px;
+        }
+        
+        .text-field-size-controls__option {
+            padding: var(--space-xs) var(--space-sm);
+            font-size: var(--font-size-xs);
+            color: var(--color-text-muted);
+            cursor: pointer;
+            border-radius: var(--radius-xs);
+            transition: all var(--transition-fast);
+            border: none;
+            background: transparent;
+            min-width: 40px;
+        }
+        
+        .text-field-size-controls__option:hover {
+            color: var(--color-text);
+            background: var(--color-bg-card);
+        }
+        
+        .text-field-size-controls__option--active {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .text-field-size-controls__option--active:hover {
+            background: var(--color-primary-hover);
+        }
+
+        /* Text Input Container */
+        .text-input-container {
+            position: relative;
+        }
+        
+        .text-input {
+            width: 100%;
+            border: 1px solid var(--color-border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            padding: var(--space-md);
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            color: var(--color-text);
+            background: white;
+        }
+        
+        .text-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+        
+        .text-input--small {
+            min-height: 80px;
+        }
+        
+        .text-input--large {
+            min-height: 200px;
+        }
+        
+        .text-input--warning {
+            border-color: var(--color-warning);
+        }
+        
+        .text-input--error {
+            border-color: var(--color-error);
+        }
+
+        /* Character Counter */
+        .character-counter {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            font-size: var(--font-size-xs);
+        }
+        
+        .character-counter__count {
+            color: var(--color-text-muted);
+        }
+        
+        .character-counter__count--warning {
+            color: var(--color-warning);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .character-counter__count--error {
+            color: var(--color-error);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .character-counter__actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        /* Inline Reference Chips */
+        .inline-reference-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: var(--color-chip-bg);
+            color: var(--color-chip-text);
+            padding: 2px var(--space-xs);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-xs);
+            margin: 0 2px;
+            vertical-align: middle;
+        }
+        
+        .inline-reference-chip__remove {
+            width: 14px;
+            height: 14px;
+            color: var(--color-chip-text);
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity var(--transition-fast);
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        
+        .inline-reference-chip__remove:hover {
+            opacity: 1;
+        }
+
+        /* Add Input Field Button */
+        .add-input-field-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+            margin-top: var(--space-md);
+        }
+        
+        .add-input-field-btn:hover {
+            background: var(--color-primary-hover);
+        }
+
+        /* Reference Dropdown */
+        .reference-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: var(--z-dropdown);
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 4px;
+            display: none;
+        }
+        
+        .reference-dropdown--show {
+            display: block;
+        }
+        
+        .reference-dropdown__item {
+            padding: var(--space-sm) var(--space-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: background-color var(--transition-fast);
+        }
+        
+        .reference-dropdown__item:hover {
+            background: var(--color-bg-card);
+        }
+        
+        .reference-dropdown__item--focused {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .reference-dropdown__icon {
+            width: 16px;
+            height: 16px;
+            color: var(--color-text-muted);
+        }
+        
+        .reference-dropdown__text {
+            font-size: var(--font-size-sm);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: var(--space-md);
+            }
+            
+            .section-card__header-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-sm);
+            }
+            
+            .section-card__controls {
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .input-controls {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .text-field-size-controls {
+                width: 100%;
+            }
+            
+            .text-field-size-controls__option {
+                flex: 1;
+            }
+            
+            .character-counter {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-xs);
+            }
+            
+            .reference-controls-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* Demo-specific styles */
+        .demo-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        @media (min-width: 1200px) {
+            .demo-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        /* Hide elements for specific demos */
+        .section-card--simple .reference-controls-section {
+            display: none;
+        }
+        
+        .section-card--simple .rich-text-toolbar {
+            display: none;
+        }
+        
+        .section-card--simple .text-field-size-controls {
+            display: none;
+        }
+        
+        .section-card--simple .input-controls {
+            display: none;
+        }
+        
+        .section-card--simple .text-input {
+            border-radius: var(--radius-md);
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .section-card--simple .character-counter {
+            border-top: 1px solid var(--color-border);
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="demo-title">Section Card Component - Wireframe Aligned</h1>
+        
+        <div class="demo-grid">
+            <!-- Demo 1: Complete Section Card (User Input Type) -->
+            <div class="demo-section">
+                <h2>Complete Section Card - User Input Configuration</h2>
+                
+                <article class="section-card">
+                    <header class="section-card__header">
+                        <div class="section-card__header-row">
+                            <div class="section-card__title-group">
+                                <h3 class="section-card__title">User input</h3>
+                                <span class="section-card__badge section-card__badge--required">Required</span>
+                            </div>
+                            <div class="section-card__controls">
+                                <a href="#" class="btn btn--secondary">Preview</a>
+                                <button class="btn btn--primary">Save Changes</button>
+                            </div>
+                        </div>
+                        <p class="section-card__description">
+                            Add two input fields to collect parameters and other information from users.
+                        </p>
+                    </header>
+                    
+                    <div class="section-card__content">
+                        <!-- Input Field 1 -->
+                        <div class="input-field">
+                            <div class="field-header">
+                                <input type="text" class="field-label field-label--editable" value="Input field 1">
+                                <button class="field-remove" aria-label="Remove field">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="input-controls">
+                                <div class="rich-text-toolbar">
+                                    <div class="rich-text-toolbar__group">
+                                        <button class="formatting-btn" title="Bold" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="formatting-btn" title="Italic" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="19" y1="4" x2="10" y2="4"></line>
+                                                <line x1="14" y1="20" x2="5" y2="20"></line>
+                                                <line x1="15" y1="4" x2="9" y2="20"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="rich-text-toolbar__group">
+                                        <button class="formatting-btn" title="Bullet List" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="formatting-btn" title="Add Link" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-field-size-controls">
+                                    <button class="text-field-size-controls__option">Small</button>
+                                    <button class="text-field-size-controls__option text-field-size-controls__option--active">Medium</button>
+                                    <button class="text-field-size-controls__option">Large</button>
+                                </div>
+                            </div>
+                            
+                            <div class="text-input-container">
+                                <textarea class="text-input" placeholder="Enter field description or requirements...">Provide detailed information about your project requirements, including scope, timeline, and any specific constraints that should be considered during the analysis.</textarea>
+                            </div>
+                            
+                            <div class="character-counter">
+                                <span class="character-counter__count">147 / 500 characters</span>
+                                <div class="character-counter__actions">
+                                    <a href="#" class="btn btn--secondary">Add field reference</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Input Field 2 -->
+                        <div class="input-field">
+                            <div class="field-header">
+                                <input type="text" class="field-label field-label--editable" value="Input field 2">
+                                <button class="field-remove" aria-label="Remove field">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="input-controls">
+                                <div class="rich-text-toolbar">
+                                    <div class="rich-text-toolbar__group">
+                                        <button class="formatting-btn" title="Bold" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="formatting-btn" title="Italic" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="19" y1="4" x2="10" y2="4"></line>
+                                                <line x1="14" y1="20" x2="5" y2="20"></line>
+                                                <line x1="15" y1="4" x2="9" y2="20"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-field-size-controls">
+                                    <button class="text-field-size-controls__option text-field-size-controls__option--active">Small</button>
+                                    <button class="text-field-size-controls__option">Medium</button>
+                                    <button class="text-field-size-controls__option">Large</button>
+                                </div>
+                            </div>
+                            
+                            <div class="text-input-container">
+                                <textarea class="text-input text-input--small text-input--warning" placeholder="Additional context or supporting information...">This field shows the warning state when approaching character limits. The text area height is set to small size for compact input. Users can expand the field size using the controls above to accommodate more content without scrolling through the textarea.</textarea>
+                            </div>
+                            
+                            <div class="character-counter">
+                                <span class="character-counter__count character-counter__count--warning">284 / 300 characters</span>
+                                <div class="character-counter__actions">
+                                    <a href="#" class="btn btn--secondary">Add field reference</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="add-input-field-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add input field
+                        </button>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Demo 2: Context Section with References -->
+            <div class="demo-section">
+                <h2>Context Section - With Prompt References</h2>
+                
+                <article class="section-card">
+                    <header class="section-card__header">
+                        <div class="section-card__header-row">
+                            <div class="section-card__title-group">
+                                <h3 class="section-card__title">Context</h3>
+                                <span class="section-card__badge section-card__badge--required">Required</span>
+                            </div>
+                            <div class="section-card__controls">
+                                <a href="#" class="btn btn--secondary">Advanced</a>
+                                <button class="btn btn--primary">Update</button>
+                            </div>
+                        </div>
+                        <p class="section-card__description">
+                            Provide background information and context for this prompt.
+                        </p>
+                        <ul class="section-card__description-list">
+                            <li>Include relevant background details that inform the analysis</li>
+                            <li>Reference related prompts or previous work where applicable</li>
+                        </ul>
+                    </header>
+                    
+                    <div class="section-card__content">
+                        <!-- Reference Controls Section -->
+                        <div class="reference-controls-section">
+                            <a href="#" class="add-reference-btn">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                Add reference
+                            </a>
+                            <div class="reference-chips">
+                                <div class="reference-chip">
+                                    <span>2 Prompt references</span>
+                                    <button class="reference-chip__edit" aria-label="Edit references">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <div class="reference-chip">
+                                    <span>1 Field reference</span>
+                                    <button class="reference-chip__edit" aria-label="Edit references">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="input-field">
+                            <div class="field-header">
+                                <span class="field-label">Context information</span>
+                            </div>
+                            
+                            <div class="input-controls">
+                                <div class="rich-text-toolbar">
+                                    <div class="rich-text-toolbar__group">
+                                        <button class="formatting-btn formatting-btn--active" title="Bold" aria-pressed="true">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="formatting-btn" title="Italic" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="19" y1="4" x2="10" y2="4"></line>
+                                                <line x1="14" y1="20" x2="5" y2="20"></line>
+                                                <line x1="15" y1="4" x2="9" y2="20"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="rich-text-toolbar__group">
+                                        <button class="formatting-btn" title="Bullet List" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-field-size-controls">
+                                    <button class="text-field-size-controls__option">Small</button>
+                                    <button class="text-field-size-controls__option">Medium</button>
+                                    <button class="text-field-size-controls__option text-field-size-controls__option--active">Large</button>
+                                </div>
+                            </div>
+                            
+                            <div class="text-input-container">
+                                <textarea class="text-input text-input--large" placeholder="Provide context that will help inform the analysis...">**Project Background:** This analysis builds upon our previous market research initiative from Q3 2024. The focus is on understanding customer behavior patterns in the post-pandemic retail environment.
+
+**Key Considerations:** 
+- Consumer spending has shifted significantly toward digital channels
+- Supply chain disruptions continue to impact product availability
+- The <span class="inline-reference-chip">customer_demographics <button class="inline-reference-chip__remove" aria-label="Remove reference"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span> field shows emerging trends in younger consumer segments</textarea>
+                            </div>
+                            
+                            <div class="character-counter">
+                                <span class="character-counter__count">564 / 1000 characters</span>
+                                <div class="character-counter__actions">
+                                    <a href="#" class="btn btn--secondary">Add field reference</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Demo 3: Prompt Name - Simple Configuration -->
+            <div class="demo-section">
+                <h2>Simple Configuration - Prompt Name</h2>
+                
+                <article class="section-card section-card--simple">
+                    <header class="section-card__header">
+                        <div class="section-card__header-row">
+                            <div class="section-card__title-group">
+                                <h3 class="section-card__title">Prompt name</h3>
+                                <span class="section-card__badge section-card__badge--required">Required</span>
+                            </div>
+                            <div class="section-card__controls">
+                                <button class="btn btn--primary">Save</button>
+                            </div>
+                        </div>
+                        <p class="section-card__description">
+                            Help users understand what they can expect from this prompt's outputs.
+                        </p>
+                    </header>
+                    
+                    <div class="section-card__content">
+                        <div class="input-field">
+                            <div class="field-header">
+                                <span class="field-label">Prompt title</span>
+                            </div>
+                            
+                            <div class="text-input-container">
+                                <textarea class="text-input text-input--small text-input--error" placeholder="Enter a descriptive name for this prompt...">Market Analysis and Consumer Behavior Insights Generator Tool</textarea>
+                            </div>
+                            
+                            <div class="character-counter">
+                                <span class="character-counter__count character-counter__count--error">65 / 40 characters</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            
+            <!-- Demo 4: Optional Section -->
+            <div class="demo-section">
+                <h2>Optional Section - Sequential Instructions</h2>
+                
+                <article class="section-card">
+                    <header class="section-card__header">
+                        <div class="section-card__header-row">
+                            <div class="section-card__title-group">
+                                <h3 class="section-card__title">Sequential instructions</h3>
+                                <span class="section-card__badge section-card__badge--optional">Optional</span>
+                            </div>
+                            <div class="section-card__controls">
+                                <a href="#" class="btn btn--secondary">Remove</a>
+                                <button class="btn btn--primary">Add to prompt</button>
+                            </div>
+                        </div>
+                        <p class="section-card__description">
+                            Guide users through a step-by-step process to complete their analysis.
+                        </p>
+                    </header>
+                    
+                    <div class="section-card__content">
+                        <!-- Alert -->
+                        <div class="alert">
+                            <svg class="alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="12"></line>
+                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                            </svg>
+                            <div class="alert__content">
+                                <h4 class="alert__title">Section not included</h4>
+                                <p class="alert__description">
+                                    This optional section isn't currently part of the prompt. Click "Add to prompt" to include it.
+                                </p>
+                            </div>
+                            <button class="alert__close" aria-label="Close alert">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Reference Controls Section -->
+                        <div class="reference-controls-section">
+                            <a href="#" class="add-reference-btn">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                Add reference
+                            </a>
+                        </div>
+                        
+                        <div class="input-field">
+                            <div class="field-header">
+                                <span class="field-label">Step-by-step instructions</span>
+                            </div>
+                            
+                            <div class="input-controls">
+                                <div class="rich-text-toolbar">
+                                    <div class="rich-text-toolbar__group">
+                                        <button class="formatting-btn" title="Bold" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
+                                            </svg>
+                                        </button>
+                                        <button class="formatting-btn" title="Italic" aria-pressed="false">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="19" y1="4" x2="10" y2="4"></line>
+                                                <line x1="14" y1="20" x2="5" y2="20"></line>
+                                                <line x1="15" y1="4" x2="9" y2="20"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="rich-text-toolbar__group">
+                                        <button class="formatting-btn formatting-btn--active" title="Bullet List" aria-pressed="true">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="text-field-size-controls">
+                                    <button class="text-field-size-controls__option">Small</button>
+                                    <button class="text-field-size-controls__option text-field-size-controls__option--active">Medium</button>
+                                    <button class="text-field-size-controls__option">Large</button>
+                                </div>
+                            </div>
+                            
+                            <div class="text-input-container">
+                                <textarea class="text-input" placeholder="Provide step-by-step guidance for completing this section...">1. Review all available data sources and identify key metrics
+2. Analyze current market conditions and competitive landscape  
+3. Identify customer behavior patterns and emerging trends
+4. Synthesize findings into actionable recommendations
+5. Validate results with stakeholder feedback</textarea>
+                            </div>
+                            
+                            <div class="character-counter">
+                                <span class="character-counter__count">272 / 500 characters</span>
+                                <div class="character-counter__actions">
+                                    <a href="#" class="btn btn--secondary">Add field reference</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== PHASE 1 BASIC INTERACTIVITY =====
+        // Phase 2 Notes: Convert to React component with proper state management and configuration system
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Text Field Size Controls
+            const sizeControls = document.querySelectorAll('.text-field-size-controls');
+            
+            sizeControls.forEach(control => {
+                const options = control.querySelectorAll('.text-field-size-controls__option');
+                const inputField = control.closest('.input-field');
+                const textInput = inputField.querySelector('.text-input');
+                
+                options.forEach(option => {
+                    option.addEventListener('click', function() {
+                        // Remove active state from siblings
+                        options.forEach(opt => opt.classList.remove('text-field-size-controls__option--active'));
+                        
+                        // Add active state to clicked option
+                        this.classList.add('text-field-size-controls__option--active');
+                        
+                        // Apply size class to text input (controls height)
+                        textInput.className = textInput.className.replace(/text-input--(small|large)/g, '');
+                        
+                        const size = this.textContent.toLowerCase();
+                        if (size === 'small') {
+                            textInput.classList.add('text-input--small');
+                        } else if (size === 'large') {
+                            textInput.classList.add('text-input--large');
+                        }
+                    });
+                });
+            });
+            
+            // Character Counter Updates
+            const textInputs = document.querySelectorAll('.text-input');
+            
+            textInputs.forEach(input => {
+                const counterElement = input.closest('.input-field').querySelector('.character-counter__count');
+                if (!counterElement) return;
+                
+                const maxLength = parseInt(counterElement.textContent.split(' / ')[1]);
+                
+                input.addEventListener('input', function() {
+                    const currentLength = this.value.length;
+                    const warningThreshold = maxLength * 0.8;
+                    const errorThreshold = maxLength;
+                    
+                    // Update counter text
+                    counterElement.textContent = `${currentLength} / ${maxLength} characters`;
+                    
+                    // Update counter styling
+                    counterElement.className = 'character-counter__count';
+                    
+                    // Update input styling
+                    this.classList.remove('text-input--warning', 'text-input--error');
+                    
+                    if (currentLength > errorThreshold) {
+                        counterElement.classList.add('character-counter__count--error');
+                        this.classList.add('text-input--error');
+                    } else if (currentLength >= warningThreshold) {
+                        counterElement.classList.add('character-counter__count--warning');
+                        this.classList.add('text-input--warning');
+                    }
+                });
+            });
+            
+            // Formatting Button Toggle
+            const formattingButtons = document.querySelectorAll('.formatting-btn');
+            
+            formattingButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Toggle active state (except for non-toggle buttons like link)
+                    if (!this.title.includes('Link')) {
+                        this.classList.toggle('formatting-btn--active');
+                        const isActive = this.classList.contains('formatting-btn--active');
+                        this.setAttribute('aria-pressed', isActive);
+                    }
+                });
+            });
+            
+            // Alert Close Functionality
+            const alertCloseButtons = document.querySelectorAll('.alert__close');
+            
+            alertCloseButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const alert = this.closest('.alert');
+                    alert.style.display = 'none';
+                });
+            });
+            
+            // Remove Field Functionality
+            const removeFieldButtons = document.querySelectorAll('.field-remove');
+            
+            removeFieldButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const inputField = this.closest('.input-field');
+                    const parentContent = inputField.closest('.section-card__content');
+                    const remainingFields = parentContent.querySelectorAll('.input-field').length;
+                    
+                    if (remainingFields > 1) {
+                        inputField.style.opacity = '0.5';
+                        inputField.style.transform = 'scale(0.95)';
+                        
+                        setTimeout(() => {
+                            inputField.remove();
+                        }, 300);
+                    } else {
+                        alert('Cannot remove the last input field');
+                    }
+                });
+            });
+            
+            // Add Input Field Functionality
+            const addFieldButtons = document.querySelectorAll('.add-input-field-btn');
+            
+            addFieldButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // In Phase 2, this would create a new field component
+                    alert('Add input field functionality - Phase 2 implementation required');
+                });
+            });
+            
+            // Inline Reference Chip Removal
+            const inlineReferenceRemoves = document.querySelectorAll('.inline-reference-chip__remove');
+            
+            inlineReferenceRemoves.forEach(button => {
+                button.addEventListener('click', function() {
+                    const chip = this.closest('.inline-reference-chip');
+                    chip.style.opacity = '0';
+                    setTimeout(() => {
+                        chip.remove();
+                    }, 150);
+                });
+            });
+            
+            // Reference Controls
+            const addReferenceButtons = document.querySelectorAll('.add-reference-btn');
+            
+            addReferenceButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Add reference functionality - Phase 2 implementation required');
+                });
+            });
+            
+            const referenceEditButtons = document.querySelectorAll('.reference-chip__edit');
+            
+            referenceEditButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('Edit references functionality - Phase 2 implementation required');
+                });
+            });
+            
+            // Editable Label Functionality
+            const editableLabels = document.querySelectorAll('.field-label--editable');
+            
+            editableLabels.forEach(label => {
+                label.addEventListener('focus', function() {
+                    this.select();
+                });
+                
+                label.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        this.blur();
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
