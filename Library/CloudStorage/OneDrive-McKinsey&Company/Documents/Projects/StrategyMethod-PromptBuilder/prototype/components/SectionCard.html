@@ -109,12 +109,12 @@
         
         .section-card__controls {
             display: flex;
-            gap: var(--space-sm);
+            gap: var(--space-md);
             align-items: center;
         }
         
         .section-card__description {
-            color: var(--gray-600);
+            color: var(--gray-800);
             font-size: var(--font-size-md);
             line-height: var(--line-height-relaxed);
             margin: 0 0 var(--space-sm) 0;
@@ -139,7 +139,7 @@
             align-items: center;
             gap: var(--space-xs);
             padding: var(--space-sm) var(--space-md);
-            border-radius: var(--radius-md);
+            border-radius: var(--radius-full);
             font-size: var(--font-size-sm);
             font-weight: var(--font-weight-medium);
             transition: all var(--transition-fast);
@@ -179,6 +179,7 @@
             border: 0px solid var(--color-alert-border);
             border-radius: var(--radius-md);
             padding: var(--space-sm) var(--space-md);
+            padding-right: var(--space-sm);
             margin-bottom: var(--space-md);
             display: flex;
             flex-direction: row;
@@ -187,8 +188,7 @@
         }
         
         .alert__icon {
-            width: 16px;
-            height: 16px;
+            font-size: 16px;
             color: var(--color-black);
             flex-shrink: 0;
             margin-top: 2px;
@@ -206,19 +206,20 @@
         .alert__title {
             font-weight: var(--font-weight-medium);
             font-size: var(--font-size-sm);
-            color: var(--color-text);
+            color: black;
             margin: 0;
         }
         
         .alert__description {
-            color: var(--color-text-muted);
+            color: var(--gray-800);
             font-size: var(--font-size-sm);
             margin: 0;
         }
         
         .alert__close {
-            width: 20px;
-            height: 20px;
+            display: flex;
+            align-items: center;
+            
             color: var(--color-text-muted);
             cursor: pointer;
             flex-shrink: 0;
@@ -269,30 +270,39 @@
         .reference-chip {
             display: flex;
             align-items: center;
-            gap: var(--space-md);
+            gap: var(--space-sm);
             color: var(--color-black);
             font-size: var(--font-size-sm);
             font-weight: 400;
             text-decoration: none;
             padding: var(--space-xs) var(--space-sm) var(--space-xs) var(--space-md);
             border: 1px solid transparent;
-            background-color: var(--gray-50);
+            background-color: var(--color-chip-bg);
             border-radius: var(--radius-full);
             transition: all var(--transition-fast);
+            cursor:auto;
+        }
+        
+        .reference-chip:hover {
+           
+            cursor: pointer;
+            border-color: var(--color-primary);
+            text-decoration: none;
         }
         
         .reference-chip__edit {
-            background: none;
-            border: none;
-            color: var(--color-primary);
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 2px;
             opacity: 0.8;
             transition: opacity var(--transition-fast);
+            pointer-events: none; /* Prevent event bubbling since parent is now clickable */
         }
         
-        .reference-chip__edit:hover {
+        .reference-chip:hover .reference-chip__edit {
             opacity: 1;
+            
         }
 
         /* Input Field */
@@ -340,6 +350,8 @@
         
         .field-remove {
             background: none;
+            align-items: center;
+            display: flex;
             border: none;
             color: var(--color-text-muted);
             cursor: pointer;
@@ -349,8 +361,8 @@
         }
         
         .field-remove:hover {
-            color: var(--color-error);
-            background: rgba(220, 38, 38, 0.1);
+            background-color: var(--gray-10);
+            color: black;
         }
 
         /* Input Controls (Toolbar + Size) */
@@ -638,9 +650,10 @@
             
             .section-card__header-row {
                 flex-direction: row;
+                align-items: center;
                 flex-wrap: wrap;
-                align-items: flex-start;
-                gap: var(--space-sm);
+                align-items: center;
+                gap: var(--space-lg);
                 flex-wrap: wrap-reverse;
             }
 
@@ -657,8 +670,9 @@
 
             .section-card__controls {
                 width: auto;
-                justify-content: flex-end;
                 gap: var(--space-md);
+                align-items: center;
+                justify-items: center;
             }
             
             .input-controls {
@@ -757,10 +771,7 @@
                             <div class="field-header">
                                 <input type="text" class="field-label field-label--editable" value="Input field 1">
                                 <button class="field-remove" aria-label="Remove field">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
+                                    <span class="material-symbols-outlined">close</span>
                                 </button>
                             </div>
                             
@@ -768,35 +779,18 @@
                                 <div class="rich-text-toolbar">
                                     <div class="rich-text-toolbar__group">
                                         <button class="formatting-btn" title="Bold" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_bold</span>
                                         </button>
                                         <button class="formatting-btn" title="Italic" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <line x1="19" y1="4" x2="10" y2="4"></line>
-                                                <line x1="14" y1="20" x2="5" y2="20"></line>
-                                                <line x1="15" y1="4" x2="9" y2="20"></line>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_italic</span>
                                         </button>
                                     </div>
                                     <div class="rich-text-toolbar__group">
                                         <button class="formatting-btn" title="Bullet List" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <line x1="8" y1="6" x2="21" y2="6"></line>
-                                                <line x1="8" y1="12" x2="21" y2="12"></line>
-                                                <line x1="8" y1="18" x2="21" y2="18"></line>
-                                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_list_bulleted</span>
                                         </button>
                                         <button class="formatting-btn" title="Add Link" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                                            </svg>
+                                            <span class="material-symbols-outlined">link</span>
                                         </button>
                                     </div>
                                 </div>
@@ -825,10 +819,7 @@
                             <div class="field-header">
                                 <input type="text" class="field-label field-label--editable" value="Input field 2">
                                 <button class="field-remove" aria-label="Remove field">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                                    </svg>
+                                    <span class="material-symbols-outlined">close</span>
                                 </button>
                             </div>
                             
@@ -836,17 +827,10 @@
                                 <div class="rich-text-toolbar">
                                     <div class="rich-text-toolbar__group">
                                         <button class="formatting-btn" title="Bold" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_bold</span>
                                         </button>
                                         <button class="formatting-btn" title="Italic" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <line x1="19" y1="4" x2="10" y2="4"></line>
-                                                <line x1="14" y1="20" x2="5" y2="20"></line>
-                                                <line x1="15" y1="4" x2="9" y2="20"></line>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_italic</span>
                                         </button>
                                     </div>
                                 </div>
@@ -871,10 +855,7 @@
                         </div>
                         
                         <button class="add-input-field-btn">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
+                            <span class="material-symbols-outlined">add</span>
                             Add input field
                         </button>
                     </div>
@@ -910,31 +891,22 @@
                         <!-- Reference Controls Section -->
                         <div class="reference-controls-section">
                             <a href="#" class="add-reference-btn">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
+                                <span class="material-symbols-outlined material-symbols-outlined--sm">add</span>
                                 Add reference
                             </a>
                             <div class="reference-chips">
-                                <div class="reference-chip">
+                                <a href="#" class="reference-chip" aria-label="Edit 2 prompt references">
                                     <span>2 Prompt references</span>
-                                    <button class="reference-chip__edit" aria-label="Edit references">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div class="reference-chip">
+                                    <span class="reference-chip__edit" aria-hidden="true">
+                                        <span class="material-symbols-outlined material-symbols-outlined--sm">edit</span>
+                                    </span>
+                                </a>
+                                <a href="#" class="reference-chip" aria-label="Edit 1 field reference">
                                     <span>1 Field reference</span>
-                                    <button class="reference-chip__edit" aria-label="Edit references">
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                        </svg>
-                                    </button>
-                                </div>
+                                    <span class="reference-chip__edit" aria-hidden="true">
+                                        <span class="material-symbols-outlined material-symbols-outlined--sm">edit</span>
+                                    </span>
+                                </a>
                             </div>
                         </div>
                         
@@ -947,29 +919,15 @@
                                 <div class="rich-text-toolbar">
                                     <div class="rich-text-toolbar__group">
                                         <button class="formatting-btn formatting-btn--active" title="Bold" aria-pressed="true">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_bold</span>
                                         </button>
                                         <button class="formatting-btn" title="Italic" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <line x1="19" y1="4" x2="10" y2="4"></line>
-                                                <line x1="14" y1="20" x2="5" y2="20"></line>
-                                                <line x1="15" y1="4" x2="9" y2="20"></line>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_italic</span>
                                         </button>
                                     </div>
                                     <div class="rich-text-toolbar__group">
                                         <button class="formatting-btn" title="Bullet List" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <line x1="8" y1="6" x2="21" y2="6"></line>
-                                                <line x1="8" y1="12" x2="21" y2="12"></line>
-                                                <line x1="8" y1="18" x2="21" y2="18"></line>
-                                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_list_bulleted</span>
                                         </button>
                                     </div>
                                 </div>
@@ -987,7 +945,7 @@
 **Key Considerations:** 
 - Consumer spending has shifted significantly toward digital channels
 - Supply chain disruptions continue to impact product availability
-- The <span class="inline-reference-chip">customer_demographics <button class="inline-reference-chip__remove" aria-label="Remove reference"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button></span> field shows emerging trends in younger consumer segments</textarea>
+- The <span class="inline-reference-chip">customer_demographics <button class="inline-reference-chip__remove" aria-label="Remove reference"><span class="material-symbols-outlined material-symbols-outlined--sm">close</span></button></span> field shows emerging trends in younger consumer segments</textarea>
                             </div>
                             
                             <div class="character-counter">
@@ -1063,11 +1021,7 @@
                     <div class="section-card__content">
                         <!-- Alert -->
                         <div class="alert">
-                            <svg class="alert__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12"></line>
-                                <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                            </svg>
+                            <span class="alert__icon material-symbols-outlined">info</span>
                             <div class="alert__content">
                                 <h4 class="alert__title">Section not included</h4>
                                 <p class="alert__description">
@@ -1075,20 +1029,14 @@
                                 </p>
                             </div>
                             <button class="alert__close" aria-label="Close alert">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                </svg>
+                                <span class="material-symbols-outlined">close</span>
                             </button>
                         </div>
                         
                         <!-- Reference Controls Section -->
                         <div class="reference-controls-section">
                             <a href="#" class="add-reference-btn">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg>
+                                <span class="material-symbols-outlined material-symbols-outlined--sm">add</span>
                                 Add reference
                             </a>
                         </div>
@@ -1102,29 +1050,15 @@
                                 <div class="rich-text-toolbar">
                                     <div class="rich-text-toolbar__group">
                                         <button class="formatting-btn" title="Bold" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"></path>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_bold</span>
                                         </button>
                                         <button class="formatting-btn" title="Italic" aria-pressed="false">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <line x1="19" y1="4" x2="10" y2="4"></line>
-                                                <line x1="14" y1="20" x2="5" y2="20"></line>
-                                                <line x1="15" y1="4" x2="9" y2="20"></line>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_italic</span>
                                         </button>
                                     </div>
                                     <div class="rich-text-toolbar__group">
                                         <button class="formatting-btn formatting-btn--active" title="Bullet List" aria-pressed="true">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                                <line x1="8" y1="6" x2="21" y2="6"></line>
-                                                <line x1="8" y1="12" x2="21" y2="12"></line>
-                                                <line x1="8" y1="18" x2="21" y2="18"></line>
-                                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                                            </svg>
+                                            <span class="material-symbols-outlined">format_list_bulleted</span>
                                         </button>
                                     </div>
                                 </div>
@@ -1305,10 +1239,11 @@
                 });
             });
             
-            const referenceEditButtons = document.querySelectorAll('.reference-chip__edit');
+            const referenceChips = document.querySelectorAll('.reference-chip');
             
-            referenceEditButtons.forEach(button => {
-                button.addEventListener('click', function() {
+            referenceChips.forEach(chip => {
+                chip.addEventListener('click', function(e) {
+                    e.preventDefault();
                     alert('Edit references functionality - Phase 2 implementation required');
                 });
             });

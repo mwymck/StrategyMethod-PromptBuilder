@@ -7,6 +7,7 @@
   --deep-blue-700: rgb(16, 53, 89);
   --deep-blue-800: rgb(8, 38, 68);
   --deep-blue-900: rgb(5, 28, 44);
+  --electric-blue-50: rgb(230, 241, 255);
   --electric-blue-100: rgb(204, 225, 255);
   --electric-blue-200: rgb(153, 196, 255);
   --electric-blue-300: rgb(94, 157, 255);
@@ -118,17 +119,18 @@
   --color-info: var(--cyan-500);
   
   /* Component Specific Colors */
-  --color-chip-bg: var(--electric-blue-100);
+  --color-chip-bg: var(--electric-blue-50);
   --color-chip-text: var(--electric-blue-700);
   --color-alert-bg: var(--gray-50);
   --color-alert-border: var(--cyan-300);
   --color-badge-bg: var(--gray-50);
-  --color-badge-text: var(--gray-700);
+  --color-badge-text: var(--gray-600);
   
   /* Typography Scale */
   --font-family-sans: "McKinsey Sans", sans-serif;
   --font-family-serif: "Bower", serif;
   --font-family-base: var(--font-family-sans);
+  --font-family-icons: "Material Symbols Outlined";
   --font-size-xs: 0.65rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -170,9 +172,16 @@
   --radius-full: 9999px;
   
   /* Icon and Element Sizes */
-  --size-icon-sm: 14px;
-  --size-icon-base: 16px;
-  --size-icon-md: 20px;
+  --size-icon-12: 12px;
+  --size-icon-16: 16px;
+  --size-icon-20: 20px;
+  --size-icon-24: 24px;
+  --size-icon-28: 28px;
+  --size-icon-32: 32px;
+  --size-icon-40: 40px;
+  --size-icon-48: 48px;
+  --size-icon-72: 72px;
+  --size-icon-base: var(--size-icon-20);
   --size-button-square: 32px;
   
   /* Component Heights */
