@@ -32,11 +32,11 @@ prototype/
 
 **Speed Target**: 30 minutes from concept to shareable demo
 
-### Phase 2: Prototype Assembly
-1. Extract components into reusable JavaScript functions
-2. Create data files in `data/` directory
-3. Build page templates that combine components
-4. Add navigation between pages
+### Phase 2: Interactive Prototype Assembly
+1. Add mock interactions (reference system, form behaviors)
+2. Extract components into reusable JavaScript functions
+3. Build multi-page prototype with navigation
+4. Create Webflow-equivalent interactive prototype for user testing
 
 **Speed Targets**:
 - Component migration: 15 minutes
@@ -85,4 +85,4 @@ All styling uses CSS variables from `shared/variables.css`:
 
 - `phase1-component-creator`: Creates Phase 1 components
 - `css-system-guardian`: Enforces design system compliance
-- `prototype-assembler`: Handles Phase 2 migration and assembly
+- `prototype-assembler`: Handles Phase 2 migration, adds mock interactions, builds Webflow-equivalent prototypes
