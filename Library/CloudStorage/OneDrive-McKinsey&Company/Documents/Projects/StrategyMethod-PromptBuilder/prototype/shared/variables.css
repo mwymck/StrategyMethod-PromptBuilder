@@ -1,7 +1,4 @@
 :root {
-  --deep-blue-900-c: rgb(5, 28, 44);
-  --electric-blue-500-c: rgb(34, 81, 255);
-  --cyan-500-c: rgb(0, 169, 244);
   --deep-blue-200: rgb(130, 166, 201);
   --deep-blue-300: rgb(83, 128, 172);
   --deep-blue-400: rgb(56, 102, 148);
@@ -28,14 +25,15 @@
   --cyan-700: rgb(6, 121, 195);
   --cyan-800: rgb(8, 99, 170);
   --cyan-900: rgb(8, 77, 145);
-  --gray-5%: rgb(242, 242, 242);
-  --gray-10%: rgb(230, 230, 230);
-  --gray-20%: rgb(204, 204, 204);
-  --gray-30%: rgb(179, 179, 179);
-  --gray-54%: rgb(117, 117, 117);
-  --gray-60%: rgb(101, 101, 101);
-  --gray-70%: rgb(77, 77, 77);
-  --gray-80%: rgb(51, 51, 51);
+  --gray-10: #fafafa;
+  --gray-50: rgb(242, 242, 242);
+  --gray-100: rgb(230, 230, 230);
+  --gray-200: rgb(204, 204, 204);
+  --gray-300: rgb(179, 179, 179);
+  --gray-540: rgb(117, 117, 117);
+  --gray-600: rgb(101, 101, 101);
+  --gray-700: rgb(77, 77, 77);
+  --gray-800: rgb(51, 51, 51);
   --marine-green-200: rgb(163, 245, 239);
   --marine-green-300: rgb(117, 240, 231);
   --marine-green-400: rgb(32, 233, 218);
@@ -90,7 +88,7 @@
   --medium-deep-bronze_shadow: rgb(108, 61, 36);
   --deep-brown-red: rgb(153, 86, 65);
   --deep-brown-red_shadow: rgb(81, 40, 32);
-  --deep-brown-: rgb(109, 77, 70);
+  --deep-brown: rgb(109, 77, 70);
   --deep-brown_shadow: rgb(56, 34, 31);
   
   /* ===== SECTION CARD COMPONENT MAPPING ===== */
@@ -102,15 +100,15 @@
   
   /* Text Colors - Using Deep Blue and Gray */
   --color-text: var(--deep-blue-900);
-  --color-text-muted: var(--gray-60%);
+  --color-text-muted: var(--gray-600);
   
   /* Background Colors */
   --color-bg: #ffffff;
-  --color-bg-card: var(--gray-5%);
+  --color-bg-card: #ffffff;
   --color-white: #ffffff;
   
   /* Border Colors */
-  --color-border: var(--gray-20%);
+  --color-border: var(--gray-100);
   
   /* Status Colors */
   --color-error: var(--crimson-red-500);
@@ -122,22 +120,26 @@
   /* Component Specific Colors */
   --color-chip-bg: var(--electric-blue-100);
   --color-chip-text: var(--electric-blue-700);
-  --color-alert-bg: var(--cyan-100);
+  --color-alert-bg: var(--gray-50);
   --color-alert-border: var(--cyan-300);
-  --color-badge-bg: var(--gray-10%);
-  --color-badge-text: var(--gray-70%);
+  --color-badge-bg: var(--gray-50);
+  --color-badge-text: var(--gray-700);
   
   /* Typography Scale */
-  --font-size-xs: 0.75rem;
+  --font-family-sans: "McKinsey Sans", sans-serif;
+  --font-family-serif: "Bower", serif;
+  --font-family-base: var(--font-family-sans);
+  --font-size-xs: 0.65rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
   --font-size-xl: 1.25rem;
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 1.875rem;
+  --font-weight-light: 300;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
-  --font-weight-semibold: 600;
+  --font-weight-semibold: 500;  /* Map to medium since 600 weight not available */
   --font-weight-bold: 700;
   --line-height-tight: 1.25;
   --line-height-base: 1.5;
@@ -160,11 +162,11 @@
   --container-xl: 1280px;
   
   /* Border Radius */
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 48px;
   --radius-full: 9999px;
   
   /* Icon and Element Sizes */
@@ -206,4 +208,30 @@
   /* Outline Specifications */
   --outline-width: 2px;
   --outline-offset: 0;
+
+  /* ===== SECTION CARD SPECIFIC VARIABLES ===== */
+  
+  /* Character Count States */
+  --color-count-normal: var(--gray-600);
+  --color-count-warning: var(--amber-yellow-600);
+  --color-count-error: var(--crimson-red-600);
+
+  /* Input Size Variants */
+  --textarea-height-sm: var(--min-height-textarea-sm);
+  --textarea-height-base: var(--min-height-textarea-base);
+  --textarea-height-lg: var(--min-height-textarea-lg);
+
+  /* Interaction States */
+  --color-collapse-indicator: var(--gray-540);
+  --color-collapse-indicator-hover: var(--color-primary);
+
+  /* Focus Ring Enhancement */
+  --focus-ring: 0 0 0 3px rgba(34, 81, 255, 0.1);  /* Using electric blue with transparency */
+  --focus-ring-outline: 2px solid var(--color-primary);
+  --focus-ring-offset: 2px;
+
+  /* Semantic Background States */
+  --color-bg-hover: var(--gray-50);
+  --color-bg-active: var(--gray-100);
+  --color-bg-disabled: var(--gray-100);
 }
