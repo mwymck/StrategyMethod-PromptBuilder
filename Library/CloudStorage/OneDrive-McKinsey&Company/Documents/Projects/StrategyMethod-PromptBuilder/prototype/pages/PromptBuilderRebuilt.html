@@ -811,6 +811,247 @@
         .section-card:focus-within {
             box-shadow: var(--shadow-hover);
         }
+
+        /* ===== REFERENCE SYSTEM STYLES ===== */
+
+        /* References Sidebar */
+        .references-sidebar {
+            width: 0;
+            overflow: hidden;
+            background: var(--color-bg-card);
+            border-left: 1px solid var(--color-border);
+            transition: all var(--transition-base);
+            height: 100vh;
+            position: relative;
+        }
+
+        .references-sidebar--open {
+            width: 400px;
+        }
+
+        .sidebar-header {
+            padding: var(--space-lg);
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-bg-hover);
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+        }
+
+        .workflow-context {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-xs);
+        }
+
+        .sidebar-close {
+            position: absolute;
+            top: var(--space-md);
+            right: var(--space-md);
+            background: none;
+            border: none;
+            font-size: var(--font-size-xl);
+            cursor: pointer;
+            color: var(--color-text-muted);
+            padding: var(--space-xs);
+            border-radius: var(--radius-sm);
+        }
+
+        .sidebar-close:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text);
+        }
+
+        .sidebar-content {
+            padding: var(--space-lg);
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--space-lg);
+            border-top: 1px solid var(--color-border);
+            background: var(--color-bg-card);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .selection-count {
+            flex: 1;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+
+        /* Reference Popup Menus */
+        .reference-popup {
+            position: absolute;
+            background: var(--color-bg-card);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-lg);
+            min-width: var(--popup-min-width);
+            z-index: var(--z-popover);
+            overflow: hidden;
+        }
+
+        .reference-popup__item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-md);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            color: var(--color-text);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .reference-popup__item:hover {
+            background: var(--color-bg-hover);
+        }
+
+        .reference-popup__item:disabled {
+            color: var(--color-text-muted);
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .reference-popup__item--disabled:hover {
+            background: none;
+        }
+
+        /* Reference Items in Sidebar */
+        .reference-item {
+            display: flex;
+            align-items: center;
+            padding: var(--space-md);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: background var(--transition-fast);
+            margin-bottom: var(--space-xs);
+        }
+
+        .reference-item:hover {
+            background: var(--color-bg-hover);
+        }
+
+        .reference-item--selected {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .reference-item__checkbox {
+            margin-right: var(--space-md);
+        }
+
+        .reference-item__info {
+            flex: 1;
+        }
+
+        .reference-item__label {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: var(--space-xxs);
+        }
+
+        .reference-item__section {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+
+        .reference-item--selected .reference-item__section {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Inline Reference Chips */
+        .inline-reference-chip {
+            display: inline-flex;
+            align-items: center;
+            background: var(--reference-chip-bg);
+            border: 1px solid var(--reference-chip-border);
+            color: var(--reference-chip-text);
+            font-size: var(--font-size-sm);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-full);
+            margin: 0 var(--space-xxs);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .inline-reference-chip:hover {
+            background: var(--electric-blue-100);
+            border-color: var(--electric-blue-300);
+        }
+
+        .inline-reference-chip__remove {
+            margin-left: var(--space-xs);
+            background: none;
+            border: none;
+            color: var(--reference-chip-text);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            padding: 0;
+            border-radius: var(--radius-full);
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .inline-reference-chip__remove:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tab Navigation in Sidebar */
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: var(--space-lg);
+        }
+
+        .sidebar-tab {
+            flex: 1;
+            padding: var(--space-md);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+            border-bottom: 2px solid transparent;
+        }
+
+        .sidebar-tab--active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .sidebar-tab:hover {
+            color: var(--color-text);
+        }
+
+        /* Section Groups in Sidebar */
+        .reference-section-group {
+            margin-bottom: var(--space-xl);
+        }
+
+        .reference-section-group__title {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-md);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 <body>
@@ -1256,8 +1497,20 @@
 
             <!-- References Sidebar -->
             <aside class="references-sidebar" id="referencesSidebar">
-                <div class="sidebar-content">
-                    <!-- Sidebar content will be dynamically populated -->
+                <div class="sidebar-header">
+                    <div class="workflow-context">Market Analysis Workflow</div>
+                    <h3>Add reference</h3>
+                    <button class="sidebar-close" onclick="promptBuilder.closeSidebar()">&times;</button>
+                </div>
+                
+                <div class="sidebar-content" id="sidebarContent">
+                    <!-- Dynamic content based on mode -->
+                </div>
+                
+                <div class="sidebar-footer">
+                    <span class="selection-count" id="selectionCount">0 selected</span>
+                    <button class="btn btn--secondary" onclick="promptBuilder.closeSidebar()">Cancel</button>
+                    <button class="btn btn--primary" onclick="promptBuilder.addSelectedReferences()">Add Selected</button>
                 </div>
             </aside>
         </div>
@@ -1338,7 +1591,39 @@
             constructor() {
                 this.hasUnsavedChanges = false;
                 this.fieldCounter = 1;
+                this.currentActiveTextarea = null;
+                this.selectedReferences = [];
+                this.mockWorkflowData = this.initializeMockData();
                 this.init();
+            }
+
+            initializeMockData() {
+                return {
+                    currentWorkflow: {
+                        id: 'workflow_001',
+                        name: 'Market Analysis Workflow',
+                        currentPromptId: 'prompt_001'
+                    },
+                    
+                    currentPromptFields: [
+                        { id: 'field_001', label: 'Customer Demographics', section: 'User Input', value: 'Target market analysis...' },
+                        { id: 'field_002', label: 'Market Timeline', section: 'User Input', value: 'Q1-Q4 2024 analysis...' },
+                        { id: 'field_003', label: 'Market Context', section: 'Context', value: 'Consumer electronics market...' },
+                        { id: 'field_004', label: 'Business Objectives', section: 'Objectives', value: 'Identify growth opportunities...' }
+                    ],
+                    
+                    workflowPrompts: [
+                        { id: 'prompt_001', name: 'Consumer Behavior Analysis', isCurrentPrompt: true, status: 'draft' },
+                        { id: 'prompt_002', name: 'Competitive Landscape Review', isCurrentPrompt: false, status: 'published' },
+                        { id: 'prompt_003', name: 'Market Sizing Analysis', isCurrentPrompt: false, status: 'draft' }
+                    ],
+                    
+                    workflowFields: [
+                        { id: 'field_005', label: 'Competitive Analysis', section: 'Context', promptName: 'Competitive Landscape Review', value: 'Key competitors include...' },
+                        { id: 'field_006', label: 'Market Size Estimates', section: 'User Input', promptName: 'Market Sizing Analysis', value: 'Total addressable market...' },
+                        { id: 'field_007', label: 'Competitive Pricing', section: 'Context', promptName: 'Competitive Landscape Review', value: 'Price analysis shows...' }
+                    ]
+                };
             }
 
             init() {
@@ -1346,6 +1631,7 @@
                 this.setupCharacterCounters();
                 this.setupTextFieldSizeControls();
                 this.setupCollapsibleSections();
+                this.setupReferenceSystem();
             }
 
             bindEvents() {
@@ -1738,11 +2024,338 @@
                 const modal = document.getElementById(modalId);
                 modal.classList.remove('modal-overlay--open');
             }
+
+            // ===== REFERENCE SYSTEM METHODS =====
+
+            setupReferenceSystem() {
+                // Bind @ symbol detection to all textareas
+                document.querySelectorAll('.text-input').forEach(textarea => {
+                    textarea.addEventListener('input', (e) => this.handleTextareaInput(e));
+                    textarea.addEventListener('keydown', (e) => this.handleTextareaKeydown(e));
+                    textarea.addEventListener('focus', (e) => {
+                        this.currentActiveTextarea = e.target;
+                    });
+                });
+            }
+
+            handleTextareaInput(event) {
+                const textarea = event.target;
+                const cursorPos = textarea.selectionStart;
+                const textBeforeCursor = textarea.value.substring(0, cursorPos);
+                
+                // Check if user just typed '@'
+                if (textBeforeCursor.endsWith('@')) {
+                    this.showReferenceTypeMenu(event, textarea);
+                }
+            }
+
+            handleTextareaKeydown(event) {
+                // Handle Escape key to close popups
+                if (event.key === 'Escape') {
+                    this.hideAllPopups();
+                }
+            }
+
+            showReferenceTypeMenu(event, textarea) {
+                const sectionCard = textarea.closest('.section-card');
+                const sectionType = sectionCard.dataset.section;
+                const isContextSection = sectionType === 'context' || sectionType === 'sequential-instructions' || sectionType === 'constraints';
+                
+                const rect = textarea.getBoundingClientRect();
+                const popup = this.createReferencePopup([
+                    { id: 'field', label: 'Field reference', available: true },
+                    { id: 'prompt', label: 'Prompt reference', available: isContextSection }
+                ], (selection) => {
+                    this.hideAllPopups();
+                    if (selection === 'field') {
+                        this.showFieldScopeMenu(textarea);
+                    } else if (selection === 'prompt') {
+                        this.openSidebar('prompt-mode');
+                    }
+                });
+                
+                // Position popup near cursor
+                popup.style.left = `${rect.left}px`;
+                popup.style.top = `${rect.bottom + 5}px`;
+                document.body.appendChild(popup);
+            }
+
+            showFieldScopeMenu(textarea) {
+                const rect = textarea.getBoundingClientRect();
+                const popup = this.createReferencePopup([
+                    { id: 'current-prompt', label: 'Field from current prompt', available: true },
+                    { id: 'current-workflow', label: 'Field from current workflow', available: true }
+                ], (selection) => {
+                    this.hideAllPopups();
+                    if (selection === 'current-prompt') {
+                        this.openSidebar('current-fields-mode');
+                    } else if (selection === 'current-workflow') {
+                        this.openSidebar('workflow-prompts-mode');
+                    }
+                });
+                
+                popup.style.left = `${rect.left}px`;
+                popup.style.top = `${rect.bottom + 5}px`;
+                document.body.appendChild(popup);
+            }
+
+            createReferencePopup(options, onSelect) {
+                const popup = document.createElement('div');
+                popup.className = 'reference-popup';
+                
+                options.forEach(option => {
+                    const item = document.createElement('button');
+                    item.className = `reference-popup__item ${!option.available ? 'reference-popup__item--disabled' : ''}`;
+                    item.textContent = option.label;
+                    item.disabled = !option.available;
+                    
+                    if (option.available) {
+                        item.addEventListener('click', () => onSelect(option.id));
+                    }
+                    
+                    popup.appendChild(item);
+                });
+                
+                return popup;
+            }
+
+            hideAllPopups() {
+                document.querySelectorAll('.reference-popup').forEach(popup => {
+                    popup.remove();
+                });
+            }
+
+            openSidebar(mode) {
+                const sidebar = document.getElementById('referencesSidebar');
+                const sidebarContent = document.getElementById('sidebarContent');
+                
+                sidebar.classList.add('references-sidebar--open');
+                this.selectedReferences = [];
+                this.updateSelectionCount();
+                
+                switch(mode) {
+                    case 'current-fields-mode':
+                        sidebarContent.innerHTML = this.renderCurrentFields();
+                        break;
+                    case 'workflow-prompts-mode':
+                        sidebarContent.innerHTML = this.renderWorkflowPrompts();
+                        break;
+                    case 'prompt-mode':
+                        sidebarContent.innerHTML = this.renderPromptReferences();
+                        break;
+                }
+                
+                // Bind selection events
+                this.bindSidebarEvents();
+            }
+
+            closeSidebar() {
+                const sidebar = document.getElementById('referencesSidebar');
+                sidebar.classList.remove('references-sidebar--open');
+                this.selectedReferences = [];
+            }
+
+            renderCurrentFields() {
+                const fields = this.mockWorkflowData.currentPromptFields;
+                const sectionsHTML = this.groupFieldsBySection(fields);
+                
+                return `
+                    <div class="sidebar-tabs">
+                        <button class="sidebar-tab sidebar-tab--active">Field References</button>
+                    </div>
+                    ${sectionsHTML}
+                `;
+            }
+
+            renderWorkflowPrompts() {
+                const prompts = this.mockWorkflowData.workflowPrompts.filter(p => !p.isCurrentPrompt);
+                
+                return `
+                    <div class="sidebar-tabs">
+                        <button class="sidebar-tab sidebar-tab--active">Select Prompt</button>
+                    </div>
+                    <div class="reference-section-group">
+                        <div class="reference-section-group__title">Available Prompts</div>
+                        ${prompts.map(prompt => `
+                            <div class="reference-item" data-prompt-id="${prompt.id}">
+                                <div class="reference-item__info">
+                                    <div class="reference-item__label">${prompt.name}</div>
+                                    <div class="reference-item__section">${prompt.status}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            renderPromptReferences() {
+                const prompts = this.mockWorkflowData.workflowPrompts.filter(p => !p.isCurrentPrompt);
+                
+                return `
+                    <div class="sidebar-tabs">
+                        <button class="sidebar-tab sidebar-tab--active">Prompt References</button>
+                    </div>
+                    <div class="reference-section-group">
+                        <div class="reference-section-group__title">Available Prompts</div>
+                        ${prompts.map(prompt => `
+                            <div class="reference-item" data-prompt-id="${prompt.id}">
+                                <input type="checkbox" class="reference-item__checkbox" />
+                                <div class="reference-item__info">
+                                    <div class="reference-item__label">${prompt.name}</div>
+                                    <div class="reference-item__section">${prompt.status}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+
+            groupFieldsBySection(fields) {
+                const sections = {};
+                fields.forEach(field => {
+                    if (!sections[field.section]) {
+                        sections[field.section] = [];
+                    }
+                    sections[field.section].push(field);
+                });
+                
+                return Object.entries(sections).map(([sectionName, sectionFields]) => `
+                    <div class="reference-section-group">
+                        <div class="reference-section-group__title">${sectionName}</div>
+                        ${sectionFields.map(field => `
+                            <div class="reference-item" data-field-id="${field.id}">
+                                <input type="checkbox" class="reference-item__checkbox" />
+                                <div class="reference-item__info">
+                                    <div class="reference-item__label">${field.label}</div>
+                                    <div class="reference-item__section">${field.section}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `).join('');
+            }
+
+            bindSidebarEvents() {
+                // Handle reference item selection
+                document.querySelectorAll('.reference-item').forEach(item => {
+                    item.addEventListener('click', (e) => {
+                        if (e.target.type === 'checkbox') return; // Let checkbox handle itself
+                        
+                        const checkbox = item.querySelector('.reference-item__checkbox');
+                        if (checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            this.updateReferenceSelection(item, checkbox.checked);
+                        } else {
+                            // Navigate to prompt fields
+                            const promptId = item.dataset.promptId;
+                            if (promptId) {
+                                this.showPromptFields(promptId);
+                            }
+                        }
+                    });
+                });
+                
+                // Handle checkbox changes
+                document.querySelectorAll('.reference-item__checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', (e) => {
+                        const item = e.target.closest('.reference-item');
+                        this.updateReferenceSelection(item, e.target.checked);
+                    });
+                });
+            }
+
+            updateReferenceSelection(item, isSelected) {
+                const fieldId = item.dataset.fieldId;
+                const promptId = item.dataset.promptId;
+                
+                if (isSelected) {
+                    item.classList.add('reference-item--selected');
+                    if (fieldId) {
+                        this.selectedReferences.push({ type: 'field', id: fieldId });
+                    } else if (promptId) {
+                        this.selectedReferences.push({ type: 'prompt', id: promptId });
+                    }
+                } else {
+                    item.classList.remove('reference-item--selected');
+                    this.selectedReferences = this.selectedReferences.filter(ref => 
+                        !(ref.id === fieldId || ref.id === promptId)
+                    );
+                }
+                
+                this.updateSelectionCount();
+            }
+
+            updateSelectionCount() {
+                const countElement = document.getElementById('selectionCount');
+                const count = this.selectedReferences.length;
+                countElement.textContent = `${count} selected`;
+            }
+
+            addSelectedReferences() {
+                if (!this.currentActiveTextarea || this.selectedReferences.length === 0) {
+                    this.closeSidebar();
+                    return;
+                }
+                
+                this.selectedReferences.forEach(ref => {
+                    if (ref.type === 'field') {
+                        const field = this.mockWorkflowData.currentPromptFields.find(f => f.id === ref.id);
+                        if (field) {
+                            this.insertReferenceChip(field.label, ref.id);
+                        }
+                    } else if (ref.type === 'prompt') {
+                        const prompt = this.mockWorkflowData.workflowPrompts.find(p => p.id === ref.id);
+                        if (prompt) {
+                            this.insertReferenceChip(prompt.name, ref.id);
+                        }
+                    }
+                });
+                
+                this.closeSidebar();
+            }
+
+            insertReferenceChip(label, refId) {
+                if (!this.currentActiveTextarea) return;
+                
+                const textarea = this.currentActiveTextarea;
+                const cursorPos = textarea.selectionStart;
+                const textBefore = textarea.value.substring(0, cursorPos - 1); // Remove the '@'
+                const textAfter = textarea.value.substring(cursorPos);
+                
+                // Create a simple text representation of the chip for prototype
+                const chipText = `[${label}]`;
+                textarea.value = textBefore + chipText + textAfter;
+                
+                // Update cursor position
+                const newPos = textBefore.length + chipText.length;
+                textarea.setSelectionRange(newPos, newPos);
+                
+                // Mark as changed
+                this.hasUnsavedChanges = true;
+                this.updateSaveButtonState();
+            }
+
+            showPromptFields(promptId) {
+                const prompt = this.mockWorkflowData.workflowPrompts.find(p => p.id === promptId);
+                const fields = this.mockWorkflowData.workflowFields.filter(f => f.promptName === prompt.name);
+                
+                const sidebarContent = document.getElementById('sidebarContent');
+                sidebarContent.innerHTML = `
+                    <div class="sidebar-tabs">
+                        <button class="sidebar-tab" onclick="promptBuilder.openSidebar('workflow-prompts-mode')">← Back to Prompts</button>
+                        <button class="sidebar-tab sidebar-tab--active">${prompt.name}</button>
+                    </div>
+                    ${this.groupFieldsBySection(fields)}
+                `;
+                
+                this.bindSidebarEvents();
+            }
         }
 
         // Initialize the Prompt Builder
+        let promptBuilder;
         document.addEventListener('DOMContentLoaded', () => {
-            new PromptBuilder();
+            promptBuilder = new PromptBuilder();
         });
     </script>
 </body>
