@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder - StrategyMethod.AI</title>
+    <link rel="stylesheet" href="../shared/variables.css">
+    <link rel="stylesheet" href="../shared/base.css">
+    <style>
+        /* ===== PROMPT BUILDER LAYOUT STYLES ===== */
+        
+        /* Layout Foundation */
+        .prompt-builder-container {
+            min-height: 100vh;
+            background: var(--gray-50);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header Section */
+        .app-header {
+            background: white;
+            border-bottom: 1px solid var(--colors--border);
+            padding: 0 var(--space-xl);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+        }
+        
+        .app-logo::before {
+            content: "🧠";
+            font-size: 24px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-lg);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            text-decoration: none;
+        }
+        
+        .btn--secondary {
+            background: white;
+            color: var(--color-text);
+            border-color: var(--colors--border);
+        }
+        
+        .btn--secondary:hover {
+            background: var(--gray-50);
+            border-color: var(--colors--border-hover);
+        }
+        
+        .btn--primary {
+            background: var(--colors--electric-blue-500);
+            color: white;
+        }
+        
+        .btn--primary:hover {
+            background: var(--colors--electric-blue-600);
+        }
+        
+        .btn--primary:disabled {
+            background: var(--gray-300);
+            cursor: not-allowed;
+        }
+        
+        /* Page Header Section */
+        .page-header {
+            background: white;
+            padding: var(--space-2xl) var(--space-xl);
+            border-bottom: 1px solid var(--colors--border);
+        }
+        
+        .page-header__content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .page-header__title {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text);
+            margin: 0 0 var(--space-sm) 0;
+        }
+        
+        .page-header__description {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-muted);
+            margin: 0 0 var(--space-xl) 0;
+        }
+        
+        .page-header__actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .btn--outline {
+            background: transparent;
+            color: var(--colors--electric-blue-500);
+            border-color: var(--colors--electric-blue-500);
+        }
+        
+        .btn--outline:hover {
+            background: var(--colors--electric-blue-50);
+        }
+        
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            padding: var(--space-xl);
+        }
+        
+        .content-column {
+            flex: 1;
+        }
+        
+        /* Section Groups */
+        .section-group {
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .section-group__header {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .section-group__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0 0 var(--space-sm) 0;
+        }
+        
+        .section-group__description {
+            font-size: var(--font-size-base);
+            color: var(--color-text-muted);
+            margin: 0;
+        }
+        
+        .section-stack {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+        
+        /* Modal Overlay System */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            padding: var(--space-md);
+        }
+        
+        .modal-overlay--open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-2xl);
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay--open .modal {
+            transform: scale(1);
+        }
+        
+        .modal__header {
+            padding: var(--space-xl);
+            border-bottom: 1px solid var(--colors--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0;
+        }
+        
+        .modal__close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            padding: var(--space-xs);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-base);
+        }
+        
+        .modal__close:hover {
+            background: var(--gray-100);
+            color: var(--color-text);
+        }
+        
+        .modal__body {
+            padding: var(--space-xl);
+            overflow-y: auto;
+            max-height: calc(90vh - 200px);
+        }
+        
+        .modal__footer {
+            padding: var(--space-xl);
+            border-top: 1px solid var(--colors--border);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: var(--space-md);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 0 var(--space-md);
+            }
+            
+            .page-header {
+                padding: var(--space-xl) var(--space-md);
+            }
+            
+            .main-content {
+                padding: var(--space-md);
+            }
+            
+            .page-header__actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .btn {
+                justify-content: center;
+            }
+            
+            .modal {
+                margin: var(--space-md);
+                max-height: calc(100vh - 2 * var(--space-md));
+            }
+        }
+        
+        /* ===== SECTION CARD STYLES ===== */
+        
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            padding: var(--space-xl);
+            margin-bottom: var(--space-lg);
+            transition: box-shadow var(--transition-base);
+        }
+        
+        .section-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .section-card__header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .section-card__title-group {
+            flex: 1;
+        }
+        
+        .section-card__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0 0 var(--space-sm) 0;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .section-card__badge {
+            display: inline-block;
+            padding: var(--space-xxs) var(--space-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .section-card__badge--required {
+            background: var(--color-badge-bg);
+            color: var(--color-badge-text);
+        }
+        
+        .section-card__badge--optional {
+            background: var(--gray-200);
+            color: var(--color-text-muted);
+        }
+        
+        .section-card__description {
+            font-size: var(--font-size-base);
+            color: var(--color-text-muted);
+            margin: 0 0 var(--space-sm) 0;
+            line-height: 1.5;
+        }
+        
+        .section-card__sub-description {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        .section-card__actions {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+        }
+        
+        /* Form Elements */
+        .input-field {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .field-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .field-label {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+        }
+        
+        .text-input-container {
+            position: relative;
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: var(--space-md);
+            border: 1px solid var(--colors--border);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-family: inherit;
+            transition: all var(--transition-base);
+            background: white;
+        }
+        
+        .text-input:focus {
+            outline: none;
+            border-color: var(--colors--electric-blue-500);
+            box-shadow: 0 0 0 3px var(--colors--electric-blue-100);
+        }
+        
+        .text-input--textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .text-input--rich {
+            min-height: 150px;
+        }
+        
+        .character-counter {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: var(--space-sm);
+        }
+        
+        .character-counter__count {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+        
+        .character-counter--warning .character-counter__count {
+            color: var(--color-warning);
+        }
+        
+        .character-counter--error .character-counter__count {
+            color: var(--color-error);
+        }
+        
+        /* Rich Text Toolbar */
+        .rich-text-toolbar {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm);
+            border: 1px solid var(--colors--border);
+            border-bottom: none;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            background: var(--gray-50);
+        }
+        
+        .toolbar-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .toolbar-btn:hover {
+            background: var(--gray-200);
+        }
+        
+        .toolbar-btn--active {
+            background: var(--colors--electric-blue-500);
+            color: white;
+        }
+        
+        /* Alert Component */
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .alert--info {
+            background: var(--colors--electric-blue-50);
+            border: 1px solid var(--colors--electric-blue-200);
+        }
+        
+        .alert__content {
+            flex: 1;
+        }
+        
+        .alert__title {
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--colors--electric-blue-700);
+            margin: 0 var(--space-xs) 0 0;
+        }
+        
+        .alert__description {
+            font-size: var(--font-size-sm);
+            color: var(--colors--electric-blue-700);
+        }
+        
+        /* Reference Controls */
+        .reference-controls-section {
+            padding: var(--space-lg);
+            background: var(--gray-50);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .reference-counters {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-top: var(--space-md);
+        }
+        
+        .reference-chip {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm) var(--space-md);
+            background: white;
+            border: 1px solid var(--colors--border);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+        }
+        
+        .reference-chip--clickable {
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+        
+        .reference-chip--clickable:hover {
+            background: var(--gray-100);
+            border-color: var(--colors--border-hover);
+        }
+        
+        .chip-edit {
+            background: none;
+            border: none;
+            color: var(--colors--electric-blue-500);
+            font-size: var(--font-size-xs);
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        /* Button Variations */
+        .btn--sm {
+            padding: var(--space-xs) var(--space-md);
+            font-size: var(--font-size-xs);
+        }
+        
+        .btn--outline.btn--sm {
+            border-color: var(--colors--electric-blue-500);
+        }
+        
+        /* Collapsed Section Cards */
+        .section-card--collapsed {
+            opacity: 0.8;
+        }
+        
+        .section-card--collapsed .section-card__content {
+            text-align: center;
+            padding-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="prompt-builder-container">
+        <!-- Application Header -->
+        <header class="app-header">
+            <div class="app-logo">
+                StrategyMethod.AI
+            </div>
+            <div class="header-actions">
+                <button class="btn btn--secondary" onclick="handleClosePrompt()">
+                    Close prompt
+                </button>
+                <button class="btn btn--primary" onclick="handleSavePrompt()">
+                    Save
+                </button>
+            </div>
+        </header>
+
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="page-header__content">
+                <h1 class="page-header__title">Prompt builder</h1>
+                <p class="page-header__description">
+                    This tool supports iterative development of StrategyMethod.AI prompts.
+                </p>
+                <div class="page-header__actions">
+                    <button class="btn btn--outline" onclick="openPromptNotesModal()">
+                        Prompt notes
+                    </button>
+                    <button class="btn btn--outline" onclick="openExamplePromptModal()">
+                        Example prompt
+                    </button>
+                    <button class="btn btn--outline" onclick="handleSupportRequest()">
+                        Support
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="content-column">
+                <!-- Required Sections -->
+                <div class="section-group">
+                    <div class="section-stack" id="required-sections">
+                        <!-- Section cards will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Optional Sections -->
+                <div class="section-group">
+                    <div class="section-group__header">
+                        <h2 class="section-group__title">Optional section</h2>
+                        <p class="section-group__description">
+                            Add fields for more precise control of prompt outputs.
+                        </p>
+                    </div>
+                    <div class="section-stack" id="optional-sections">
+                        <!-- Optional section cards will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Prompt Notes Modal -->
+    <div class="modal-overlay" id="prompt-notes-modal">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">Prompt notes</h2>
+                <button class="modal__close" onclick="closePromptNotesModal()">×</button>
+            </div>
+            <div class="modal__body">
+                <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">
+                    Note any changes or information that will be helpful to collaborators
+                </p>
+                <textarea 
+                    id="prompt-note-input"
+                    style="width: 100%; min-height: 120px; padding: var(--space-md); border: 1px solid var(--colors--border); border-radius: var(--radius-md); font-family: inherit; resize: vertical;"
+                    placeholder="Enter your notes here..."
+                ></textarea>
+                
+                <!-- Notes History Table -->
+                <div style="margin-top: var(--space-xl);">
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--color-text); text-align: left;">
+                                <th style="padding: var(--space-md) 0; font-weight: var(--font-weight-semibold);">Prompt notes</th>
+                                <th style="padding: var(--space-md) 0; font-weight: var(--font-weight-semibold);">Date</th>
+                                <th style="padding: var(--space-md) 0; font-weight: var(--font-weight-semibold);">Editor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notes-history">
+                            <tr style="border-bottom: 1px solid var(--colors--border);">
+                                <td style="padding: var(--space-md) 0;">Added a new section to include SWOT analysis for each key competitor.</td>
+                                <td style="padding: var(--space-md) 0;">Jul 23, 2025, 5:30pm ET</td>
+                                <td style="padding: var(--space-md) 0;">Jack Adams</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--colors--border);">
+                                <td style="padding: var(--space-md) 0;">Integrated advanced sentiment analysis tools to better categorize customer feedback.</td>
+                                <td style="padding: var(--space-md) 0;">Aug 15, 2024, 2:45pm ET</td>
+                                <td style="padding: var(--space-md) 0;">Sarah Smith</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button class="btn btn--secondary" onclick="closePromptNotesModal()">
+                    Dismiss
+                </button>
+                <button class="btn btn--primary" onclick="savePromptNote()">
+                    Save note
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unsaved Changes Modal -->
+    <div class="modal-overlay" id="unsaved-changes-modal">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">Unsaved changes</h2>
+            </div>
+            <div class="modal__body">
+                <p style="margin-bottom: var(--space-md);">You have unsaved changes</p>
+                <p style="color: var(--color-text-muted); margin: 0;">
+                    If you continue without saving all changes will be discarded.
+                </p>
+            </div>
+            <div class="modal__footer">
+                <button class="btn btn--secondary" onclick="closeUnsavedChangesModal()">
+                    Continue editing
+                </button>
+                <button class="btn btn--primary" onclick="discardChanges()">
+                    Close without saving
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== PROMPT BUILDER LAYOUT JAVASCRIPT =====
+        
+        // Global state
+        let hasUnsavedChanges = false;
+        let currentUser = "Current User"; // In real app, get from auth
+        
+        // Modal Management
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('modal-overlay--open');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('modal-overlay--open');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // Header Actions
+        function handleClosePrompt() {
+            if (hasUnsavedChanges) {
+                openModal('unsaved-changes-modal');
+            } else {
+                // Navigate to prompt library
+                window.location.href = 'prompt-library.html';
+            }
+        }
+        
+        function handleSavePrompt() {
+            if (validatePrompt()) {
+                openModal('prompt-notes-modal');
+            }
+        }
+        
+        // Page Header Actions
+        function openPromptNotesModal() {
+            openModal('prompt-notes-modal');
+        }
+        
+        function openExamplePromptModal() {
+            alert('Example prompt modal - to be implemented');
+        }
+        
+        function handleSupportRequest() {
+            window.location.href = 'mailto:support@strategymethod.ai?subject=Prompt Builder Support Request';
+        }
+        
+        // Prompt Notes Modal
+        function closePromptNotesModal() {
+            closeModal('prompt-notes-modal');
+            document.getElementById('prompt-note-input').value = '';
+        }
+        
+        function savePromptNote() {
+            const noteText = document.getElementById('prompt-note-input').value.trim();
+            if (noteText) {
+                addNoteToHistory(noteText);
+                // Here we would also save the actual prompt
+                closePromptNotesModal();
+                // Navigate to prompt library
+                setTimeout(() => {
+                    window.location.href = 'prompt-library.html';
+                }, 500);
+            } else {
+                // Just save without note
+                closePromptNotesModal();
+                setTimeout(() => {
+                    window.location.href = 'prompt-library.html';
+                }, 500);
+            }
+        }
+        
+        function addNoteToHistory(noteText) {
+            const tbody = document.getElementById('notes-history');
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            });
+            
+            const row = document.createElement('tr');
+            row.style.borderBottom = '1px solid var(--colors--border)';
+            row.innerHTML = `
+                <td style="padding: var(--space-md) 0;">${noteText}</td>
+                <td style="padding: var(--space-md) 0;">${dateStr}</td>
+                <td style="padding: var(--space-md) 0;">${currentUser}</td>
+            `;
+            
+            tbody.insertBefore(row, tbody.firstChild);
+        }
+        
+        // Unsaved Changes Modal
+        function closeUnsavedChangesModal() {
+            closeModal('unsaved-changes-modal');
+        }
+        
+        function discardChanges() {
+            hasUnsavedChanges = false;
+            closeModal('unsaved-changes-modal');
+            window.location.href = 'prompt-library.html';
+        }
+        
+        // Validation
+        function validatePrompt() {
+            // Basic validation - will be expanded when sections are added
+            return true;
+        }
+        
+        // Track changes
+        function markAsChanged() {
+            hasUnsavedChanges = true;
+        }
+        
+        // ===== SECTION CARD CONFIGURATIONS =====
+        
+        const sectionConfigurations = {
+            'prompt-name': {
+                title: 'Prompt name',
+                badge: { text: 'Required', type: 'required' },
+                description: 'Help users understand what they can expect from this prompts outputs.',
+                fields: [
+                    { 
+                        id: 'prompt-title',
+                        type: 'simple-text', 
+                        label: 'Prompt title', 
+                        characterLimit: 40,
+                        placeholder: 'Enter a descriptive name for this prompt...'
+                    }
+                ],
+                features: { 
+                    toolbar: false, 
+                    references: false, 
+                    sizeControls: false,
+                    addFields: false
+                }
+            },
+            
+            'user-input': {
+                title: 'User input',
+                badge: { text: 'Required', type: 'required' },
+                description: 'Add text input fields to collect parameters and other information from users.',
+                fields: [
+                    { 
+                        id: 'input-field-1',
+                        type: 'textarea', 
+                        label: 'Input field 1', 
+                        characterLimit: null,
+                        placeholder: 'Enter field description or requirements...'
+                    }
+                ],
+                features: { 
+                    toolbar: false, 
+                    references: false, 
+                    sizeControls: true,
+                    addFields: true
+                }
+            },
+            
+            'objectives': {
+                title: 'Objectives',
+                badge: { text: 'Required', type: 'required' },
+                description: 'Describe the objectives for this prompt. Be descriptive, but concise.',
+                alerts: [
+                    {
+                        type: 'info',
+                        title: 'Tip:',
+                        message: 'Use the @ symbol to reference other fields in this workflow.'
+                    }
+                ],
+                fields: [
+                    { 
+                        id: 'objectives-text',
+                        type: 'textarea', 
+                        label: null,
+                        characterLimit: null,
+                        placeholder: 'Describe the objectives for this prompt...'
+                    }
+                ],
+                features: { 
+                    toolbar: false, 
+                    references: 'field-only', 
+                    sizeControls: false,
+                    addFields: false
+                }
+            },
+            
+            'output-format': {
+                title: 'Output format',
+                badge: { text: 'Required', type: 'required' },
+                description: null,
+                fields: [
+                    { 
+                        id: 'output-format-text',
+                        type: 'rich-text', 
+                        label: null,
+                        characterLimit: null,
+                        placeholder: 'Specify the desired output format...',
+                        defaultContent: 'Analysis data: [data in mm/dd/yyyy format]\nCompany: [subject company name]\n\n[Title]\n[Description]\n\nLorem ipsum dolor sit amet...'
+                    }
+                ],
+                features: { 
+                    toolbar: true, 
+                    references: false, 
+                    sizeControls: false,
+                    addFields: false
+                }
+            },
+            
+            'context': {
+                title: 'Context',
+                badge: { text: 'Required', type: 'required' },
+                description: 'Provide background information and context for this prompt.',
+                subDescription: 'Use the @ key to reference other fields or prompts. The complete content of referenced prompts will be added to the context window of this prompt.',
+                fields: [
+                    { 
+                        id: 'context-text',
+                        type: 'textarea', 
+                        label: null,
+                        characterLimit: null,
+                        placeholder: 'Provide background information and context...'
+                    }
+                ],
+                features: { 
+                    toolbar: false, 
+                    references: 'full', 
+                    sizeControls: false,
+                    addFields: false,
+                    learnMore: true
+                },
+                references: { prompt: 2, field: 1 }
+            },
+            
+            'sequential-instructions': {
+                title: 'Sequential instructions',
+                badge: { text: 'Optional', type: 'optional' },
+                description: 'Outline the step-by-step process the agent should follow when responding to this prompt.',
+                fields: [
+                    { 
+                        id: 'sequential-instructions-text',
+                        type: 'textarea', 
+                        label: null,
+                        characterLimit: null,
+                        placeholder: 'Outline the step-by-step process...'
+                    }
+                ],
+                features: { 
+                    toolbar: false, 
+                    references: 'full', 
+                    sizeControls: false,
+                    addFields: false
+                },
+                isOptional: true
+            },
+            
+            'constraints': {
+                title: 'Constraints',
+                badge: { text: 'Optional', type: 'optional' },
+                description: 'List actions and behaviors the agent should avoid.',
+                fields: [
+                    { 
+                        id: 'constraints-text',
+                        type: 'textarea', 
+                        label: null,
+                        characterLimit: null,
+                        placeholder: 'List constraints and limitations...'
+                    }
+                ],
+                features: { 
+                    toolbar: false, 
+                    references: 'full', 
+                    sizeControls: false,
+                    addFields: false
+                },
+                isOptional: true
+            }
+        };
+        
+        // Section state management
+        const sectionStates = {
+            'prompt-name': { enabled: true, expanded: true },
+            'user-input': { enabled: true, expanded: true },
+            'objectives': { enabled: true, expanded: true },
+            'output-format': { enabled: true, expanded: true },
+            'context': { enabled: true, expanded: true },
+            'sequential-instructions': { enabled: false, expanded: false },
+            'constraints': { enabled: false, expanded: false }
+        };
+        
+        // ===== SECTION CARD RENDERING =====
+        
+        function createSectionCard(sectionId, config) {
+            const state = sectionStates[sectionId];
+            const isCollapsed = config.isOptional && !state.expanded;
+            
+            if (isCollapsed) {
+                return createCollapsedSectionCard(sectionId, config);
+            }
+            
+            return createExpandedSectionCard(sectionId, config);
+        }
+        
+        function createCollapsedSectionCard(sectionId, config) {
+            return `
+                <div class="section-card section-card--collapsed" data-section-id="${sectionId}">
+                    <div class="section-card__header">
+                        <div class="section-card__title-group">
+                            <h3 class="section-card__title">
+                                ${config.title}
+                                <span class="section-card__badge section-card__badge--${config.badge.type}">
+                                    ${config.badge.text}
+                                </span>
+                            </h3>
+                            <p class="section-card__description">${config.description}</p>
+                        </div>
+                    </div>
+                    <div class="section-card__content">
+                        <button class="btn btn--primary" onclick="addSectionToPrompt('${sectionId}')">
+                            Add to prompt
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createExpandedSectionCard(sectionId, config) {
+            let headerExtra = '';
+            if (config.features.learnMore) {
+                headerExtra = `
+                    <button class="btn btn--outline btn--sm" onclick="openLearnMoreModal('${sectionId}')">
+                        Learn more
+                    </button>
+                `;
+            }
+            
+            let referencesSection = '';
+            if (config.features.references === 'full' && config.references) {
+                referencesSection = `
+                    <div class="reference-controls-section">
+                        <button class="btn btn--outline" onclick="openReferenceSidebar('${sectionId}')">
+                            Add reference
+                        </button>
+                        <div class="reference-counters">
+                            <div class="reference-chip reference-chip--clickable" onclick="editPromptReferences('${sectionId}')">
+                                <span>${config.references.prompt} prompt references</span>
+                                <button class="chip-edit">Edit</button>
+                            </div>
+                            <div class="reference-chip reference-chip--clickable" onclick="editFieldReferences('${sectionId}')">
+                                <span>${config.references.field} field reference</span>
+                                <button class="chip-edit">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            let alertsSection = '';
+            if (config.alerts) {
+                alertsSection = config.alerts.map(alert => `
+                    <div class="alert alert--${alert.type}">
+                        <div class="alert__content">
+                            <strong class="alert__title">${alert.title}</strong>
+                            <span class="alert__description">${alert.message}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            let fieldsSection = '';
+            config.fields.forEach((field, index) => {
+                fieldsSection += createFieldInput(sectionId, field, index);
+            });
+            
+            let addFieldButton = '';
+            if (config.features.addFields) {
+                addFieldButton = `
+                    <button class="btn btn--outline" onclick="addInputField('${sectionId}')">
+                        + Add input field
+                    </button>
+                `;
+            }
+            
+            let removeButton = '';
+            if (config.isOptional && sectionStates[sectionId].expanded) {
+                removeButton = `
+                    <button class="btn btn--secondary btn--sm" onclick="removeSectionFromPrompt('${sectionId}')" style="margin-left: auto;">
+                        Remove section
+                    </button>
+                `;
+            }
+            
+            return `
+                <div class="section-card section-card--expanded" data-section-id="${sectionId}">
+                    <div class="section-card__header">
+                        <div class="section-card__title-group">
+                            <h3 class="section-card__title">
+                                ${config.title}
+                                <span class="section-card__badge section-card__badge--${config.badge.type}">
+                                    ${config.badge.text}
+                                </span>
+                            </h3>
+                            ${config.description ? `<p class="section-card__description">${config.description}</p>` : ''}
+                            ${config.subDescription ? `<p class="section-card__sub-description">${config.subDescription}</p>` : ''}
+                        </div>
+                        <div class="section-card__actions">
+                            ${headerExtra}
+                            ${removeButton}
+                        </div>
+                    </div>
+                    
+                    ${referencesSection}
+                    ${alertsSection}
+                    
+                    <div class="section-card__content">
+                        ${fieldsSection}
+                        ${addFieldButton}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createFieldInput(sectionId, field, index) {
+            const fieldId = `${sectionId}-${field.id}`;
+            let input = '';
+            
+            if (field.type === 'simple-text') {
+                input = `
+                    <input 
+                        type="text" 
+                        id="${fieldId}"
+                        class="text-input"
+                        placeholder="${field.placeholder || ''}"
+                        maxlength="${field.characterLimit || ''}"
+                        oninput="markAsChanged()"
+                    />
+                `;
+            } else if (field.type === 'textarea') {
+                input = `
+                    <textarea 
+                        id="${fieldId}"
+                        class="text-input text-input--textarea"
+                        placeholder="${field.placeholder || ''}"
+                        oninput="markAsChanged()"
+                    ></textarea>
+                `;
+            } else if (field.type === 'rich-text') {
+                input = `
+                    <div class="rich-text-toolbar">
+                        <button class="toolbar-btn" onclick="formatText('bold')"><strong>B</strong></button>
+                        <button class="toolbar-btn" onclick="formatText('italic')"><em>I</em></button>
+                        <button class="toolbar-btn" onclick="formatText('underline')"><u>U</u></button>
+                        <button class="toolbar-btn" onclick="formatText('list')">•</button>
+                    </div>
+                    <textarea 
+                        id="${fieldId}"
+                        class="text-input text-input--rich"
+                        placeholder="${field.placeholder || ''}"
+                        oninput="markAsChanged()"
+                    >${field.defaultContent || ''}</textarea>
+                `;
+            }
+            
+            let removeButton = '';
+            if (index > 0 && sectionConfigurations[sectionId].features.addFields) {
+                removeButton = `
+                    <button class="btn btn--secondary btn--sm field-remove" onclick="removeInputField('${fieldId}')">
+                        Remove
+                    </button>
+                `;
+            }
+            
+            return `
+                <div class="input-field" data-field-id="${fieldId}">
+                    ${field.label ? `
+                        <div class="field-header">
+                            <label class="field-label" for="${fieldId}">${field.label}</label>
+                            ${removeButton}
+                        </div>
+                    ` : ''}
+                    <div class="text-input-container">
+                        ${input}
+                    </div>
+                    ${field.characterLimit ? `
+                        <div class="character-counter">
+                            <span class="character-counter__count">0 / ${field.characterLimit} characters</span>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        // ===== SECTION MANAGEMENT =====
+        
+        function addSectionToPrompt(sectionId) {
+            sectionStates[sectionId].enabled = true;
+            sectionStates[sectionId].expanded = true;
+            markAsChanged();
+            renderSections();
+        }
+        
+        function removeSectionFromPrompt(sectionId) {
+            sectionStates[sectionId].enabled = false;
+            sectionStates[sectionId].expanded = false;
+            markAsChanged();
+            renderSections();
+        }
+        
+        function addInputField(sectionId) {
+            const config = sectionConfigurations[sectionId];
+            const currentFields = document.querySelectorAll(`[data-section-id="${sectionId}"] .input-field`).length;
+            const newFieldNumber = currentFields + 1;
+            
+            const newField = {
+                id: `input-field-${newFieldNumber}`,
+                type: 'textarea',
+                label: `Input field ${newFieldNumber}`,
+                characterLimit: null,
+                placeholder: 'Enter field description or requirements...'
+            };
+            
+            config.fields.push(newField);
+            markAsChanged();
+            renderSections();
+        }
+        
+        function removeInputField(fieldId) {
+            const sectionId = fieldId.split('-')[0] + '-' + fieldId.split('-')[1];
+            const config = sectionConfigurations[sectionId];
+            const fieldIndex = config.fields.findIndex(f => fieldId.includes(f.id));
+            
+            if (fieldIndex > 0) { // Don't remove the first field
+                config.fields.splice(fieldIndex, 1);
+                markAsChanged();
+                renderSections();
+            }
+        }
+        
+        // ===== RENDERING =====
+        
+        function renderSections() {
+            const requiredContainer = document.getElementById('required-sections');
+            const optionalContainer = document.getElementById('optional-sections');
+            
+            // Required sections
+            const requiredSections = ['prompt-name', 'user-input', 'objectives', 'output-format', 'context'];
+            requiredContainer.innerHTML = requiredSections.map(sectionId => 
+                createSectionCard(sectionId, sectionConfigurations[sectionId])
+            ).join('');
+            
+            // Optional sections
+            const optionalSections = ['sequential-instructions', 'constraints'];
+            optionalContainer.innerHTML = optionalSections.map(sectionId => 
+                createSectionCard(sectionId, sectionConfigurations[sectionId])
+            ).join('');
+            
+            // Re-attach event listeners and setup interactions
+            setupSectionInteractions();
+        }
+        
+        function setupSectionInteractions() {
+            // Character counters
+            document.querySelectorAll('input[maxlength], textarea').forEach(input => {
+                const counter = input.closest('.input-field')?.querySelector('.character-counter__count');
+                if (counter && input.maxLength > 0) {
+                    const updateCounter = () => {
+                        const current = input.value.length;
+                        const max = input.maxLength;
+                        counter.textContent = `${current} / ${max} characters`;
+                        
+                        // Add visual feedback
+                        const percentage = current / max;
+                        counter.classList.toggle('character-counter--warning', percentage > 0.8);
+                        counter.classList.toggle('character-counter--error', percentage > 1);
+                    };
+                    
+                    input.addEventListener('input', updateCounter);
+                    updateCounter();
+                }
+            });
+        }
+        
+        // ===== REFERENCE SYSTEM INTEGRATION =====
+        
+        function openReferenceSidebar(sectionId) {
+            alert(`Opening reference sidebar for ${sectionId} - Integration with existing reference system needed`);
+        }
+        
+        function editPromptReferences(sectionId) {
+            alert(`Editing prompt references for ${sectionId} - Opens reference sidebar in prompt mode`);
+        }
+        
+        function editFieldReferences(sectionId) {
+            alert(`Editing field references for ${sectionId} - Opens reference sidebar in field mode`);
+        }
+        
+        function openLearnMoreModal(sectionId) {
+            alert(`Learn more modal for ${sectionId} - Context section explanation to be implemented`);
+        }
+        
+        // ===== RICH TEXT FORMATTING =====
+        
+        function formatText(format) {
+            // Basic rich text formatting - to be enhanced
+            const activeTextarea = document.activeElement;
+            if (activeTextarea && activeTextarea.classList.contains('text-input--rich')) {
+                const start = activeTextarea.selectionStart;
+                const end = activeTextarea.selectionEnd;
+                const selectedText = activeTextarea.value.substring(start, end);
+                
+                let formattedText = selectedText;
+                switch(format) {
+                    case 'bold':
+                        formattedText = `**${selectedText}**`;
+                        break;
+                    case 'italic':
+                        formattedText = `*${selectedText}*`;
+                        break;
+                    case 'underline':
+                        formattedText = `__${selectedText}__`;
+                        break;
+                    case 'list':
+                        formattedText = selectedText.split('\n').map(line => `• ${line}`).join('\n');
+                        break;
+                }
+                
+                activeTextarea.value = activeTextarea.value.substring(0, start) + formattedText + activeTextarea.value.substring(end);
+                markAsChanged();
+            }
+        }
+        
+        // ===== VALIDATION SYSTEM =====
+        
+        function validatePrompt() {
+            const errors = [];
+            
+            // Check required fields
+            const requiredSections = ['prompt-name', 'user-input', 'objectives', 'output-format', 'context'];
+            
+            requiredSections.forEach(sectionId => {
+                const config = sectionConfigurations[sectionId];
+                config.fields.forEach(field => {
+                    const fieldId = `${sectionId}-${field.id}`;
+                    const input = document.getElementById(fieldId);
+                    if (input && !input.value.trim()) {
+                        errors.push(`${config.title}: ${field.label || 'Content'} is required`);
+                    }
+                });
+            });
+            
+            // Check character limits
+            document.querySelectorAll('input[maxlength]').forEach(input => {
+                if (input.value.length > input.maxLength) {
+                    errors.push(`${input.closest('.section-card').__sectionTitle}: Content exceeds character limit`);
+                }
+            });
+            
+            if (errors.length > 0) {
+                alert('Please fix the following errors:\n\n' + errors.join('\n'));
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Prompt Builder initialized');
+            renderSections();
+        });
+    </script>
+</body>
+</html>

@@ -593,7 +593,7 @@
             background: var(--color-primary-hover);
         }
 
-        /* Reference Dropdown */
+        /* Reference Dropdown - Enhanced for Phase 2A */
         .reference-dropdown {
             position: absolute;
             top: 100%;
@@ -604,14 +604,41 @@
             border-radius: var(--radius-md);
             box-shadow: var(--shadow-lg);
             z-index: var(--z-dropdown);
-            max-height: 200px;
-            overflow-y: auto;
             margin-top: 4px;
             display: none;
+            opacity: 0;
+            transform: translateY(-8px);
+            transition: all 200ms ease-out;
         }
         
         .reference-dropdown--show {
             display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .reference-dropdown__search {
+            padding: var(--space-sm);
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .reference-dropdown__input {
+            width: 100%;
+            padding: var(--space-xs) var(--space-sm);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            outline: none;
+        }
+        
+        .reference-dropdown__input:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+        
+        .reference-dropdown__content {
+            max-height: 200px;
+            overflow-y: auto;
         }
         
         .reference-dropdown__item {
@@ -621,6 +648,11 @@
             align-items: center;
             gap: var(--space-sm);
             transition: background-color var(--transition-fast);
+            border-bottom: 1px solid var(--gray-50);
+        }
+        
+        .reference-dropdown__item:last-child {
+            border-bottom: none;
         }
         
         .reference-dropdown__item:hover {
@@ -632,14 +664,71 @@
             color: white;
         }
         
+        .reference-dropdown__item--focused .reference-dropdown__icon,
+        .reference-dropdown__item--focused .reference-dropdown__meta {
+            color: white;
+        }
+        
         .reference-dropdown__icon {
-            width: 16px;
-            height: 16px;
+            font-size: 16px;
             color: var(--color-text-muted);
+            flex-shrink: 0;
+        }
+        
+        .reference-dropdown__details {
+            flex: 1;
+            min-width: 0;
         }
         
         .reference-dropdown__text {
             font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            margin-bottom: 2px;
+        }
+        
+        .reference-dropdown__text mark {
+            background: #fef08a;
+            color: inherit;
+            padding: 0;
+            border-radius: 2px;
+        }
+        
+        .reference-dropdown__item--focused .reference-dropdown__text mark {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .reference-dropdown__meta {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-muted);
+            font-weight: normal;
+        }
+        
+        .reference-dropdown__empty {
+            padding: var(--space-md);
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: var(--font-size-sm);
+            font-style: italic;
+        }
+        
+        /* Inline Reference Dropdown */
+        .reference-dropdown--inline {
+            position: absolute;
+            top: auto;
+            bottom: 100%;
+            left: 20px;
+            right: auto;
+            width: 300px;
+            margin-bottom: 4px;
+        }
+        
+        .reference-type-selection {
+            padding: var(--space-sm) 0;
+        }
+        
+        .reference-dropdown__list {
+            max-height: 150px;
+            overflow-y: auto;
         }
 
         /* Responsive Design */
@@ -737,10 +826,181 @@
             border-radius: var(--radius-md);
         }
         
+        /* ===== PHASE 2A REFERENCES SIDEBAR STYLES ===== */
+        
+        /* Flexbox Layout System */
+        .page-container {
+            display: flex;
+            transition: all 300ms ease;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            transition: all 300ms ease;
+        }
+
+        .references-sidebar {
+            width: 0;
+            overflow: hidden;
+            background: white;
+            border-left: 1px solid var(--colors--border);
+            transition: all 300ms ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .references-sidebar--open {
+            width: 400px;
+        }
+
+        /* Sidebar Components */
+        .sidebar-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--colors--border);
+            background: var(--gray-50);
+        }
+
+        .workflow-context {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+            margin-bottom: 8px;
+        }
+
+        .sidebar-header h3 {
+            margin: 0;
+            font-size: var(--font-size-lg);
+            color: var(--color-text);
+        }
+
+        .sidebar-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--color-text-muted);
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        .sidebar-close:hover {
+            background: var(--colors--surface-hover);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+        }
+
+        .sidebar-footer {
+            padding: 16px;
+            border-top: 1px solid var(--colors--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--gray-50);
+        }
+
+        .selection-count {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+
+        .sidebar-footer .btn-secondary {
+            margin-right: 8px;
+        }
+
+        /* Reference Items */
+        .reference-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .reference-item:hover {
+            background: var(--colors--surface-hover);
+        }
+
+        .reference-item--selected {
+            background: var(--colors--electric-blue-500);
+            color: white;
+            border-color: var(--colors--electric-blue-600);
+        }
+
+        .reference-item input[type="checkbox"] {
+            margin-right: 12px;
+        }
+
+        .reference-info {
+            flex: 1;
+        }
+
+        .reference-label {
+            font-weight: var(--font-weight-medium);
+            margin-bottom: 4px;
+        }
+
+        .reference-section,
+        .reference-status {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+
+        .reference-item--selected .reference-section,
+        .reference-item--selected .reference-status {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Popup Menu Styles */
+        .reference-popup-menu {
+            background: white;
+            border: 1px solid var(--colors--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            z-index: 1000;
+        }
+
+        .popup-menu-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--colors--border);
+            transition: background 0.2s;
+        }
+
+        .popup-menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .popup-menu-item:hover {
+            background: var(--colors--surface-hover);
+        }
+
+        .popup-menu-item:first-child {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .popup-menu-item:last-child {
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        
     </style>
 </head>
 <body>
-    <div class="demo-container">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="demo-container">
         <h1 class="demo-title">Section Card Component - Wireframe Aligned</h1>
         
         <div class="demo-grid">
@@ -1088,12 +1348,95 @@
                     </div>
                 </article>
             </div>
+            </div>
         </div>
+
+        <!-- References Sidebar (initially hidden) -->
+        <div id="references-sidebar" class="references-sidebar">
+        <div class="sidebar-header">
+            <div class="workflow-context">Market Analysis Workflow</div>
+            <h3>Add reference</h3>
+            <button class="sidebar-close" onclick="closeSidebar()">×</button>
+        </div>
+        
+        <div class="sidebar-content" id="sidebar-content">
+            <!-- Dynamic content based on mode -->
+        </div>
+        
+        <div class="sidebar-footer">
+            <span class="selection-count">0 selected</span>
+            <button class="btn-secondary" onclick="closeSidebar()">Cancel</button>
+            <button class="btn-primary" onclick="addSelectedReferences()">Add Selected</button>
+        </div>
+    </div>
     </div>
 
     <script>
-        // ===== PHASE 1 BASIC INTERACTIVITY =====
+        // ===== PHASE 1 BASIC INTERACTIVITY + PHASE 2A MOCK INTERACTIONS =====
         // Phase 2 Notes: Convert to React component with proper state management and configuration system
+        
+        // ===== PHASE 2A.1: MOCK REFERENCE DATA =====
+        const mockReferences = {
+            fields: [
+                { id: 'field_1', name: 'Customer Demographics', type: 'field', section: 'User Input', icon: 'input' },
+                { id: 'field_2', name: 'Market Analysis Scope', type: 'field', section: 'Context', icon: 'input' },
+                { id: 'field_3', name: 'Timeline Requirements', type: 'field', section: 'User Input', icon: 'input' },
+                { id: 'field_4', name: 'Budget Constraints', type: 'field', section: 'Context', icon: 'input' },
+                { id: 'field_5', name: 'Success Metrics', type: 'field', section: 'User Input', icon: 'input' }
+            ],
+            prompts: [
+                { id: 'prompt_1', name: 'Market Research Framework', type: 'prompt', category: 'Analysis Tools', icon: 'psychology' },
+                { id: 'prompt_2', name: 'Customer Segmentation Tool', type: 'prompt', category: 'Strategy Templates', icon: 'psychology' },
+                { id: 'prompt_3', name: 'Competitive Intelligence Report', type: 'prompt', category: 'Research Methods', icon: 'psychology' },
+                { id: 'prompt_4', name: 'SWOT Analysis Generator', type: 'prompt', category: 'Analysis Tools', icon: 'psychology' },
+                { id: 'prompt_5', name: 'User Journey Mapping Tool', type: 'prompt', category: 'Strategy Templates', icon: 'psychology' }
+            ]
+        };
+
+        // ===== PHASE 2A.2: WORKFLOW-SCOPED MOCK DATA =====
+        const mockWorkflowData = {
+            currentWorkflow: {
+                id: 'workflow_001',
+                name: 'Market Analysis Workflow',
+                currentPromptId: 'prompt_001'
+            },
+            
+            currentPromptFields: [
+                { id: 'field_001', label: 'Customer Demographics', section: 'User Input', value: 'Target market analysis for consumer electronics...' },
+                { id: 'field_002', label: 'Market Context', section: 'Context', value: 'Consumer electronics market in North America...' },
+                { id: 'field_003', label: 'Analysis Objectives', section: 'Objectives', value: 'Understand consumer behavior patterns and preferences...' }
+            ],
+            
+            workflowPrompts: [
+                { id: 'prompt_001', name: 'Consumer Behavior Analysis', isCurrentPrompt: true, status: 'draft' },
+                { id: 'prompt_002', name: 'Competitive Landscape Review', isCurrentPrompt: false, status: 'published' },
+                { id: 'prompt_003', name: 'Market Sizing Analysis', isCurrentPrompt: false, status: 'draft' }
+            ],
+            
+            workflowFields: [
+                { 
+                    id: 'field_004', 
+                    label: 'Competitive Analysis', 
+                    section: 'Context', 
+                    promptName: 'Competitive Landscape Review', 
+                    promptId: 'prompt_002',
+                    value: 'Key competitors include Apple, Samsung, Google...' 
+                },
+                { 
+                    id: 'field_005', 
+                    label: 'Market Size Estimates', 
+                    section: 'User Input', 
+                    promptName: 'Market Sizing Analysis', 
+                    promptId: 'prompt_003',
+                    value: 'Total addressable market estimated at $150B...' 
+                }
+            ]
+        };
+
+        // Global reference dropdown state
+        let activeDropdown = null;
+        let activeTextArea = null;
+        let dropdownFocusIndex = -1;
         
         document.addEventListener('DOMContentLoaded', function() {
             // Text Field Size Controls
@@ -1125,7 +1468,95 @@
                 });
             });
             
-            // Character Counter Updates
+            // ===== PHASE 2A.3: ENHANCED PROGRESSIVE CHARACTER FEEDBACK SYSTEM =====
+            
+            // Progressive feedback levels with contextual guidance
+            const feedbackLevels = {
+                normal: { 
+                    threshold: 0, 
+                    message: null, 
+                    color: 'gray-300',
+                    suggestion: null
+                },
+                approaching: { 
+                    threshold: 0.7, 
+                    message: 'Consider wrapping up your thoughts', 
+                    color: 'warning',
+                    suggestion: 'You\'re approaching the character limit. Try to be more concise.'
+                },
+                warning: { 
+                    threshold: 0.9, 
+                    message: 'Approaching character limit', 
+                    color: 'warning',
+                    suggestion: 'Content is getting long. Consider removing unnecessary words.'
+                },
+                error: { 
+                    threshold: 1.0, 
+                    message: 'Content exceeds limit', 
+                    color: 'error',
+                    suggestion: 'Please shorten your content to fit within the character limit.'
+                },
+                critical: { 
+                    threshold: 1.2, 
+                    message: 'Significantly over limit', 
+                    color: 'error-dark',
+                    suggestion: 'Content is significantly too long. Major editing required.'
+                }
+            };
+            
+            // Create character feedback tooltip
+            function createCharacterTooltip() {
+                const tooltip = document.createElement('div');
+                tooltip.className = 'character-tooltip';
+                tooltip.style.cssText = `
+                    position: absolute;
+                    bottom: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background: var(--gray-900);
+                    color: white;
+                    padding: var(--space-xs) var(--space-sm);
+                    border-radius: var(--radius-sm);
+                    font-size: var(--font-size-xs);
+                    white-space: nowrap;
+                    z-index: 1000;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 200ms ease-out;
+                    margin-bottom: 4px;
+                `;
+                
+                // Add arrow
+                const arrow = document.createElement('div');
+                arrow.style.cssText = `
+                    position: absolute;
+                    top: 100%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 0;
+                    height: 0;
+                    border-left: 4px solid transparent;
+                    border-right: 4px solid transparent;
+                    border-top: 4px solid var(--gray-900);
+                `;
+                tooltip.appendChild(arrow);
+                
+                return tooltip;
+            }
+            
+            // Get current feedback level
+            function getFeedbackLevel(currentLength, maxLength) {
+                const ratio = currentLength / maxLength;
+                
+                if (ratio >= feedbackLevels.critical.threshold) return { ...feedbackLevels.critical, key: 'critical' };
+                if (ratio >= feedbackLevels.error.threshold) return { ...feedbackLevels.error, key: 'error' };
+                if (ratio >= feedbackLevels.warning.threshold) return { ...feedbackLevels.warning, key: 'warning' };
+                if (ratio >= feedbackLevels.approaching.threshold) return { ...feedbackLevels.approaching, key: 'approaching' };
+                return { ...feedbackLevels.normal, key: 'normal' };
+            }
+            
+            
+            // Enhanced Character Counter Updates with @ Symbol Detection
             const textInputs = document.querySelectorAll('.text-input');
             
             textInputs.forEach(input => {
@@ -1134,13 +1565,46 @@
                 
                 const maxLength = parseInt(counterElement.textContent.split(' / ')[1]);
                 
+                // Create and add tooltip for hover feedback
+                const tooltip = createCharacterTooltip();
+                counterElement.style.position = 'relative';
+                counterElement.appendChild(tooltip);
+                
+                // Add hover functionality for suggestions
+                counterElement.addEventListener('mouseenter', function() {
+                    const currentLength = input.value.length;
+                    const level = getFeedbackLevel(currentLength, maxLength);
+                    
+                    if (level.suggestion) {
+                        tooltip.textContent = level.suggestion;
+                        tooltip.style.opacity = '1';
+                    }
+                });
+                
+                counterElement.addEventListener('mouseleave', function() {
+                    tooltip.style.opacity = '0';
+                });
+                
+                // @ Symbol Detection for Hierarchical Reference Menu
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === '@') {
+                        // Allow the @ to be typed first, then show hierarchical menu
+                        setTimeout(() => {
+                            showReferenceTypeMenu(e, this);
+                        }, 50);
+                    }
+                });
+                
                 input.addEventListener('input', function() {
                     const currentLength = this.value.length;
-                    const warningThreshold = maxLength * 0.8;
-                    const errorThreshold = maxLength;
+                    const level = getFeedbackLevel(currentLength, maxLength);
                     
-                    // Update counter text
-                    counterElement.textContent = `${currentLength} / ${maxLength} characters`;
+                    // Update counter text with contextual message
+                    if (level.message && currentLength > 0) {
+                        counterElement.textContent = `${currentLength} / ${maxLength} characters • ${level.message}`;
+                    } else {
+                        counterElement.textContent = `${currentLength} / ${maxLength} characters`;
+                    }
                     
                     // Update counter styling
                     counterElement.className = 'character-counter__count';
@@ -1148,29 +1612,273 @@
                     // Update input styling
                     this.classList.remove('text-input--warning', 'text-input--error');
                     
-                    if (currentLength > errorThreshold) {
+                    // Apply level-specific styling
+                    if (level.key === 'error' || level.key === 'critical') {
                         counterElement.classList.add('character-counter__count--error');
                         this.classList.add('text-input--error');
-                    } else if (currentLength >= warningThreshold) {
+                        
+                        // Add compress button for error states
+                        addCompressButton(this, level.key === 'critical');
+                    } else if (level.key === 'warning' || level.key === 'approaching') {
                         counterElement.classList.add('character-counter__count--warning');
                         this.classList.add('text-input--warning');
+                        removeCompressButton(this);
+                    } else {
+                        removeCompressButton(this);
                     }
                 });
             });
             
-            // Formatting Button Toggle
+            // Add compress button for over-limit content
+            function addCompressButton(inputElement, isCritical) {
+                const actions = inputElement.closest('.input-field').querySelector('.character-counter__actions');
+                let compressBtn = actions.querySelector('.compress-btn');
+                
+                if (!compressBtn) {
+                    compressBtn = document.createElement('button');
+                    compressBtn.className = 'btn btn--secondary compress-btn';
+                    compressBtn.innerHTML = `
+                        <span class="material-symbols-outlined material-symbols-outlined--sm">compress</span>
+                        ${isCritical ? 'Fix length' : 'Compress content'}
+                    `;
+                    compressBtn.style.marginLeft = 'var(--space-sm)';
+                    
+                    compressBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showCompressContentFeedback(isCritical);
+                    });
+                    
+                    actions.appendChild(compressBtn);
+                }
+                
+                // Update button text based on severity
+                compressBtn.innerHTML = `
+                    <span class="material-symbols-outlined material-symbols-outlined--sm">compress</span>
+                    ${isCritical ? 'Fix length' : 'Compress content'}
+                `;
+            }
+            
+            // Remove compress button
+            function removeCompressButton(inputElement) {
+                const compressBtn = inputElement.closest('.input-field').querySelector('.compress-btn');
+                if (compressBtn) {
+                    compressBtn.style.opacity = '0';
+                    setTimeout(() => compressBtn.remove(), 200);
+                }
+            }
+            
+            // Show compress content feedback
+            function showCompressContentFeedback(isCritical) {
+                const title = isCritical ? 'Content Compression' : 'Optimize Content';
+                const message = isCritical ? 
+                    'In a real app, this would suggest specific edits to reduce length' :
+                    'In a real app, this would highlight wordy sentences for editing';
+                showFeedback(title, message, 'info');
+            }
+            
+            // ===== PHASE 2A.4: RICH TEXT TOOLBAR MOCK FUNCTIONALITY =====
+            
+            // Mock formatting functions (now creates actual rich text)
+            const formatters = {
+                bold: (textarea, start, end) => {
+                    const selectedText = textarea.value.substring(start, end);
+                    // In a real implementation, this would apply actual bold formatting
+                    // For now, we'll simulate by showing the user it's been "formatted"
+                    showFormattingFeedback('Bold Applied', `Applied bold formatting to: "${selectedText}"`, 'success');
+                    return { newText: selectedText, newCursorPos: end };
+                },
+                italic: (textarea, start, end) => {
+                    const selectedText = textarea.value.substring(start, end);
+                    showFormattingFeedback('Italic Applied', `Applied italic formatting to: "${selectedText}"`, 'success');
+                    return { newText: selectedText, newCursorPos: end };
+                },
+                list: (textarea, start, end) => {
+                    const selectedText = textarea.value.substring(start, end);
+                    const lines = selectedText.split('\n');
+                    const formattedText = lines.map(line => line.trim() ? `• ${line}` : line).join('\n');
+                    return { newText: formattedText, newCursorPos: start + formattedText.length };
+                },
+                link: (textarea, start, end) => {
+                    const selectedText = textarea.value.substring(start, end);
+                    // Show mock link dialog
+                    showLinkDialog(selectedText);
+                    return { newText: selectedText, newCursorPos: end };
+                }
+            };
+            
+            // Show mock link dialog
+            function showLinkDialog(selectedText) {
+                showFormattingFeedback('Link Dialog', `In a real app, this would open a dialog to add a link to: "${selectedText}"`, 'info');
+            }
+            
+            // Apply mock formatting to selected text
+            function applyMockFormatting(textArea, formatType) {
+                const start = textArea.selectionStart;
+                const end = textArea.selectionEnd;
+                const selectedText = textArea.value.substring(start, end);
+                
+                if (!selectedText && formatType !== 'list') {
+                    // No selection - show feedback about selecting text first
+                    showFormattingFeedback('Select Text First', 'Please select some text to apply formatting', 'info');
+                    return;
+                }
+                
+                const formatter = formatters[formatType];
+                if (!formatter) return;
+                
+                const result = formatter(textArea, start, end);
+                
+                if (result.newText !== selectedText) {
+                    // Update textarea value only if text actually changed
+                    const beforeText = textArea.value.substring(0, start);
+                    const afterText = textArea.value.substring(end);
+                    textArea.value = beforeText + result.newText + afterText;
+                    
+                    // Update character counter
+                    const inputEvent = new Event('input', { bubbles: true });
+                    textArea.dispatchEvent(inputEvent);
+                }
+                
+                // Set cursor position
+                setTimeout(() => {
+                    textArea.setSelectionRange(result.newCursorPos, result.newCursorPos);
+                    textArea.focus();
+                }, 10);
+            }
+            
+            // Show undo/redo mini-panel (mock)
+            function showFormatHistoryPanel(button) {
+                // Remove any existing panel
+                const existingPanel = document.querySelector('.format-history-panel');
+                if (existingPanel) {
+                    existingPanel.remove();
+                    return;
+                }
+                
+                const panel = document.createElement('div');
+                panel.className = 'format-history-panel';
+                panel.innerHTML = `
+                    <div class="format-history-item">
+                        <span class="material-symbols-outlined">undo</span>
+                        Undo Bold
+                    </div>
+                    <div class="format-history-item">
+                        <span class="material-symbols-outlined">redo</span>
+                        Redo Italic
+                    </div>
+                `;
+                panel.style.cssText = `
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    background: white;
+                    border: 1px solid var(--color-border);
+                    border-radius: var(--radius-sm);
+                    box-shadow: var(--shadow-lg);
+                    z-index: 1000;
+                    min-width: 120px;
+                    opacity: 0;
+                    transform: translateY(-4px);
+                    transition: all 200ms ease-out;
+                `;
+                
+                // Style history items
+                panel.querySelectorAll('.format-history-item').forEach(item => {
+                    item.style.cssText = `
+                        display: flex;
+                        align-items: center;
+                        gap: var(--space-xs);
+                        padding: var(--space-xs) var(--space-sm);
+                        font-size: var(--font-size-xs);
+                        cursor: pointer;
+                        transition: background-color var(--transition-fast);
+                    `;
+                    
+                    item.addEventListener('mouseenter', () => {
+                        item.style.backgroundColor = 'var(--color-bg-card)';
+                    });
+                    
+                    item.addEventListener('mouseleave', () => {
+                        item.style.backgroundColor = 'transparent';
+                    });
+                    
+                    item.addEventListener('click', () => {
+                        showFormattingFeedback('Format History', 'In a real app, this would undo/redo formatting changes', 'info');
+                        panel.remove();
+                    });
+                });
+                
+                button.style.position = 'relative';
+                button.appendChild(panel);
+                
+                // Animate in
+                setTimeout(() => {
+                    panel.style.opacity = '1';
+                    panel.style.transform = 'translateY(0)';
+                }, 10);
+                
+                // Remove after delay
+                setTimeout(() => {
+                    panel.style.opacity = '0';
+                    panel.style.transform = 'translateY(-4px)';
+                    setTimeout(() => panel.remove(), 200);
+                }, 3000);
+            }
+            
+            // Show formatting feedback
+            function showFormattingFeedback(title, message, type) {
+                showFeedback(title, message, type);
+            }
+            
+            // Enhanced Formatting Button Toggle with Mock Functionality
             const formattingButtons = document.querySelectorAll('.formatting-btn');
             
             formattingButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
                     
-                    // Toggle active state (except for non-toggle buttons like link)
-                    if (!this.title.includes('Link')) {
+                    const formatType = this.title.toLowerCase();
+                    const parentField = this.closest('.input-field');
+                    const textArea = parentField ? parentField.querySelector('.text-input') : null;
+                    
+                    // Handle different button types
+                    if (formatType.includes('link')) {
+                        // Link button - show link dialog mock
+                        if (textArea) {
+                            applyMockFormatting(textArea, 'link');
+                        }
+                        showFormatHistoryPanel(this);
+                    } else if (formatType.includes('list')) {
+                        // List button - apply list formatting
+                        if (textArea) {
+                            applyMockFormatting(textArea, 'list');
+                        }
+                        this.classList.toggle('formatting-btn--active');
+                        const isActive = this.classList.contains('formatting-btn--active');
+                        this.setAttribute('aria-pressed', isActive);
+                    } else if (formatType.includes('bold')) {
+                        // Bold button
+                        if (textArea) {
+                            applyMockFormatting(textArea, 'bold');
+                        }
+                        this.classList.toggle('formatting-btn--active');
+                        const isActive = this.classList.contains('formatting-btn--active');
+                        this.setAttribute('aria-pressed', isActive);
+                    } else if (formatType.includes('italic')) {
+                        // Italic button
+                        if (textArea) {
+                            applyMockFormatting(textArea, 'italic');
+                        }
                         this.classList.toggle('formatting-btn--active');
                         const isActive = this.classList.contains('formatting-btn--active');
                         this.setAttribute('aria-pressed', isActive);
                     }
+                });
+                
+                // Add double-click for format history on any button
+                button.addEventListener('dblclick', function(e) {
+                    e.preventDefault();
+                    showFormatHistoryPanel(this);
                 });
             });
             
@@ -1206,13 +1914,257 @@
                 });
             });
             
-            // Add Input Field Functionality
+            // ===== PHASE 2A.2: DYNAMIC FIELD MANAGEMENT SYSTEM =====
+            
+            // Get next field number
+            function getNextFieldNumber() {
+                const existingFields = document.querySelectorAll('.input-field');
+                const fieldNumbers = Array.from(existingFields).map(field => {
+                    const labelInput = field.querySelector('.field-label--editable');
+                    if (labelInput) {
+                        const match = labelInput.value.match(/Input field (\d+)/);
+                        return match ? parseInt(match[1]) : 0;
+                    }
+                    return 0;
+                });
+                return Math.max(...fieldNumbers, 0) + 1;
+            }
+            
+            // Create new input field HTML
+            function createNewInputFieldHTML(fieldNumber) {
+                return `
+                    <div class="input-field" style="opacity: 0; transform: translateY(-20px);">
+                        <div class="field-header">
+                            <input type="text" class="field-label field-label--editable" value="Input field ${fieldNumber}">
+                            <button class="field-remove" aria-label="Remove field">
+                                <span class="material-symbols-outlined">close</span>
+                            </button>
+                        </div>
+                        
+                        <div class="input-controls">
+                            <div class="rich-text-toolbar">
+                                <div class="rich-text-toolbar__group">
+                                    <button class="formatting-btn" title="Bold" aria-pressed="false">
+                                        <span class="material-symbols-outlined">format_bold</span>
+                                    </button>
+                                    <button class="formatting-btn" title="Italic" aria-pressed="false">
+                                        <span class="material-symbols-outlined">format_italic</span>
+                                    </button>
+                                </div>
+                                <div class="rich-text-toolbar__group">
+                                    <button class="formatting-btn" title="Bullet List" aria-pressed="false">
+                                        <span class="material-symbols-outlined">format_list_bulleted</span>
+                                    </button>
+                                    <button class="formatting-btn" title="Add Link" aria-pressed="false">
+                                        <span class="material-symbols-outlined">link</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="text-field-size-controls">
+                                <button class="text-field-size-controls__option">Small</button>
+                                <button class="text-field-size-controls__option text-field-size-controls__option--active">Medium</button>
+                                <button class="text-field-size-controls__option">Large</button>
+                            </div>
+                        </div>
+                        
+                        <div class="text-input-container">
+                            <textarea class="text-input" placeholder="Enter field description or requirements..."></textarea>
+                        </div>
+                        
+                        <div class="character-counter">
+                            <span class="character-counter__count">0 / 500 characters</span>
+                            <div class="character-counter__actions">
+                                <a href="#" class="btn btn--secondary">Add field reference</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Initialize new field functionality
+            function initializeNewField(fieldElement) {
+                // Size controls
+                const sizeOptions = fieldElement.querySelectorAll('.text-field-size-controls__option');
+                const textInput = fieldElement.querySelector('.text-input');
+                
+                sizeOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        sizeOptions.forEach(opt => opt.classList.remove('text-field-size-controls__option--active'));
+                        this.classList.add('text-field-size-controls__option--active');
+                        
+                        textInput.className = textInput.className.replace(/text-input--(small|large)/g, '');
+                        const size = this.textContent.toLowerCase();
+                        if (size === 'small') {
+                            textInput.classList.add('text-input--small');
+                        } else if (size === 'large') {
+                            textInput.classList.add('text-input--large');
+                        }
+                    });
+                });
+                
+                // Character counter
+                const counterElement = fieldElement.querySelector('.character-counter__count');
+                const maxLength = 500;
+                
+                textInput.addEventListener('input', function() {
+                    const currentLength = this.value.length;
+                    const warningThreshold = maxLength * 0.8;
+                    const errorThreshold = maxLength;
+                    
+                    counterElement.textContent = `${currentLength} / ${maxLength} characters`;
+                    counterElement.className = 'character-counter__count';
+                    this.classList.remove('text-input--warning', 'text-input--error');
+                    
+                    if (currentLength > errorThreshold) {
+                        counterElement.classList.add('character-counter__count--error');
+                        this.classList.add('text-input--error');
+                    } else if (currentLength >= warningThreshold) {
+                        counterElement.classList.add('character-counter__count--warning');
+                        this.classList.add('text-input--warning');
+                    }
+                });
+                
+                // Formatting buttons
+                const formattingButtons = fieldElement.querySelectorAll('.formatting-btn');
+                formattingButtons.forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        if (!this.title.includes('Link')) {
+                            this.classList.toggle('formatting-btn--active');
+                            const isActive = this.classList.contains('formatting-btn--active');
+                            this.setAttribute('aria-pressed', isActive);
+                        }
+                    });
+                });
+                
+                // Remove field functionality
+                const removeButton = fieldElement.querySelector('.field-remove');
+                removeButton.addEventListener('click', function() {
+                    const parentContent = fieldElement.closest('.section-card__content');
+                    const remainingFields = parentContent.querySelectorAll('.input-field').length;
+                    
+                    if (remainingFields > 1) {
+                        fieldElement.style.opacity = '0.5';
+                        fieldElement.style.transform = 'scale(0.95)';
+                        setTimeout(() => fieldElement.remove(), 300);
+                        showFieldRemovedFeedback();
+                    } else {
+                        showFieldErrorFeedback('Cannot remove the last input field');
+                    }
+                });
+                
+                // Editable label functionality
+                const editableLabel = fieldElement.querySelector('.field-label--editable');
+                editableLabel.addEventListener('focus', function() {
+                    this.select();
+                });
+                editableLabel.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        this.blur();
+                    }
+                });
+                
+                // Add field reference functionality
+                const addRefButton = fieldElement.querySelector('.character-counter__actions .btn--secondary');
+                if (addRefButton && addRefButton.textContent.includes('field reference')) {
+                    addRefButton.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showReferenceDropdown(this);
+                    });
+                }
+            }
+            
+            // Show feedback messages
+            function showFieldAddedFeedback() {
+                showFeedback('Field Added', 'New input field created successfully', 'success');
+            }
+            
+            function showFieldRemovedFeedback() {
+                showFeedback('Field Removed', 'Input field deleted from section', 'info');
+            }
+            
+            function showFieldErrorFeedback(message) {
+                showFeedback('Cannot Remove Field', message, 'error');
+            }
+            
+            function showFeedback(title, message, type) {
+                const colors = {
+                    success: 'var(--color-success)',
+                    info: 'var(--color-primary)',
+                    error: 'var(--color-error)'
+                };
+                
+                const feedback = document.createElement('div');
+                feedback.innerHTML = `
+                    <div style="font-weight: var(--font-weight-medium); margin-bottom: 2px;">${title}</div>
+                    <div style="font-size: var(--font-size-xs);">${message}</div>
+                `;
+                feedback.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${colors[type]};
+                    color: white;
+                    padding: var(--space-sm) var(--space-md);
+                    border-radius: var(--radius-md);
+                    font-size: var(--font-size-sm);
+                    z-index: 1000;
+                    opacity: 0;
+                    transform: translateY(-10px);
+                    transition: all 200ms ease-out;
+                    min-width: 200px;
+                `;
+                
+                document.body.appendChild(feedback);
+                
+                setTimeout(() => {
+                    feedback.style.opacity = '1';
+                    feedback.style.transform = 'translateY(0)';
+                }, 10);
+                
+                setTimeout(() => {
+                    feedback.style.opacity = '0';
+                    feedback.style.transform = 'translateY(-10px)';
+                    setTimeout(() => feedback.remove(), 200);
+                }, 3000);
+            }
+            
+            // Add Input Field Functionality - Replace placeholder alert with real functionality
             const addFieldButtons = document.querySelectorAll('.add-input-field-btn');
             
             addFieldButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    // In Phase 2, this would create a new field component
-                    alert('Add input field functionality - Phase 2 implementation required');
+                    const sectionContent = this.closest('.section-card__content');
+                    const fieldNumber = getNextFieldNumber();
+                    
+                    // Create new field element
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = createNewInputFieldHTML(fieldNumber);
+                    const newField = tempDiv.firstElementChild;
+                    
+                    // Insert before the add button
+                    sectionContent.insertBefore(newField, this);
+                    
+                    // Initialize functionality
+                    initializeNewField(newField);
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        newField.style.transition = 'all 300ms ease-out';
+                        newField.style.opacity = '1';
+                        newField.style.transform = 'translateY(0)';
+                    }, 10);
+                    
+                    // Focus the new field label for immediate editing
+                    setTimeout(() => {
+                        const labelInput = newField.querySelector('.field-label--editable');
+                        labelInput.focus();
+                        labelInput.select();
+                    }, 350);
+                    
+                    // Show feedback
+                    showFieldAddedFeedback();
                 });
             });
             
@@ -1229,13 +2181,742 @@
                 });
             });
             
-            // Reference Controls
+            // ===== PHASE 2A.1: REFERENCE SYSTEM MOCK IMPLEMENTATION =====
+            
+            // Create reference dropdown HTML
+            function createReferenceDropdown() {
+                return `
+                    <div class="reference-dropdown" id="reference-dropdown">
+                        <div class="reference-dropdown__search">
+                            <input type="text" placeholder="Search references..." class="reference-dropdown__input">
+                        </div>
+                        <div class="reference-dropdown__content"></div>
+                    </div>
+                `;
+            }
+            
+            // Show reference dropdown (for non-inline references)
+            function showReferenceDropdown(button, searchTerm = '') {
+                hideReferenceDropdown(); // Hide any existing dropdown
+                
+                const container = button.closest('.reference-controls-section') || button.closest('.character-counter__actions');
+                if (!container) return;
+                
+                // Create dropdown if it doesn't exist
+                if (!document.getElementById('reference-dropdown')) {
+                    container.style.position = 'relative';
+                    container.insertAdjacentHTML('beforeend', createReferenceDropdown());
+                }
+                
+                const dropdown = document.getElementById('reference-dropdown');
+                const searchInput = dropdown.querySelector('.reference-dropdown__input');
+                const content = dropdown.querySelector('.reference-dropdown__content');
+                
+                // Set search term if provided
+                searchInput.value = searchTerm;
+                
+                // Filter and display references (non-inline)
+                updateDropdownContent(content, searchTerm, false);
+                
+                // Show dropdown with animation
+                dropdown.classList.add('reference-dropdown--show');
+                setTimeout(() => searchInput.focus(), 100);
+                
+                activeDropdown = dropdown;
+                activeTextArea = null;
+                dropdownFocusIndex = -1;
+                
+                // Setup search functionality
+                searchInput.addEventListener('input', function() {
+                    updateDropdownContent(content, this.value, false);
+                });
+                
+                // Setup keyboard navigation
+                searchInput.addEventListener('keydown', handleDropdownKeyNav);
+            }
+            
+            // Hierarchical Reference Menu System
+            function showReferenceTypeMenu(event, textArea) {
+                hideReferenceDropdown(); // Hide any existing dropdown
+                activeTextArea = textArea;
+                
+                // Determine if we're in Context section for prompt references availability
+                const sectionCard = textArea.closest('.section-card');
+                const isContextSection = sectionCard && sectionCard.querySelector('h1')?.textContent?.includes('Context');
+                
+                const primaryOptions = [
+                    { id: 'field', label: 'Field reference', available: true },
+                    { id: 'prompt', label: 'Prompt reference', available: isContextSection }
+                ];
+                
+                showPopupMenu(primaryOptions, textArea, (selection) => {
+                    if (selection === 'field') {
+                        showFieldScopeMenu(textArea);
+                    } else if (selection === 'prompt') {
+                        openSidebar('prompt-mode');
+                    }
+                });
+            }
+            
+            function showFieldScopeMenu(textArea) {
+                const scopeOptions = [
+                    { id: 'current-prompt', label: 'Field from current prompt' },
+                    { id: 'current-workflow', label: 'Field from current workflow' }
+                ];
+                
+                showPopupMenu(scopeOptions, textArea, (selection) => {
+                    if (selection === 'current-prompt') {
+                        openSidebar('current-fields-mode');
+                    } else if (selection === 'current-workflow') {
+                        openSidebar('workflow-prompts-mode');
+                    }
+                });
+            }
+            
+            function showPopupMenu(options, textArea, onSelect) {
+                const container = textArea.closest('.text-input-container');
+                if (!container) return;
+                
+                const popup = document.createElement('div');
+                popup.className = 'reference-popup-menu';
+                popup.innerHTML = options
+                    .filter(option => option.available !== false)
+                    .map(option => `
+                        <div class="popup-menu-item" data-option-id="${option.id}">
+                            ${option.label}
+                        </div>
+                    `).join('');
+                
+                // Position popup near cursor
+                const rect = textArea.getBoundingClientRect();
+                popup.style.position = 'absolute';
+                popup.style.left = `${rect.left}px`;
+                popup.style.top = `${rect.bottom + 5}px`;
+                popup.style.zIndex = '1000';
+                
+                document.body.appendChild(popup);
+                
+                // Add click handlers
+                popup.querySelectorAll('.popup-menu-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        const optionId = item.dataset.optionId;
+                        document.body.removeChild(popup);
+                        onSelect(optionId);
+                    });
+                });
+                
+                // Close on outside click
+                setTimeout(() => {
+                    document.addEventListener('click', function closePopup(e) {
+                        if (!popup.contains(e.target)) {
+                            if (document.body.contains(popup)) {
+                                document.body.removeChild(popup);
+                            }
+                            document.removeEventListener('click', closePopup);
+                        }
+                    });
+                }, 100);
+            }
+
+            // ===== SIDEBAR MODE SWITCHING LOGIC =====
+            
+            function openSidebar(mode) {
+                const sidebar = document.getElementById('references-sidebar');
+                const sidebarContent = document.getElementById('sidebar-content');
+                
+                sidebar.classList.add('references-sidebar--open');
+                
+                switch(mode) {
+                    case 'current-fields-mode':
+                        sidebarContent.innerHTML = renderCurrentFields();
+                        break;
+                    case 'workflow-prompts-mode':
+                        sidebarContent.innerHTML = renderWorkflowPrompts();
+                        break;
+                    case 'prompt-mode':
+                        sidebarContent.innerHTML = renderPromptReferences();
+                        break;
+                }
+                
+                // Add event listeners to reference items
+                setupReferenceItemListeners();
+            }
+            
+            function closeSidebar() {
+                const sidebar = document.getElementById('references-sidebar');
+                sidebar.classList.remove('references-sidebar--open');
+            }
+            
+            function renderCurrentFields() {
+                return `
+                    <div class="reference-section">
+                        <h4>Current Prompt Fields</h4>
+                        ${mockWorkflowData.currentPromptFields.map(field => `
+                            <div class="reference-item" data-field-id="${field.id}">
+                                <input type="checkbox" />
+                                <div class="reference-info">
+                                    <div class="reference-label">${field.label}</div>
+                                    <div class="reference-section">${field.section}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            
+            function renderWorkflowPrompts() {
+                return `
+                    <div class="reference-section">
+                        <h4>Select Prompt from Workflow</h4>
+                        <p style="font-size: 14px; color: var(--color-text-muted); margin-bottom: 16px;">
+                            Choose a prompt, then select fields from it
+                        </p>
+                        ${mockWorkflowData.workflowPrompts
+                            .filter(prompt => !prompt.isCurrentPrompt)
+                            .map(prompt => `
+                                <div class="reference-item" data-prompt-id="${prompt.id}" onclick="selectPromptForFields('${prompt.id}')">
+                                    <div class="reference-info">
+                                        <div class="reference-label">${prompt.name}</div>
+                                        <div class="reference-status">${prompt.status.toUpperCase()}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                    </div>
+                `;
+            }
+            
+            function renderPromptReferences() {
+                return `
+                    <div class="reference-section">
+                        <h4>Workflow Prompt References</h4>
+                        ${mockWorkflowData.workflowPrompts
+                            .filter(prompt => !prompt.isCurrentPrompt)
+                            .map(prompt => `
+                                <div class="reference-item" data-prompt-id="${prompt.id}">
+                                    <input type="checkbox" />
+                                    <div class="reference-info">
+                                        <div class="reference-label">${prompt.name}</div>
+                                        <div class="reference-status">${prompt.status.toUpperCase()}</div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                    </div>
+                `;
+            }
+            
+            function selectPromptForFields(promptId) {
+                // Show fields from selected prompt
+                const sidebarContent = document.getElementById('sidebar-content');
+                const selectedPrompt = mockWorkflowData.workflowPrompts.find(p => p.id === promptId);
+                const fieldsFromPrompt = mockWorkflowData.workflowFields.filter(f => f.promptId === promptId);
+                
+                sidebarContent.innerHTML = `
+                    <div class="reference-section">
+                        <button onclick="openSidebar('workflow-prompts-mode')" 
+                                style="background: none; border: none; color: var(--colors--electric-blue-500); cursor: pointer; margin-bottom: 16px;">
+                            ← Back to prompts
+                        </button>
+                        <h4>Fields from "${selectedPrompt.name}"</h4>
+                        ${fieldsFromPrompt.map(field => `
+                            <div class="reference-item" data-field-id="${field.id}">
+                                <input type="checkbox" />
+                                <div class="reference-info">
+                                    <div class="reference-label">${field.label}</div>
+                                    <div class="reference-section">${field.section}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                
+                setupReferenceItemListeners();
+            }
+            
+            function setupReferenceItemListeners() {
+                const referenceItems = document.querySelectorAll('.reference-item');
+                referenceItems.forEach(item => {
+                    const checkbox = item.querySelector('input[type="checkbox"]');
+                    if (checkbox) {
+                        checkbox.addEventListener('change', function() {
+                            if (this.checked) {
+                                item.classList.add('reference-item--selected');
+                            } else {
+                                item.classList.remove('reference-item--selected');
+                            }
+                            updateSelectionCount();
+                        });
+                    }
+                });
+            }
+            
+            function updateSelectionCount() {
+                const selectedItems = document.querySelectorAll('.reference-item--selected').length;
+                const selectionCount = document.querySelector('.selection-count');
+                if (selectionCount) {
+                    selectionCount.textContent = `${selectedItems} selected`;
+                }
+            }
+            
+            // ===== REFERENCE INSERTION LOGIC =====
+            
+            function addSelectedReferences() {
+                const selectedItems = document.querySelectorAll('.reference-item--selected');
+                selectedItems.forEach(item => {
+                    const fieldId = item.dataset.fieldId;
+                    const promptId = item.dataset.promptId;
+                    
+                    if (fieldId) {
+                        // Handle field reference insertion
+                        const field = findFieldById(fieldId);
+                        if (field) {
+                            insertReferenceChip(field);
+                        }
+                    } else if (promptId) {
+                        // Handle prompt reference insertion
+                        const prompt = mockWorkflowData.workflowPrompts.find(p => p.id === promptId);
+                        if (prompt) {
+                            addPromptReferenceChip(prompt);
+                        }
+                    }
+                });
+                closeSidebar();
+            }
+            
+            function findFieldById(fieldId) {
+                // Check current prompt fields
+                let field = mockWorkflowData.currentPromptFields.find(f => f.id === fieldId);
+                if (field) return field;
+                
+                // Check workflow fields (from other prompts)
+                field = mockWorkflowData.workflowFields.find(f => f.id === fieldId);
+                return field;
+            }
+            
+            function insertReferenceChip(field) {
+                if (!activeTextArea) return;
+                
+                // Create chip text - show source if from another prompt
+                let chipText = field.label;
+                if (field.promptName) {
+                    chipText = `${field.label} (${field.promptName})`;
+                }
+                
+                // Find and replace the @ symbol
+                const cursorPos = activeTextArea.selectionStart;
+                const textValue = activeTextArea.value;
+                
+                // Find the @ symbol before cursor
+                let atPos = -1;
+                for (let i = cursorPos - 1; i >= 0; i--) {
+                    if (textValue[i] === '@') {
+                        atPos = i;
+                        break;
+                    }
+                    if (textValue[i] === ' ' || textValue[i] === '\n') {
+                        break;
+                    }
+                }
+                
+                if (atPos !== -1) {
+                    const beforeText = textValue.substring(0, atPos);
+                    const afterText = textValue.substring(cursorPos);
+                    const referenceText = `@${chipText}`;
+                    
+                    activeTextArea.value = beforeText + referenceText + afterText;
+                    
+                    // Set cursor position after reference
+                    const newPos = atPos + referenceText.length;
+                    activeTextArea.setSelectionRange(newPos, newPos);
+                    activeTextArea.focus();
+                    
+                    // Show feedback
+                    showReferenceAddedFeedback(field, 'field');
+                }
+            }
+            
+            function addPromptReferenceChip(prompt) {
+                // For demo purposes, show an alert
+                // In real implementation, this would add to the prompt reference counter above Context
+                showReferenceAddedFeedback(prompt, 'prompt');
+            }
+            
+            function showReferenceAddedFeedback(reference, type) {
+                // Create a temporary feedback message
+                const feedback = document.createElement('div');
+                feedback.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--colors--electric-blue-500);
+                    color: white;
+                    padding: 12px 16px;
+                    border-radius: 8px;
+                    box-shadow: var(--shadow-lg);
+                    z-index: 1001;
+                    font-size: 14px;
+                `;
+                
+                const name = reference.label || reference.name;
+                feedback.textContent = `✓ Added ${type} reference: ${name}`;
+                
+                document.body.appendChild(feedback);
+                
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    if (document.body.contains(feedback)) {
+                        document.body.removeChild(feedback);
+                    }
+                }, 3000);
+            }
+
+            // Show inline reference dropdown (triggered by @ symbol)
+            function showInlineReferenceDropdown(textArea) {
+                hideReferenceDropdown(); // Hide any existing dropdown
+                
+                const container = textArea.closest('.text-input-container');
+                if (!container) return;
+                
+                // Create dropdown positioned at cursor
+                if (!document.getElementById('reference-dropdown')) {
+                    container.style.position = 'relative';
+                    container.insertAdjacentHTML('beforeend', createInlineReferenceDropdown());
+                }
+                
+                const dropdown = document.getElementById('reference-dropdown');
+                const content = dropdown.querySelector('.reference-dropdown__content');
+                
+                // Show reference type selection first
+                showReferenceTypeSelection(content);
+                
+                // Show dropdown with animation
+                dropdown.classList.add('reference-dropdown--show');
+                
+                activeDropdown = dropdown;
+                activeTextArea = textArea;
+                dropdownFocusIndex = -1;
+            }
+            
+            // Create inline reference dropdown (simpler version)
+            function createInlineReferenceDropdown() {
+                return `
+                    <div class="reference-dropdown reference-dropdown--inline" id="reference-dropdown">
+                        <div class="reference-dropdown__content"></div>
+                    </div>
+                `;
+            }
+            
+            // Show reference type selection
+            function showReferenceTypeSelection(content) {
+                content.innerHTML = `
+                    <div class="reference-type-selection">
+                        <div class="reference-type-item" data-type="field">
+                            <span class="material-symbols-outlined reference-dropdown__icon">input</span>
+                            <div class="reference-dropdown__details">
+                                <div class="reference-dropdown__text">Field Reference</div>
+                                <div class="reference-dropdown__meta">Insert inline field reference</div>
+                            </div>
+                        </div>
+                        <div class="reference-type-item" data-type="prompt">
+                            <span class="material-symbols-outlined reference-dropdown__icon">psychology</span>
+                            <div class="reference-dropdown__details">
+                                <div class="reference-dropdown__text">Prompt Reference</div>
+                                <div class="reference-dropdown__meta">Insert non-inline prompt reference</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add click handlers for type selection
+                content.querySelectorAll('.reference-type-item').forEach(item => {
+                    item.className += ' reference-dropdown__item';
+                    item.addEventListener('click', function() {
+                        const referenceType = this.dataset.type;
+                        showReferenceSelection(content, referenceType);
+                    });
+                });
+            }
+            
+            // Show specific reference selection
+            function showReferenceSelection(content, referenceType) {
+                const references = referenceType === 'field' ? mockReferences.fields : mockReferences.prompts;
+                
+                content.innerHTML = `
+                    <div class="reference-dropdown__search">
+                        <input type="text" placeholder="Search ${referenceType} references..." class="reference-dropdown__input">
+                    </div>
+                    <div class="reference-dropdown__list"></div>
+                `;
+                
+                const searchInput = content.querySelector('.reference-dropdown__input');
+                const listContainer = content.querySelector('.reference-dropdown__list');
+                
+                // Initial display
+                displayReferenceList(listContainer, references, '', referenceType);
+                
+                // Search functionality
+                searchInput.addEventListener('input', function() {
+                    const filtered = references.filter(ref => 
+                        ref.name.toLowerCase().includes(this.value.toLowerCase()) ||
+                        (ref.section && ref.section.toLowerCase().includes(this.value.toLowerCase())) ||
+                        (ref.category && ref.category.toLowerCase().includes(this.value.toLowerCase()))
+                    );
+                    displayReferenceList(listContainer, filtered, this.value, referenceType);
+                });
+                
+                // Focus search input
+                setTimeout(() => searchInput.focus(), 100);
+            }
+            
+            // Display reference list
+            function displayReferenceList(container, references, searchTerm, referenceType) {
+                if (references.length === 0) {
+                    container.innerHTML = '<div class="reference-dropdown__empty">No references found</div>';
+                    return;
+                }
+                
+                const html = references.map((ref, index) => `
+                    <div class="reference-dropdown__item" data-ref-id="${ref.id}" data-ref-type="${referenceType}" data-index="${index}">
+                        <span class="material-symbols-outlined reference-dropdown__icon">${ref.icon}</span>
+                        <div class="reference-dropdown__details">
+                            <div class="reference-dropdown__text">${highlightMatch(ref.name, searchTerm)}</div>
+                            <div class="reference-dropdown__meta">${ref.section || ref.category} • ${ref.type}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                container.innerHTML = html;
+                
+                // Add click handlers to items
+                container.querySelectorAll('.reference-dropdown__item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const refId = this.dataset.refId;
+                        const refType = this.dataset.refType;
+                        const reference = references.find(r => r.id === refId);
+                        insertInlineReference(reference, refType);
+                    });
+                });
+            }
+            
+            // Update dropdown content based on search
+            function updateDropdownContent(content, searchTerm = '', isInline = false) {
+                const allReferences = [...mockReferences.fields, ...mockReferences.prompts];
+                const filtered = allReferences.filter(ref => 
+                    ref.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    (ref.section && ref.section.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                    (ref.category && ref.category.toLowerCase().includes(searchTerm.toLowerCase()))
+                );
+                
+                if (filtered.length === 0) {
+                    content.innerHTML = '<div class="reference-dropdown__empty">No references found</div>';
+                    return;
+                }
+                
+                const html = filtered.map((ref, index) => `
+                    <div class="reference-dropdown__item" data-ref-id="${ref.id}" data-index="${index}">
+                        <span class="material-symbols-outlined reference-dropdown__icon">${ref.icon}</span>
+                        <div class="reference-dropdown__details">
+                            <div class="reference-dropdown__text">${highlightMatch(ref.name, searchTerm)}</div>
+                            <div class="reference-dropdown__meta">${ref.section || ref.category} • ${ref.type}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                content.innerHTML = html;
+                
+                // Add click handlers to items
+                content.querySelectorAll('.reference-dropdown__item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const refId = this.dataset.refId;
+                        const reference = allReferences.find(r => r.id === refId);
+                        insertReference(reference);
+                    });
+                });
+            }
+            
+            // Highlight search matches
+            function highlightMatch(text, searchTerm) {
+                if (!searchTerm) return text;
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                return text.replace(regex, '<mark>$1</mark>');
+            }
+            
+            // Handle keyboard navigation in dropdown
+            function handleDropdownKeyNav(e) {
+                const items = activeDropdown.querySelectorAll('.reference-dropdown__item');
+                
+                switch(e.key) {
+                    case 'ArrowDown':
+                        e.preventDefault();
+                        dropdownFocusIndex = Math.min(dropdownFocusIndex + 1, items.length - 1);
+                        updateDropdownFocus(items);
+                        break;
+                    case 'ArrowUp':
+                        e.preventDefault();
+                        dropdownFocusIndex = Math.max(dropdownFocusIndex - 1, -1);
+                        updateDropdownFocus(items);
+                        break;
+                    case 'Enter':
+                        e.preventDefault();
+                        if (dropdownFocusIndex >= 0 && items[dropdownFocusIndex]) {
+                            items[dropdownFocusIndex].click();
+                        }
+                        break;
+                    case 'Escape':
+                        hideReferenceDropdown();
+                        break;
+                }
+            }
+            
+            // Update visual focus in dropdown
+            function updateDropdownFocus(items) {
+                items.forEach((item, index) => {
+                    item.classList.toggle('reference-dropdown__item--focused', index === dropdownFocusIndex);
+                });
+            }
+            
+            // Hide reference dropdown
+            function hideReferenceDropdown() {
+                if (activeDropdown) {
+                    activeDropdown.classList.remove('reference-dropdown--show');
+                    setTimeout(() => {
+                        if (activeDropdown && activeDropdown.parentNode) {
+                            activeDropdown.remove();
+                        }
+                        activeDropdown = null;
+                        activeTextArea = null;
+                        dropdownFocusIndex = -1;
+                    }, 200);
+                }
+            }
+            
+            // Insert inline reference (for @ symbol usage)
+            function insertInlineReference(reference, referenceType) {
+                if (!activeTextArea) return;
+                
+                // Find the @ symbol and replace it with the reference
+                const cursorPos = activeTextArea.selectionStart;
+                const textValue = activeTextArea.value;
+                
+                // Find the @ symbol before cursor
+                let atPos = -1;
+                for (let i = cursorPos - 1; i >= 0; i--) {
+                    if (textValue[i] === '@') {
+                        atPos = i;
+                        break;
+                    }
+                    if (textValue[i] === ' ' || textValue[i] === '\n') {
+                        break;
+                    }
+                }
+                
+                if (atPos >= 0) {
+                    if (referenceType === 'field') {
+                        // For field references, insert inline chip-style reference
+                        const beforeText = textValue.substring(0, atPos);
+                        const afterText = textValue.substring(cursorPos);
+                        const referenceText = `@${reference.name}`;
+                        
+                        activeTextArea.value = beforeText + referenceText + afterText;
+                        
+                        // Set cursor position after reference
+                        const newPos = atPos + referenceText.length;
+                        activeTextArea.setSelectionRange(newPos, newPos);
+                        
+                        showReferenceAddedFeedback(reference, 'inline field');
+                    } else {
+                        // For prompt references, remove @ and add to reference chips
+                        const beforeText = textValue.substring(0, atPos);
+                        const afterText = textValue.substring(cursorPos);
+                        
+                        activeTextArea.value = beforeText + afterText;
+                        activeTextArea.setSelectionRange(atPos, atPos);
+                        
+                        // Add to reference chips display
+                        updateReferenceChipsDisplay(reference);
+                        showReferenceAddedFeedback(reference, 'prompt reference');
+                    }
+                    
+                    // Update character counter
+                    const inputEvent = new Event('input', { bubbles: true });
+                    activeTextArea.dispatchEvent(inputEvent);
+                }
+                
+                hideReferenceDropdown();
+            }
+            
+            // Insert reference (mock implementation for non-inline)
+            function insertReference(reference) {
+                // Update reference chips display
+                updateReferenceChipsDisplay(reference);
+                
+                // Show success feedback
+                showReferenceAddedFeedback(reference, 'reference');
+                
+                hideReferenceDropdown();
+            }
+            
+            // Update reference chips display
+            function updateReferenceChipsDisplay(reference) {
+                // Find the reference chips container in the same section
+                const section = activeDropdown.closest('.section-card__content');
+                const chipsContainer = section.querySelector('.reference-chips');
+                
+                if (chipsContainer) {
+                    // Create new reference chip
+                    const chipHtml = `
+                        <a href="#" class="reference-chip" aria-label="Edit ${reference.name}" data-ref-id="${reference.id}">
+                            <span>${reference.name}</span>
+                            <span class="reference-chip__edit" aria-hidden="true">
+                                <span class="material-symbols-outlined material-symbols-outlined--sm">edit</span>
+                            </span>
+                        </a>
+                    `;
+                    
+                    // Add with animation
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = chipHtml;
+                    const newChip = tempDiv.firstElementChild;
+                    
+                    // Add animation class
+                    newChip.style.opacity = '0';
+                    newChip.style.transform = 'scale(0.8)';
+                    
+                    chipsContainer.appendChild(newChip);
+                    
+                    // Animate in
+                    setTimeout(() => {
+                        newChip.style.transition = 'all 200ms ease-out';
+                        newChip.style.opacity = '1';
+                        newChip.style.transform = 'scale(1)';
+                    }, 10);
+                    
+                    // Add click handler for editing
+                    newChip.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showReferenceDropdown(this, reference.name);
+                    });
+                }
+            }
+            
+            // Show reference added feedback
+            function showReferenceAddedFeedback(reference, type = 'reference') {
+                const messages = {
+                    'inline field': `Inserted inline field reference: ${reference.name}`,
+                    'prompt reference': `Added prompt reference: ${reference.name}`,
+                    'reference': `Added ${reference.name}`
+                };
+                
+                const message = messages[type] || messages['reference'];
+                showFeedback('Reference Added', message, 'success');
+            }
+            
+            // Reference Controls - Replace placeholder alerts with real functionality
             const addReferenceButtons = document.querySelectorAll('.add-reference-btn');
             
             addReferenceButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
-                    alert('Add reference functionality - Phase 2 implementation required');
+                    showReferenceDropdown(this);
                 });
             });
             
@@ -1244,8 +2925,31 @@
             referenceChips.forEach(chip => {
                 chip.addEventListener('click', function(e) {
                     e.preventDefault();
-                    alert('Edit references functionality - Phase 2 implementation required');
+                    // Extract current reference name for search
+                    const referenceName = this.querySelector('span:first-child').textContent.trim();
+                    showReferenceDropdown(this, referenceName);
                 });
+            });
+            
+            // Add field reference buttons in character counters
+            const addFieldRefButtons = document.querySelectorAll('.character-counter__actions .btn--secondary');
+            
+            addFieldRefButtons.forEach(button => {
+                if (button.textContent.includes('field reference')) {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showReferenceDropdown(this);
+                    });
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (activeDropdown && !activeDropdown.contains(e.target) && 
+                    !e.target.closest('.add-reference-btn') && 
+                    !e.target.closest('.reference-chip')) {
+                    hideReferenceDropdown();
+                }
             });
             
             // Editable Label Functionality

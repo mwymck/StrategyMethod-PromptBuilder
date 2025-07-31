@@ -53,15 +53,20 @@ Each instance is a **separate, independent card** - not collapsible sections wit
 
 ### Reference System Integration
 **Field References (Inline):**
-- Typing "@" triggers inline reference dropdown near cursor
-- Selected field references appear as **blue chips inline** with text
-- Field reference chips can be removed via "x" button
-- Available in text areas that support @ references
+- Typing "@" triggers hierarchical popup menu system:
+  - Primary popup: "Field reference" / "Prompt reference" (context-dependent)
+  - Secondary popup for fields: "Field from current prompt" / "Field from current workflow"
+- **Workflow-scoped**: All references limited to current workflow only
+- **Cross-prompt field references**: 2-step selection (prompt → field) for fields from other workflow prompts
+- Selected field references appear as **blue chips inline** with text, showing source context when from other prompts
+- Field reference chips can be removed via "x" button or edited by clicking
+- **Side panel interface**: Opens alongside content (flexbox layout, not overlay) for reference selection
 
 **Prompt References (Above Input):**
-- **Reference controls section** displays above input area (when applicable)
-- **"+ Add reference" button** for accessing prompt references
+- **Reference controls section** displays above input area (Context section only)
+- **"+ Add Prompt Reference" button** opens side panel with workflow prompts
 - **Reference counter chips** showing "X prompt references" with edit capability
+- **Workflow-scoped**: Only prompts from current workflow available, excluding current prompt
 - **Not inline** - appear as controls above the text input area
 
 ### Input Field Management

@@ -41,11 +41,11 @@ python -m http.server 8000  # Then open http://localhost:8000
 - Include multiple component states and realistic content
 - Target: 30 minutes from concept to shareable demo
 
-**Phase 2 - Prototype Assembly:**
-- Extract components into `createComponentName(data)` JavaScript functions
-- Separate content into structured data files (`prototype/data/`)
-- Combine components into full page templates (`prototype/pages/`)
-- Add navigation system via `shared/prototype.js`
+**Phase 2 - Interactive Prototype Assembly:**
+- Extract components into `createComponentName(data)` JavaScript functions for reusability
+- Add mock interactions and functionality (reference system, form behaviors)
+- Create multi-page prototype with navigation for user testing
+- Build Webflow-equivalent prototype for validation and engineering handoff
 
 ### Design System Architecture
 
@@ -75,7 +75,7 @@ All Phase 1 components follow this structure:
 - Mobile-first responsive design
 - Multiple states/variations for testing
 - CSS using shared variables exclusively
-- Basic interactions only (complex logic deferred to Phase 2)
+- Basic interactions only (advanced mock interactions added in Phase 2)
 - Realistic placeholder content (no lorem ipsum)
 
 ## Specialized Sub-agents
@@ -84,7 +84,7 @@ This project includes three specialized AI agents for different tasks:
 
 - **`phase1-component-creator`**: Creates standalone HTML/CSS components with semantic structure, accessibility compliance, and responsive design
 - **`css-system-guardian`**: Enforces design system compliance, detects hardcoded values, maintains CSS variable usage
-- **`prototype-assembler`**: Handles Phase 1 to Phase 2 migration, extracts components to JavaScript functions, builds multi-page prototypes
+- **`prototype-assembler`**: Handles Phase 1 to Phase 2 migration, adds mock interactions, creates Webflow-equivalent interactive prototypes for user testing and engineering handoff
 
 ## Speed Targets
 
@@ -109,6 +109,6 @@ The primary component being developed is a Section Card with:
 - Semantic HTML structure (use `<article>`, `<section>`, `<header>` appropriately)
 - CSS variables for all styling (zero hardcoded values)
 - Mobile-first responsive design
-- Keyboard navigation and ARIA compliance
 - Component states documented and visually distinct
-- Cross-browser compatibility maintained
+- Mock interactions that demonstrate intended functionality
+- Webflow-equivalent prototype fidelity for user testing and engineering handoff
