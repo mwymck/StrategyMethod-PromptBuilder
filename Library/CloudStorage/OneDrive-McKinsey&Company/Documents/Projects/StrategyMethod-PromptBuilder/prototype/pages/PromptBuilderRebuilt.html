@@ -1,0 +1,1749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder - StrategyMethod.AI</title>
+    <link rel="stylesheet" href="../shared/variables.css">
+    <link rel="stylesheet" href="../shared/base.css">
+    <style>
+        /* ===== PROMPT BUILDER LAYOUT STYLES ===== */
+        
+        /* Layout Foundation */
+        .prompt-builder-container {
+            min-height: 100vh;
+            background: var(--gray-50);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-container {
+            display: flex;
+            transition: all var(--transition-base);
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            transition: all var(--transition-base);
+        }
+
+        .references-sidebar {
+            width: 0;
+            overflow: hidden;
+            background: white;
+            border-left: 1px solid var(--color-border);
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-base);
+        }
+
+        .references-sidebar--open {
+            width: 400px;
+        }
+        
+        /* Application Header */
+        .app-header {
+            background: white;
+            border-bottom: 1px solid var(--color-border);
+            padding: 0 var(--space-xl);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: var(--z-sticky);
+        }
+        
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+        }
+        
+        .app-logo::before {
+            content: "🧠";
+            font-size: 24px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: white;
+            padding: var(--space-2xl) var(--space-xl);
+            border-bottom: 1px solid var(--color-border);
+        }
+        
+        .page-header__content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .page-header__title {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text);
+            margin: 0 0 var(--space-sm) 0;
+        }
+        
+        .page-header__description {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-muted);
+            margin: 0 0 var(--space-xl) 0;
+        }
+        
+        .page-header__actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        /* Main Content Container */
+        .content-container {
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            padding: var(--space-xl);
+        }
+        
+        /* Section Groups */
+        .section-group {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .section-group__header {
+            margin-bottom: var(--space-lg);
+        }
+
+        .section-group__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0 0 var(--space-sm) 0;
+        }
+
+        .section-group__description {
+            font-size: var(--font-size-base);
+            color: var(--color-text-muted);
+            margin: 0;
+        }
+
+        /* Button System */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-lg);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            text-decoration: none;
+            background: transparent;
+        }
+
+        .btn:focus {
+            outline: var(--focus-ring-outline);
+            outline-offset: var(--focus-ring-offset);
+        }
+        
+        .btn--secondary {
+            background: white;
+            color: var(--color-text);
+            border-color: var(--color-border);
+        }
+        
+        .btn--secondary:hover {
+            background: var(--color-bg-hover);
+            border-color: var(--color-primary);
+        }
+        
+        .btn--primary {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+        
+        .btn--primary:hover {
+            background: var(--color-primary-hover);
+            border-color: var(--color-primary-hover);
+        }
+        
+        .btn--primary:disabled {
+            background: var(--color-bg-disabled);
+            color: var(--color-text-muted);
+            border-color: var(--color-border);
+            cursor: not-allowed;
+        }
+        
+        .btn--link {
+            background: transparent;
+            color: var(--color-primary);
+            border: none;
+            padding: var(--space-sm);
+        }
+        
+        .btn--link:hover {
+            color: var(--color-primary-hover);
+            background: var(--color-bg-hover);
+        }
+
+        .btn--outline {
+            background: transparent;
+            color: var(--color-primary);
+            border-color: var(--color-primary);
+        }
+
+        .btn--outline:hover {
+            background: var(--electric-blue-50);
+        }
+
+        /* Material Icons */
+        .material-symbols-outlined {
+            font-family: var(--font-family-icons);
+            font-weight: normal;
+            font-style: normal;
+            font-size: var(--size-icon-base);
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== SECTION CARD COMPONENT ===== */
+        
+        .section-card {
+            background: var(--color-bg-card);
+            border: 1px solid transparent;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: box-shadow var(--transition-base);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .section-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section-card--error {
+            border-color: var(--color-error);
+        }
+        
+        /* Card Header - Single Row Layout */
+        .section-card__header {
+            padding: var(--space-xl) var(--space-xl) 0 var(--space-xl);
+        }
+        
+        .section-card__header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+        }
+        
+        .section-card__title-group {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .section-card__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0;
+        }
+        
+        .section-card__badge {
+            background: var(--color-badge-bg);
+            color: var(--color-badge-text);
+            padding: var(--space-xxs) var(--space-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        .section-card__badge--required {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .section-card__badge--optional {
+            background: var(--color-badge-bg);
+            color: var(--color-badge-text);
+        }
+        
+        .section-card__controls {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .section-card__description {
+            font-size: var(--font-size-base);
+            color: var(--color-text-muted);
+            margin: 0 0 var(--space-md) 0;
+            line-height: var(--line-height-base);
+        }
+
+        .section-card__description-list {
+            margin: 0 0 var(--space-md) 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .section-card__description-list li {
+            position: relative;
+            padding-left: var(--space-lg);
+            margin-bottom: var(--space-xs);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+
+        .section-card__description-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--color-text-muted);
+        }
+        
+        /* Card Content */
+        .section-card__content {
+            padding: 0 var(--space-xl) var(--space-xl) var(--space-xl);
+        }
+
+        /* Alert System */
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-sm);
+            padding: var(--space-md);
+            margin-bottom: var(--space-lg);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-alert-border);
+            background: var(--color-alert-bg);
+        }
+
+        .alert--info {
+            border-color: var(--cyan-300);
+            background: var(--cyan-100);
+        }
+
+        .alert__icon {
+            flex-shrink: 0;
+            width: var(--size-icon-20);
+            height: var(--size-icon-20);
+            border-radius: 50%;
+            background: var(--color-info);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-bold);
+        }
+
+        .alert__content {
+            flex: 1;
+        }
+
+        .alert__headline {
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin-bottom: var(--space-xs);
+        }
+
+        .alert__description {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+            margin: 0;
+        }
+
+        .alert__close {
+            flex-shrink: 0;
+            background: transparent;
+            border: none;
+            padding: var(--space-xs);
+            cursor: pointer;
+            color: var(--color-text-muted);
+            font-size: var(--font-size-lg);
+        }
+
+        .alert__close:hover {
+            color: var(--color-text);
+        }
+
+        /* Reference Controls Section */
+        .reference-controls-section {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+            flex-wrap: wrap;
+        }
+
+        .reference-chips {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+
+        .reference-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--color-chip-bg);
+            color: var(--color-chip-text);
+            border: 1px solid transparent;
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .reference-chip:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .reference-chip__count {
+            font-weight: var(--font-weight-semibold);
+        }
+
+        .reference-chip .material-symbols-outlined {
+            font-size: var(--size-icon-16);
+        }
+
+        /* Input Field */
+        .input-field {
+            margin-bottom: var(--space-lg);
+        }
+
+        .field-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-sm);
+        }
+
+        .field-label {
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+        }
+
+        .field-remove {
+            background: transparent;
+            border: none;
+            color: var(--color-text-muted);
+            font-size: var(--font-size-lg);
+            cursor: pointer;
+            padding: var(--space-xs);
+            border-radius: var(--radius-sm);
+        }
+
+        .field-remove:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text);
+        }
+
+        /* Input Controls */
+        .input-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-md);
+            padding: var(--space-sm);
+            background: var(--color-bg-hover);
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            border: 1px solid var(--color-border);
+            border-bottom: none;
+        }
+
+        .rich-text-toolbar {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+
+        .toolbar-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: var(--size-button-square);
+            height: var(--size-button-square);
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: var(--radius-xs);
+            cursor: pointer;
+            color: var(--color-text);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            transition: all var(--transition-base);
+        }
+
+        .toolbar-btn:hover {
+            background: var(--color-bg-active);
+            border-color: var(--color-border);
+        }
+
+        .toolbar-btn--active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .text-field-size-controls {
+            display: flex;
+            align-items: center;
+            gap: 1px;
+            background: white;
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--color-border);
+            overflow: hidden;
+        }
+
+        .size-btn {
+            padding: var(--space-xs) var(--space-sm);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-muted);
+            transition: all var(--transition-base);
+        }
+
+        .size-btn:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text);
+        }
+
+        .size-btn--active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Text Input Container */
+        .text-input-container {
+            position: relative;
+        }
+
+        .text-input-container--error {
+            border-color: var(--color-error);
+        }
+
+        .text-input {
+            width: 100%;
+            min-height: var(--textarea-height-base);
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            font-size: var(--font-size-base);
+            font-family: var(--font-family-base);
+            color: var(--color-text);
+            background: white;
+            resize: vertical;
+            transition: all var(--transition-base);
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: var(--focus-ring);
+        }
+
+        .text-input--error {
+            border-color: var(--color-error);
+        }
+
+        .text-input--small {
+            min-height: var(--textarea-height-sm);
+        }
+
+        .text-input--large {
+            min-height: var(--textarea-height-lg);
+        }
+
+        /* Character Counter */
+        .character-counter {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: var(--space-xs);
+        }
+
+        .character-count {
+            font-size: var(--font-size-xs);
+            color: var(--color-count-normal);
+        }
+
+        .character-count--warning {
+            color: var(--color-count-warning);
+        }
+
+        .character-count--error {
+            color: var(--color-count-error);
+        }
+
+        .error-message {
+            color: var(--color-error);
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-xs);
+        }
+
+        /* Add Field Button */
+        .add-field-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            width: 100%;
+            justify-content: center;
+            padding: var(--space-md);
+            border: 2px dashed var(--color-border);
+            background: transparent;
+            color: var(--color-primary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .add-field-btn:hover {
+            border-color: var(--color-primary);
+            background: var(--electric-blue-50);
+        }
+
+        /* Collapsible Optional Sections */
+        .section-card--collapsed .section-card__content {
+            display: none;
+        }
+
+        .section-card--collapsed {
+            background: var(--color-bg-hover);
+        }
+
+        .section-card--collapsed .section-card__header {
+            padding-bottom: var(--space-xl);
+        }
+
+        /* Modal System */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: var(--z-modal);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+        }
+
+        .modal-overlay--open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow: hidden;
+            transform: translateY(-20px);
+            transition: transform var(--transition-base);
+        }
+
+        .modal-overlay--open .modal {
+            transform: translateY(0);
+        }
+
+        .modal__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-xl);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .modal__title {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0;
+        }
+
+        .modal__close {
+            background: transparent;
+            border: none;
+            font-size: var(--font-size-xl);
+            color: var(--color-text-muted);
+            cursor: pointer;
+            padding: var(--space-xs);
+        }
+
+        .modal__close:hover {
+            color: var(--color-text);
+        }
+
+        .modal__content {
+            padding: var(--space-xl);
+        }
+
+        .modal__textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: var(--space-md);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-family: var(--font-family-base);
+            resize: vertical;
+            margin-bottom: var(--space-lg);
+        }
+
+        .modal__actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: flex-end;
+            padding: var(--space-xl);
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .app-header {
+                padding: 0 var(--space-md);
+            }
+
+            .page-header {
+                padding: var(--space-xl) var(--space-md);
+            }
+
+            .content-container {
+                padding: var(--space-md);
+            }
+
+            .section-card__header {
+                padding: var(--space-lg) var(--space-lg) 0 var(--space-lg);
+            }
+
+            .section-card__content {
+                padding: 0 var(--space-lg) var(--space-lg) var(--space-lg);
+            }
+
+            .section-card__header-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-md);
+            }
+
+            .section-card__controls {
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            .input-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-sm);
+            }
+
+            .rich-text-toolbar {
+                justify-content: center;
+            }
+
+            .references-sidebar--open {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                z-index: var(--z-modal);
+            }
+
+            .page-header__actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .reference-controls-section {
+                flex-direction: column;
+                align-items: stretch;
+                gap: var(--space-sm);
+            }
+        }
+
+        /* Hidden state utility */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Focus management */
+        .section-card:focus-within {
+            box-shadow: var(--shadow-hover);
+        }
+    </style>
+</head>
+<body>
+    <div class="prompt-builder-container">
+        <!-- Application Header -->
+        <header class="app-header">
+            <div class="app-logo">
+                StrategyMethod.AI
+            </div>
+            <div class="header-actions">
+                <button class="btn btn--secondary" id="closePromptBtn">
+                    Close prompt
+                </button>
+                <button class="btn btn--primary" id="savePromptBtn">
+                    Save
+                </button>
+            </div>
+        </header>
+
+        <div class="page-container">
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Page Header -->
+                <section class="page-header">
+                    <div class="page-header__content">
+                        <h1 class="page-header__title">Prompt builder</h1>
+                        <p class="page-header__description">
+                            This tool supports iterative development of StrategyMethod.AI prompts.
+                        </p>
+                        <div class="page-header__actions">
+                            <button class="btn btn--outline" id="promptNotesBtn">
+                                Prompt notes
+                            </button>
+                            <button class="btn btn--outline" id="examplePromptBtn">
+                                Example prompt
+                            </button>
+                            <button class="btn btn--outline" id="supportBtn">
+                                Support
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Main Content Container -->
+                <main class="content-container">
+                    <!-- Required Sections -->
+                    <div class="section-group">
+                        <!-- 1. Prompt Name Section -->
+                        <article class="section-card" data-section="prompt-name">
+                            <header class="section-card__header">
+                                <div class="section-card__header-row">
+                                    <div class="section-card__title-group">
+                                        <h3 class="section-card__title">Prompt name</h3>
+                                        <span class="section-card__badge section-card__badge--required">Required</span>
+                                    </div>
+                                    <div class="section-card__controls">
+                                        <!-- No secondary control for prompt name -->
+                                    </div>
+                                </div>
+                                <p class="section-card__description">
+                                    Help users understand what they can expect from this prompt's outputs.
+                                </p>
+                            </header>
+                            <div class="section-card__content">
+                                <div class="input-field">
+                                    <div class="text-input-container">
+                                        <input type="text" class="text-input" id="promptNameInput" 
+                                               placeholder="Enter prompt name..." maxlength="40">
+                                    </div>
+                                    <div class="character-counter">
+                                        <span class="character-count" id="promptNameCounter">0 / 40</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- 2. User Input Section -->
+                        <article class="section-card" data-section="user-input">
+                            <header class="section-card__header">
+                                <div class="section-card__header-row">
+                                    <div class="section-card__title-group">
+                                        <h3 class="section-card__title">User input</h3>
+                                        <span class="section-card__badge section-card__badge--required">Required</span>
+                                    </div>
+                                    <div class="section-card__controls">
+                                        <!-- No secondary control for user input -->
+                                    </div>
+                                </div>
+                                <p class="section-card__description">
+                                    Add text input fields to collect parameters and other information from users.
+                                </p>
+                            </header>
+                            <div class="section-card__content">
+                                <div class="input-fields-container" id="userInputFields">
+                                    <div class="input-field">
+                                        <div class="field-header">
+                                            <span class="field-label">Input field 1</span>
+                                            <button class="field-remove hidden" type="button">×</button>
+                                        </div>
+                                        <div class="input-controls">
+                                            <div class="rich-text-toolbar">
+                                                <button class="toolbar-btn" type="button" data-format="bold">
+                                                    <strong>B</strong>
+                                                </button>
+                                                <button class="toolbar-btn" type="button" data-format="italic">
+                                                    <em>I</em>
+                                                </button>
+                                                <button class="toolbar-btn" type="button" data-format="underline">
+                                                    U
+                                                </button>
+                                            </div>
+                                            <div class="text-field-size-controls">
+                                                <button class="size-btn" data-size="small">Small</button>
+                                                <button class="size-btn size-btn--active" data-size="medium">Medium</button>
+                                                <button class="size-btn" data-size="large">Large</button>
+                                            </div>
+                                        </div>
+                                        <div class="text-input-container">
+                                            <textarea class="text-input" 
+                                                      placeholder="Enter input field description..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="add-field-btn" id="addUserInputField">
+                                    <span class="material-symbols-outlined">add</span>
+                                    Add input field
+                                </button>
+                            </div>
+                        </article>
+
+                        <!-- 3. Objectives Section -->
+                        <article class="section-card" data-section="objectives">
+                            <header class="section-card__header">
+                                <div class="section-card__header-row">
+                                    <div class="section-card__title-group">
+                                        <h3 class="section-card__title">Objectives</h3>
+                                        <span class="section-card__badge section-card__badge--required">Required</span>
+                                    </div>
+                                    <div class="section-card__controls">
+                                        <!-- No secondary control for objectives -->
+                                    </div>
+                                </div>
+                                <p class="section-card__description">
+                                    Describe of the objectives for this prompt. Be descriptive but concise.
+                                </p>
+                            </header>
+                            <div class="section-card__content">
+                                <div class="alert alert--info">
+                                    <div class="alert__icon">i</div>
+                                    <div class="alert__content">
+                                        <div class="alert__headline">Tip</div>
+                                        <div class="alert__description">Use the '@' symbol to reference other fields in this workflow.</div>
+                                    </div>
+                                    <button class="alert__close" type="button">×</button>
+                                </div>
+                                
+                                <div class="input-field">
+                                    <div class="input-controls">
+                                        <div class="rich-text-toolbar">
+                                            <button class="toolbar-btn" type="button" data-format="bold">
+                                                <strong>B</strong>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="italic">
+                                                <em>I</em>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="underline">
+                                                U
+                                            </button>
+                                        </div>
+                                        <div class="text-field-size-controls">
+                                            <button class="size-btn" data-size="small">Small</button>
+                                            <button class="size-btn size-btn--active" data-size="medium">Medium</button>
+                                            <button class="size-btn" data-size="large">Large</button>
+                                        </div>
+                                    </div>
+                                    <div class="text-input-container">
+                                        <textarea class="text-input" 
+                                                  placeholder="Describe the objectives for this prompt. Use @ to reference fields..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- 4. Output Format Section -->
+                        <article class="section-card" data-section="output-format">
+                            <header class="section-card__header">
+                                <div class="section-card__header-row">
+                                    <div class="section-card__title-group">
+                                        <h3 class="section-card__title">Output format</h3>
+                                        <span class="section-card__badge section-card__badge--required">Required</span>
+                                    </div>
+                                    <div class="section-card__controls">
+                                        <!-- No secondary control for output format -->
+                                    </div>
+                                </div>
+                            </header>
+                            <div class="section-card__content">
+                                <div class="input-field">
+                                    <div class="input-controls">
+                                        <div class="rich-text-toolbar">
+                                            <button class="toolbar-btn" type="button" data-format="bold">
+                                                <strong>B</strong>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="italic">
+                                                <em>I</em>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="underline">
+                                                U
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="list">
+                                                •
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="link">
+                                                🔗
+                                            </button>
+                                        </div>
+                                        <div class="text-field-size-controls">
+                                            <button class="size-btn" data-size="small">Small</button>
+                                            <button class="size-btn size-btn--active" data-size="medium">Medium</button>
+                                            <button class="size-btn" data-size="large">Large</button>
+                                        </div>
+                                    </div>
+                                    <div class="text-input-container">
+                                        <textarea class="text-input" 
+                                                  placeholder="Specify the desired output format..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- 5. Context Section -->
+                        <article class="section-card" data-section="context">
+                            <header class="section-card__header">
+                                <div class="section-card__header-row">
+                                    <div class="section-card__title-group">
+                                        <h3 class="section-card__title">Context</h3>
+                                        <span class="section-card__badge section-card__badge--required">Required</span>
+                                    </div>
+                                    <div class="section-card__controls">
+                                        <button class="btn btn--link" id="contextLearnMoreBtn">
+                                            Learn more
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="section-card__description">
+                                    Provide background information and context for this prompt.
+                                </p>
+                                <ul class="section-card__description-list">
+                                    <li>Add background information</li>
+                                    <li>Share field references across prompts from your library for the context</li>
+                                    <li>Reference of future prompts</li>
+                                </ul>
+                            </header>
+                            <div class="section-card__content">
+                                <div class="reference-controls-section">
+                                    <button class="btn btn--secondary" id="addContextReference">
+                                        <span class="material-symbols-outlined">add</span>
+                                        Add reference
+                                    </button>
+                                    <div class="reference-chips">
+                                        <button class="reference-chip" id="promptReferencesChip">
+                                            <span class="reference-chip__count">2</span>
+                                            <span class="reference-chip__label">Prompt references</span>
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="reference-chip" id="fieldReferencesChip">
+                                            <span class="reference-chip__count">1</span>
+                                            <span class="reference-chip__label">Field reference</span>
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="input-field">
+                                    <div class="input-controls">
+                                        <div class="rich-text-toolbar">
+                                            <button class="toolbar-btn" type="button" data-format="bold">
+                                                <strong>B</strong>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="italic">
+                                                <em>I</em>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="underline">
+                                                U
+                                            </button>
+                                        </div>
+                                        <div class="text-field-size-controls">
+                                            <button class="size-btn" data-size="small">Small</button>
+                                            <button class="size-btn size-btn--active" data-size="medium">Medium</button>
+                                            <button class="size-btn" data-size="large">Large</button>
+                                        </div>
+                                    </div>
+                                    <div class="text-input-container">
+                                        <textarea class="text-input" 
+                                                  placeholder="Provide context and background information. Use @ to reference fields and prompts..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Optional Sections -->
+                    <div class="section-group">
+                        <div class="section-group__header">
+                            <h2 class="section-group__title">Optional section</h2>
+                            <p class="section-group__description">
+                                Add fields for more precise control of prompt outputs
+                            </p>
+                        </div>
+
+                        <!-- 6. Sequential Instructions Section -->
+                        <article class="section-card section-card--collapsed" data-section="sequential-instructions">
+                            <header class="section-card__header">
+                                <div class="section-card__header-row">
+                                    <div class="section-card__title-group">
+                                        <h3 class="section-card__title">Sequential instructions</h3>
+                                        <span class="section-card__badge section-card__badge--optional">Optional</span>
+                                    </div>
+                                    <div class="section-card__controls">
+                                        <button class="btn btn--primary" data-action="add-to-prompt">
+                                            Add to prompt
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="section-card__description">
+                                    Outline the step-by-step process the agent should follow when responding to this prompt.
+                                </p>
+                            </header>
+                            <div class="section-card__content">
+                                <div class="reference-controls-section">
+                                    <button class="btn btn--secondary">
+                                        <span class="material-symbols-outlined">add</span>
+                                        Add reference
+                                    </button>
+                                    <div class="reference-chips">
+                                        <button class="reference-chip">
+                                            <span class="reference-chip__count">0</span>
+                                            <span class="reference-chip__label">Prompt references</span>
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="reference-chip">
+                                            <span class="reference-chip__count">0</span>
+                                            <span class="reference-chip__label">Field reference</span>
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="input-field">
+                                    <div class="input-controls">
+                                        <div class="rich-text-toolbar">
+                                            <button class="toolbar-btn" type="button" data-format="bold">
+                                                <strong>B</strong>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="italic">
+                                                <em>I</em>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="underline">
+                                                U
+                                            </button>
+                                        </div>
+                                        <div class="text-field-size-controls">
+                                            <button class="size-btn" data-size="small">Small</button>
+                                            <button class="size-btn size-btn--active" data-size="medium">Medium</button>
+                                            <button class="size-btn" data-size="large">Large</button>
+                                        </div>
+                                    </div>
+                                    <div class="text-input-container">
+                                        <textarea class="text-input" 
+                                                  placeholder="Outline step-by-step instructions. Use @ to reference fields and prompts..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- 7. Constraints Section -->
+                        <article class="section-card section-card--collapsed" data-section="constraints">
+                            <header class="section-card__header">
+                                <div class="section-card__header-row">
+                                    <div class="section-card__title-group">
+                                        <h3 class="section-card__title">Constraints</h3>
+                                        <span class="section-card__badge section-card__badge--optional">Optional</span>
+                                    </div>
+                                    <div class="section-card__controls">
+                                        <button class="btn btn--primary" data-action="add-to-prompt">
+                                            Add to prompt
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="section-card__description">
+                                    Set specific parameters and limitations the agent should avoid.
+                                </p>
+                            </header>
+                            <div class="section-card__content">
+                                <div class="reference-controls-section">
+                                    <button class="btn btn--secondary">
+                                        <span class="material-symbols-outlined">add</span>
+                                        Add reference
+                                    </button>
+                                    <div class="reference-chips">
+                                        <button class="reference-chip">
+                                            <span class="reference-chip__count">0</span>
+                                            <span class="reference-chip__label">Prompt references</span>
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="reference-chip">
+                                            <span class="reference-chip__count">0</span>
+                                            <span class="reference-chip__label">Field reference</span>
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="input-field">
+                                    <div class="input-controls">
+                                        <div class="rich-text-toolbar">
+                                            <button class="toolbar-btn" type="button" data-format="bold">
+                                                <strong>B</strong>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="italic">
+                                                <em>I</em>
+                                            </button>
+                                            <button class="toolbar-btn" type="button" data-format="underline">
+                                                U
+                                            </button>
+                                        </div>
+                                        <div class="text-field-size-controls">
+                                            <button class="size-btn" data-size="small">Small</button>
+                                            <button class="size-btn size-btn--active" data-size="medium">Medium</button>
+                                            <button class="size-btn" data-size="large">Large</button>
+                                        </div>
+                                    </div>
+                                    <div class="text-input-container">
+                                        <textarea class="text-input" 
+                                                  placeholder="Set constraints and limitations. Use @ to reference fields and prompts..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </main>
+            </div>
+
+            <!-- References Sidebar -->
+            <aside class="references-sidebar" id="referencesSidebar">
+                <div class="sidebar-content">
+                    <!-- Sidebar content will be dynamically populated -->
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Modal Overlays -->
+    <!-- Prompt Notes Modal -->
+    <div class="modal-overlay" id="promptNotesModal">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">Prompt notes</h2>
+                <button class="modal__close" type="button">&times;</button>
+            </div>
+            <div class="modal__content">
+                <p>Note any changes or information that will be helpful to collaborators</p>
+                <textarea class="modal__textarea" id="promptNotesTextarea" 
+                          placeholder="Enter your notes here..."></textarea>
+                <div class="notes-history">
+                    <h3>Previous Notes</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prompt notes</th>
+                                <th>Date</th>
+                                <th>Editor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notesHistoryBody">
+                            <!-- History entries will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--secondary" type="button" data-action="dismiss">Dismiss</button>
+                <button class="btn btn--primary" type="button" data-action="save-note">Save note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unsaved Changes Modal -->
+    <div class="modal-overlay" id="unsavedChangesModal">
+        <div class="modal">
+            <div class="modal__content">
+                <h2>You have unsaved changes</h2>
+                <p>If you continue without saving all changes will be discarded</p>
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--secondary" type="button" data-action="continue-editing">Continue editing</button>
+                <button class="btn btn--primary" type="button" data-action="close-without-saving">Close without saving</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Learn More Modal -->
+    <div class="modal-overlay" id="contextLearnMoreModal">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">Context Section Guide</h2>
+                <button class="modal__close" type="button">&times;</button>
+            </div>
+            <div class="modal__content">
+                <p>The Context section allows you to provide background information and reference other elements in your workflow:</p>
+                <ul>
+                    <li><strong>Background Information:</strong> Add relevant context that helps the AI understand the scenario</li>
+                    <li><strong>Field References:</strong> Use @ to reference fields from this prompt or other prompts in your workflow</li>
+                    <li><strong>Prompt References:</strong> Reference entire prompts from your workflow to build complex interactions</li>
+                </ul>
+                <p>References are scoped to your current workflow and cannot access content from other workflows.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== PROMPT BUILDER JAVASCRIPT FUNCTIONALITY =====
+        
+        class PromptBuilder {
+            constructor() {
+                this.hasUnsavedChanges = false;
+                this.fieldCounter = 1;
+                this.init();
+            }
+
+            init() {
+                this.bindEvents();
+                this.setupCharacterCounters();
+                this.setupTextFieldSizeControls();
+                this.setupCollapsibleSections();
+            }
+
+            bindEvents() {
+                // Header actions
+                document.getElementById('closePromptBtn').addEventListener('click', () => this.handleClosePrompt());
+                document.getElementById('savePromptBtn').addEventListener('click', () => this.handleSavePrompt());
+                document.getElementById('promptNotesBtn').addEventListener('click', () => this.openModal('promptNotesModal'));
+                document.getElementById('contextLearnMoreBtn').addEventListener('click', () => this.openModal('contextLearnMoreModal'));
+
+                // Modal actions
+                this.bindModalEvents();
+
+                // Form change tracking
+                this.setupChangeTracking();
+
+                // Add field functionality
+                document.getElementById('addUserInputField').addEventListener('click', () => this.addUserInputField());
+
+                // Alert close buttons
+                document.querySelectorAll('.alert__close').forEach(btn => {
+                    btn.addEventListener('click', (e) => this.closeAlert(e.target.closest('.alert')));
+                });
+            }
+
+            bindModalEvents() {
+                // Modal close events
+                document.querySelectorAll('.modal__close, [data-action="dismiss"]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const modal = e.target.closest('.modal-overlay');
+                        this.closeModal(modal.id);
+                    });
+                });
+
+                // Prompt notes save
+                document.querySelector('[data-action="save-note"]').addEventListener('click', () => this.savePromptNote());
+
+                // Unsaved changes actions
+                document.querySelector('[data-action="continue-editing"]').addEventListener('click', () => {
+                    this.closeModal('unsavedChangesModal');
+                });
+                
+                document.querySelector('[data-action="close-without-saving"]').addEventListener('click', () => {
+                    // Navigate to prompt library
+                    window.location.href = '../pages/PromptLibrary.html';
+                });
+
+                // Close modal on overlay click
+                document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                    overlay.addEventListener('click', (e) => {
+                        if (e.target === overlay) {
+                            this.closeModal(overlay.id);
+                        }
+                    });
+                });
+            }
+
+            setupChangeTracking() {
+                // Track changes in all form inputs
+                document.querySelectorAll('input, textarea').forEach(input => {
+                    input.addEventListener('input', () => {
+                        this.hasUnsavedChanges = true;
+                        this.updateSaveButtonState();
+                    });
+                });
+            }
+
+            setupCharacterCounters() {
+                // Prompt name character counter
+                const promptNameInput = document.getElementById('promptNameInput');
+                const promptNameCounter = document.getElementById('promptNameCounter');
+                
+                promptNameInput.addEventListener('input', () => {
+                    const count = promptNameInput.value.length;
+                    const limit = 40;
+                    promptNameCounter.textContent = `${count} / ${limit}`;
+                    
+                    // Update counter styling based on progress
+                    promptNameCounter.className = 'character-count';
+                    if (count > limit) {
+                        promptNameCounter.classList.add('character-count--error');
+                    } else if (count > limit * 0.8) {
+                        promptNameCounter.classList.add('character-count--warning');
+                    }
+                });
+            }
+
+            setupTextFieldSizeControls() {
+                // Handle text field size control buttons
+                document.querySelectorAll('.text-field-size-controls').forEach(controlGroup => {
+                    const buttons = controlGroup.querySelectorAll('.size-btn');
+                    const textarea = controlGroup.closest('.input-field').querySelector('.text-input');
+                    
+                    buttons.forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            // Remove active state from all buttons
+                            buttons.forEach(b => b.classList.remove('size-btn--active'));
+                            // Add active state to clicked button
+                            btn.classList.add('size-btn--active');
+                            
+                            // Update textarea size
+                            const size = btn.dataset.size;
+                            textarea.className = textarea.className.replace(/text-input--\w+/g, '');
+                            if (size !== 'medium') {
+                                textarea.classList.add(`text-input--${size}`);
+                            }
+                        });
+                    });
+                });
+            }
+
+            setupCollapsibleSections() {
+                // Handle collapsible optional sections
+                document.querySelectorAll('[data-action="add-to-prompt"]').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const sectionCard = e.target.closest('.section-card');
+                        this.toggleSection(sectionCard);
+                    });
+                });
+            }
+
+            toggleSection(sectionCard) {
+                const isCollapsed = sectionCard.classList.contains('section-card--collapsed');
+                const btn = sectionCard.querySelector('[data-action="add-to-prompt"]');
+                
+                if (isCollapsed) {
+                    // Expand section
+                    sectionCard.classList.remove('section-card--collapsed');
+                    btn.textContent = 'Remove from prompt';
+                    btn.dataset.action = 'remove-from-prompt';
+                } else {
+                    // Collapse section
+                    sectionCard.classList.add('section-card--collapsed');
+                    btn.textContent = 'Add to prompt';
+                    btn.dataset.action = 'add-to-prompt';
+                }
+                
+                this.hasUnsavedChanges = true;
+                this.updateSaveButtonState();
+            }
+
+            addUserInputField() {
+                this.fieldCounter++;
+                const container = document.getElementById('userInputFields');
+                
+                const fieldHtml = `
+                    <div class="input-field">
+                        <div class="field-header">
+                            <span class="field-label">Input field ${this.fieldCounter}</span>
+                            <button class="field-remove" type="button">×</button>
+                        </div>
+                        <div class="input-controls">
+                            <div class="rich-text-toolbar">
+                                <button class="toolbar-btn" type="button" data-format="bold">
+                                    <strong>B</strong>
+                                </button>
+                                <button class="toolbar-btn" type="button" data-format="italic">
+                                    <em>I</em>
+                                </button>
+                                <button class="toolbar-btn" type="button" data-format="underline">
+                                    U
+                                </button>
+                            </div>
+                            <div class="text-field-size-controls">
+                                <button class="size-btn" data-size="small">Small</button>
+                                <button class="size-btn size-btn--active" data-size="medium">Medium</button>
+                                <button class="size-btn" data-size="large">Large</button>
+                            </div>
+                        </div>
+                        <div class="text-input-container">
+                            <textarea class="text-input" 
+                                      placeholder="Enter input field description..."></textarea>
+                        </div>
+                    </div>
+                `;
+                
+                container.insertAdjacentHTML('beforeend', fieldHtml);
+                
+                // Re-bind events for new field
+                const newField = container.lastElementChild;
+                this.bindFieldEvents(newField);
+                this.updateFieldRemoveButtons();
+                
+                this.hasUnsavedChanges = true;
+                this.updateSaveButtonState();
+            }
+
+            bindFieldEvents(field) {
+                // Bind remove button
+                const removeBtn = field.querySelector('.field-remove');
+                removeBtn.addEventListener('click', () => this.removeField(field));
+
+                // Bind size controls
+                const sizeControls = field.querySelector('.text-field-size-controls');
+                this.setupTextFieldSizeControlsForElement(sizeControls);
+
+                // Bind change tracking
+                field.querySelector('.text-input').addEventListener('input', () => {
+                    this.hasUnsavedChanges = true;
+                    this.updateSaveButtonState();
+                });
+            }
+
+            setupTextFieldSizeControlsForElement(controlGroup) {
+                const buttons = controlGroup.querySelectorAll('.size-btn');
+                const textarea = controlGroup.closest('.input-field').querySelector('.text-input');
+                
+                buttons.forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        buttons.forEach(b => b.classList.remove('size-btn--active'));
+                        btn.classList.add('size-btn--active');
+                        
+                        const size = btn.dataset.size;
+                        textarea.className = textarea.className.replace(/text-input--\w+/g, '');
+                        if (size !== 'medium') {
+                            textarea.classList.add(`text-input--${size}`);
+                        }
+                    });
+                });
+            }
+
+            removeField(field) {
+                field.remove();
+                this.updateFieldRemoveButtons();
+                this.hasUnsavedChanges = true;
+                this.updateSaveButtonState();
+            }
+
+            updateFieldRemoveButtons() {
+                const fields = document.querySelectorAll('#userInputFields .input-field');
+                fields.forEach((field, index) => {
+                    const removeBtn = field.querySelector('.field-remove');
+                    if (fields.length === 1) {
+                        removeBtn.classList.add('hidden');
+                    } else {
+                        removeBtn.classList.remove('hidden');
+                    }
+                });
+            }
+
+            closeAlert(alert) {
+                alert.style.display = 'none';
+            }
+
+            handleClosePrompt() {
+                if (this.hasUnsavedChanges) {
+                    this.openModal('unsavedChangesModal');
+                } else {
+                    // Navigate to prompt library
+                    window.location.href = '../pages/PromptLibrary.html';
+                }
+            }
+
+            handleSavePrompt() {
+                if (this.validateForm()) {
+                    this.openModal('promptNotesModal');
+                } else {
+                    // Show validation errors
+                    this.showValidationErrors();
+                }
+            }
+
+            validateForm() {
+                let isValid = true;
+                
+                // Validate prompt name
+                const promptName = document.getElementById('promptNameInput').value.trim();
+                if (!promptName) {
+                    this.showFieldError('promptNameInput', 'Prompt name is required');
+                    isValid = false;
+                }
+
+                // Validate user input fields
+                const userInputFields = document.querySelectorAll('#userInputFields .text-input');
+                let hasUserInput = false;
+                userInputFields.forEach(field => {
+                    if (field.value.trim()) {
+                        hasUserInput = true;
+                    }
+                });
+                if (!hasUserInput) {
+                    this.showSectionError('user-input', 'At least one user input field is required');
+                    isValid = false;
+                }
+
+                // Validate other required sections
+                const requiredSections = ['objectives', 'output-format', 'context'];
+                requiredSections.forEach(sectionId => {
+                    const textarea = document.querySelector(`[data-section="${sectionId}"] .text-input`);
+                    if (!textarea.value.trim()) {
+                        this.showSectionError(sectionId, 'This field is required');
+                        isValid = false;
+                    }
+                });
+
+                return isValid;
+            }
+
+            showFieldError(fieldId, message) {
+                const field = document.getElementById(fieldId);
+                const container = field.closest('.text-input-container');
+                container.classList.add('text-input-container--error');
+                field.classList.add('text-input--error');
+                
+                // Add error message if not exists
+                let errorMsg = container.nextElementSibling;
+                if (!errorMsg || !errorMsg.classList.contains('error-message')) {
+                    errorMsg = document.createElement('div');
+                    errorMsg.className = 'error-message';
+                    container.parentNode.insertBefore(errorMsg, container.nextSibling);
+                }
+                errorMsg.textContent = message;
+            }
+
+            showSectionError(sectionId, message) {
+                const section = document.querySelector(`[data-section="${sectionId}"]`);
+                section.classList.add('section-card--error');
+                
+                const textarea = section.querySelector('.text-input');
+                textarea.classList.add('text-input--error');
+            }
+
+            showValidationErrors() {
+                // Scroll to first error
+                const firstError = document.querySelector('.section-card--error, .text-input--error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+
+            savePromptNote() {
+                const noteText = document.getElementById('promptNotesTextarea').value.trim();
+                
+                if (noteText) {
+                    // Add note to history
+                    this.addNoteToHistory(noteText);
+                }
+                
+                // Save the prompt
+                this.hasUnsavedChanges = false;
+                this.updateSaveButtonState();
+                
+                // Close modal and navigate
+                this.closeModal('promptNotesModal');
+                
+                // Simulate navigation to prompt library
+                setTimeout(() => {
+                    alert('Prompt saved successfully!');
+                    // window.location.href = '../pages/PromptLibrary.html';
+                }, 500);
+            }
+
+            addNoteToHistory(noteText) {
+                const historyBody = document.getElementById('notesHistoryBody');
+                const now = new Date();
+                const dateStr = now.toLocaleDateString();
+                const timeStr = now.toLocaleTimeString();
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${noteText}</td>
+                    <td>${dateStr} ${timeStr}</td>
+                    <td>Current User</td>
+                `;
+                
+                historyBody.insertBefore(row, historyBody.firstChild);
+            }
+
+            updateSaveButtonState() {
+                const saveBtn = document.getElementById('savePromptBtn');
+                if (this.hasUnsavedChanges) {
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = 'Save';
+                } else {
+                    saveBtn.textContent = 'Saved';
+                }
+            }
+
+            openModal(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.add('modal-overlay--open');
+                
+                // Focus management
+                const firstFocusable = modal.querySelector('button, input, textarea');
+                if (firstFocusable) {
+                    setTimeout(() => firstFocusable.focus(), 100);
+                }
+            }
+
+            closeModal(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.classList.remove('modal-overlay--open');
+            }
+        }
+
+        // Initialize the Prompt Builder
+        document.addEventListener('DOMContentLoaded', () => {
+            new PromptBuilder();
+        });
+    </script>
+</body>
+</html>

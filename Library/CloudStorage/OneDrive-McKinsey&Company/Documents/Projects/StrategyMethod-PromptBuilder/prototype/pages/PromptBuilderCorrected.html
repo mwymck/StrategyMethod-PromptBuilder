@@ -714,6 +714,69 @@
         </main>
     </div>
 
+    <!-- Prompt Notes Modal -->
+    <div id="prompt-notes-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">Prompt notes</h2>
+                <button class="modal__close" onclick="closeModal('prompt-notes-modal')">&times;</button>
+            </div>
+            <div class="modal__content">
+                <p class="modal__description">Note any changes or information that will be helpful to collaborators.</p>
+                <textarea class="modal__textarea" id="prompt-notes-textarea" placeholder="Enter your notes here..."></textarea>
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--secondary" onclick="closeModal('prompt-notes-modal')">Dismiss</button>
+                <button class="btn btn--primary" onclick="savePromptNote()">Save note</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Learn More Modal -->
+    <div id="context-learn-more-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">About Context</h2>
+                <button class="modal__close" onclick="closeModal('context-learn-more-modal')">&times;</button>
+            </div>
+            <div class="modal__content">
+                <p class="modal__description">The Context section provides background information that helps the AI understand the situation and generate more relevant responses.</p>
+                <h3>Using References</h3>
+                <p>Use the @ symbol to reference other fields or prompts:</p>
+                <ul>
+                    <li><strong>Field references:</strong> Include content from other fields in your workflow</li>
+                    <li><strong>Prompt references:</strong> Include the complete context from other prompts</li>
+                </ul>
+                <h3>Best Practices</h3>
+                <ul>
+                    <li>Provide relevant background information</li>
+                    <li>Include constraints and requirements</li>
+                    <li>Reference related data and analysis</li>
+                </ul>
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--primary" onclick="closeModal('context-learn-more-modal')">Got it</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unsaved Changes Confirmation Modal -->
+    <div id="unsaved-changes-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal__header">
+                <h2 class="modal__title">You have unsaved changes</h2>
+                <button class="modal__close" onclick="closeModal('unsaved-changes-modal')">&times;</button>
+            </div>
+            <div class="modal__content">
+                <p class="modal__description">If you continue without saving all changes will be discarded.</p>
+            </div>
+            <div class="modal__actions">
+                <button class="btn btn--secondary" onclick="closeModal('unsaved-changes-modal')">Continue editing</button>
+                <button class="btn btn--primary" onclick="closeWithoutSaving()">Close without saving</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ===== ACTUAL SECTION CARD COMPONENT INTEGRATION =====
         // Using the exact HTML structure and classes from SectionCard.html
@@ -730,16 +793,15 @@
             const sectionId = `section-${id}`;
             const textareaId = `${id}-textarea`;
             
-            // Build header controls exactly like SectionCard.html
+            // Build header controls exactly per requirements - NO individual Save buttons
             let headerControls = '';
             if (learnMore.enabled) {
                 headerControls += `<a href="#" class="btn btn--secondary" onclick="showContextLearnMoreModal()">Learn more</a>`;
             }
             if (addToPromptButton && collapsed) {
                 headerControls += `<button class="btn btn--primary" onclick="expandOptionalSection('${id}')">Add to prompt</button>`;
-            } else if (!collapsed) {
-                headerControls += `<button class="btn btn--primary">Save</button>`;
             }
+            // NO Save buttons in individual section cards - only at app level
             
             // Build alert component exactly like SectionCard.html
             let alertHtml = '';
@@ -1112,6 +1174,9 @@
             optionalSectionStates[sectionId] = true;
             sectionConfigs[sectionId].collapsed = false;
             renderSections();
+            // Reattach change listeners after re-rendering
+            setTimeout(attachChangeListeners, 100);
+            markAsChanged(); // Expanding section counts as a change
         }
         
         // Placeholder functions for integration
@@ -1120,7 +1185,7 @@
         }
         
         function showContextLearnMoreModal() {
-            alert('Context help modal - to be implemented');
+            openModal('context-learn-more-modal');
         }
         
         function toggleFormat(textareaId, format) {
@@ -1133,32 +1198,86 @@
             const newFieldNumber = currentFields + 1;
             const newField = createDynamicField(sectionId, newFieldNumber, `Input field ${newFieldNumber}`, true);
             container.insertAdjacentHTML('beforeend', newField);
+            
+            // Attach change listeners to the new field
+            setTimeout(() => {
+                const newFieldElement = document.getElementById(`${sectionId}-field-${newFieldNumber}`);
+                if (newFieldElement) {
+                    const inputs = newFieldElement.querySelectorAll('input[type="text"], textarea');
+                    inputs.forEach(input => {
+                        input.addEventListener('input', markAsChanged);
+                    });
+                }
+            }, 100);
+            
+            markAsChanged(); // Adding field counts as a change
         }
         
         function removeDynamicField(fieldId) {
             const field = document.getElementById(fieldId);
-            if (field) field.remove();
+            if (field) {
+                field.remove();
+                markAsChanged(); // Removing field counts as a change
+            }
         }
         
+        // Modal Functions
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('modal-overlay--open');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('modal-overlay--open');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function savePromptNote() {
+            const noteText = document.getElementById('prompt-notes-textarea').value;
+            const currentDate = new Date().toLocaleDateString();
+            
+            // In a real implementation, this would save to a database
+            console.log('Saving note:', noteText, 'by', currentUser, 'on', currentDate);
+            
+            // Close modal and navigate to library (completing save workflow)
+            closeModal('prompt-notes-modal');
+            alert('Prompt saved successfully! Navigating to prompt library...');
+            // window.location.href = 'prompt-library.html';
+        }
+        
+        function closeWithoutSaving() {
+            closeModal('unsaved-changes-modal');
+            // window.location.href = 'prompt-library.html';
+            alert('Navigating to prompt library without saving...');
+        }
+
         // Header Actions
         function handleClosePrompt() {
             if (hasUnsavedChanges) {
-                alert('You have unsaved changes!');
+                openModal('unsaved-changes-modal');
             } else {
-                window.location.href = 'prompt-library.html';
+                // window.location.href = 'prompt-library.html';
+                alert('Navigating to prompt library...');
             }
         }
         
         function handleSavePrompt() {
-            alert('Save functionality - to be implemented');
+            // Per requirements: Save button triggers prompt notes modal workflow
+            openModal('prompt-notes-modal');
         }
         
         function openPromptNotesModal() {
-            alert('Prompt notes modal - to be implemented');
+            openModal('prompt-notes-modal');
         }
         
         function openExamplePromptModal() {
-            alert('Example prompt modal - to be implemented');
+            alert('Example prompt modal - to be implemented in future phase');
         }
         
         function handleSupportRequest() {
@@ -1185,9 +1304,33 @@
             }).join('');
         }
         
+        // Change tracking
+        function markAsChanged() {
+            hasUnsavedChanges = true;
+        }
+        
+        function attachChangeListeners() {
+            // Add change listeners to all text inputs and textareas
+            const inputs = document.querySelectorAll('input[type="text"], textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', markAsChanged);
+            });
+        }
+        
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             renderSections();
+            
+            // Attach change listeners after rendering
+            setTimeout(attachChangeListeners, 100);
+            
+            // Close modals when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal-overlay')) {
+                    const modalId = e.target.id;
+                    closeModal(modalId);
+                }
+            });
         });
     </script>
 </body>
