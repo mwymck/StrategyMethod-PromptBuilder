@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Section Card</title>
+</head>
+<body>
+    <h1>Debug Section Card Component</h1>
+    <div id="output"></div>
+
+    <script>
+        // Test loading the component directly
+        console.log('Testing Section Card component loading...');
+        
+        // First check if we can access the file
+        fetch('../components/SectionCardComponent.js')
+            .then(response => {
+                console.log('Fetch response:', response.status, response.statusText);
+                return response.text();
+            })
+            .then(text => {
+                console.log('File loaded, length:', text.length);
+                console.log('First 200 characters:', text.substring(0, 200));
+                
+                // Try to evaluate the script
+                try {
+                    eval(text);
+                    console.log('Script evaluated successfully');
+                    
+                    // Check if functions and objects are available
+                    console.log('createSectionCard function:', typeof createSectionCard);
+                    console.log('sectionConfigs object:', typeof sectionConfigs);
+                    
+                    if (typeof sectionConfigs !== 'undefined') {
+                        console.log('sectionConfigs keys:', Object.keys(sectionConfigs));
+                        document.getElementById('output').innerHTML = `
+                            <h2>✅ Success!</h2>
+                            <p>Section Card component loaded successfully.</p>
+                            <p>Available sections: ${Object.keys(sectionConfigs).join(', ')}</p>
+                        `;
+                    } else {
+                        document.getElementById('output').innerHTML = `
+                            <h2>❌ Error</h2>
+                            <p>sectionConfigs object not found after script evaluation.</p>
+                        `;
+                    }
+                } catch (error) {
+                    console.error('Script evaluation error:', error);
+                    document.getElementById('output').innerHTML = `
+                        <h2>❌ JavaScript Error</h2>
+                        <p>Error: ${error.message}</p>
+                        <p>Check console for details.</p>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                document.getElementById('output').innerHTML = `
+                    <h2>❌ Load Error</h2>
+                    <p>Could not load SectionCardComponent.js</p>
+                    <p>Error: ${error.message}</p>
+                `;
+            });
+    </script>
+</body>
+</html>

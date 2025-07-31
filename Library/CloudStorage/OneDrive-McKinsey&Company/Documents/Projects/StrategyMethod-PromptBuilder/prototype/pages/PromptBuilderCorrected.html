@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Builder - StrategyMethod.AI (Using Real Section Card)</title>
+    <link rel="stylesheet" href="../shared/variables.css">
+    <link rel="stylesheet" href="../shared/base.css">
+    <style>
+        /* ===== PROMPT BUILDER LAYOUT STYLES ===== */
+        
+        /* Layout Foundation */
+        .prompt-builder-container {
+            min-height: 100vh;
+            background: var(--gray-50);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header Section */
+        .app-header {
+            background: white;
+            border-bottom: 1px solid var(--colors--border);
+            padding: 0 var(--space-xl);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+        }
+        
+        .app-logo::before {
+            content: "🧠";
+            font-size: 24px;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        /* Page Header Section */
+        .page-header {
+            background: white;
+            padding: var(--space-2xl) var(--space-xl);
+            border-bottom: 1px solid var(--colors--border);
+        }
+        
+        .page-header__content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .page-header__title {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text);
+            margin: 0 0 var(--space-sm) 0;
+        }
+        
+        .page-header__description {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-muted);
+            margin: 0 0 var(--space-xl) 0;
+        }
+        
+        .page-header__actions {
+            display: flex;
+            gap: var(--space-md);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: var(--space-2xl) var(--space-xl);
+            max-width: 1200px;  
+            margin: 0 auto;
+            width: 100%;  
+        }
+        
+        .sections-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0; /* Let section cards control their own spacing */
+        }
+        
+        .optional-sections-header {
+            margin-top: var(--space-2xl);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .optional-sections-header h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0 0 var(--space-sm) 0;
+        }
+        
+        .optional-sections-header p {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-md);
+            margin: 0;
+        }
+
+        /* ===== EXACT SECTION CARD STYLES FROM SECTIONCARD.HTML ===== */
+        
+        .section-card {
+            background: var(--color-bg-card);
+            border: 0px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+            transition: box-shadow var(--transition-base);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .section-card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Card Header - Single Row Layout */
+        .section-card__header {
+            padding: var(--space-xl) var(--space-xl) 0 var(--space-xl);
+        }
+        
+        .section-card__header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-card__title-group {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .section-card__title {
+            font-size: var(--font-size-3xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0;
+        }
+        
+        .section-card__badge {
+            background: var(--color-badge-bg);
+            color: var(--color-badge-text);
+            padding: var(--space-xxs) var(--space-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+            text-transform: uppercase;
+        }
+        
+        .section-card__badge--required {
+            background: var(--color-badge-bg);
+            color: var(--color-badge-text);
+        }
+        
+        .section-card__badge--optional {
+            background: var(--color-chip-bg);
+            color: var(--color-text);
+        }
+        
+        .section-card__controls {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+        
+        .section-card__description {
+            color: var(--gray-800);
+            font-size: var(--font-size-md);
+            line-height: var(--line-height-relaxed);
+            margin: 0 0 var(--space-sm) 0;
+            font-weight: 300;
+        }
+
+        /* Control Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+            border: 1px solid transparent;
+            text-decoration: none;
+        }
+        
+        .btn--primary {
+            background: var(--color-primary);
+            color: white;
+        }
+        
+        .btn--primary:hover {
+            background: var(--color-primary-hover);
+        }
+        
+        .btn--secondary {
+            background: transparent;
+            color: var(--color-primary);
+            border: none;
+            padding: 0px;
+        }
+        
+        .btn--secondary:hover {
+            text-decoration: underline;
+        }
+
+        /* Card Content */
+        .section-card__content {
+            padding: var(--space-xl);
+        }
+
+        /* Alert Component */
+        .alert {
+            background: var(--color-alert-bg);
+            border: 0px solid var(--color-alert-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-sm) var(--space-md);
+            padding-right: var(--space-sm);
+            margin-bottom: var(--space-md);
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: var(--space-sm);
+        }
+        
+        .alert__icon {
+            font-size: 16px;
+            color: var(--color-black);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .alert__content {
+            flex: 1;
+            flex-direction: row;
+            display: flex;
+            column-gap: var(--space-sm);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .alert__description {
+            color: var(--gray-800);
+            font-size: var(--font-size-sm);
+            margin: 0;
+        }
+
+        /* Reference Controls Section */
+        .reference-controls-section {
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .add-reference-btn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            color: var(--color-primary);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            text-decoration: none;
+            padding: var(--space-xs) var(--space-md);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-fast);
+        }
+        
+        .add-reference-btn:hover {
+            border: 1px solid var(--electric-blue-500);
+        }
+        
+        .reference-chips {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+        }
+        
+        .reference-chip {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--color-black);
+            font-size: var(--font-size-sm);
+            font-weight: 400;
+            text-decoration: none;
+            padding: var(--space-xs) var(--space-sm) var(--space-xs) var(--space-md);
+            border: 1px solid transparent;
+            background-color: var(--color-chip-bg);
+            border-radius: var(--radius-full);
+            transition: all var(--transition-fast);
+            cursor: auto;
+        }
+        
+        .reference-chip:hover {
+            cursor: pointer;
+            border-color: var(--color-primary);
+            text-decoration: none;
+        }
+        
+        .reference-chip__edit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+            opacity: 0.8;
+            transition: opacity var(--transition-fast);
+            pointer-events: none;
+        }
+        
+        .reference-chip:hover .reference-chip__edit {
+            opacity: 1;
+        }
+
+        /* Input Field */
+        .input-field {
+            margin-bottom: var(--space-lg);
+        }
+        
+        .input-field:last-child {
+            margin-bottom: 0;
+        }
+        
+        .field-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .field-label {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+            font-size: var(--font-size-lg);
+        }
+        
+        .field-label--editable {
+            border: none;
+            background: transparent;
+            border-radius: var(--radius-sm);
+            transition: background-color var(--transition-fast);
+            font-weight: var(--font-weight-medium);
+            color: black;
+            font-size: var(--font-size-lg);
+        }
+        
+        .field-label--editable:hover {
+            background: var(--color-bg-card);
+        }
+        
+        .field-label--editable:focus {
+            background: white;
+            outline: 2px solid var(--color-primary);
+            outline-offset: 0;
+        }
+        
+        .field-remove {
+            background: none;
+            border: none;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            padding: var(--space-xs);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+        
+        .field-remove:hover {
+            color: var(--color-error);
+            background: var(--color-error-bg);
+        }
+
+        /* Input Controls */
+        .input-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+        
+        /* Rich Text Toolbar */
+        .rich-text-toolbar {
+            display: flex;
+            gap: var(--space-xs);
+            align-items: center;
+        }
+        
+        .rich-text-toolbar__group {
+            display: flex;
+            gap: var(--space-xs);
+        }
+        
+        .formatting-btn {
+            background: none;
+            border: 1px solid var(--colors--border);
+            border-radius: var(--radius-sm);
+            padding: var(--space-xs) var(--space-sm);
+            cursor: pointer;
+            color: var(--color-text);
+            transition: all var(--transition-fast);
+        }
+        
+        .formatting-btn:hover {
+            background: var(--gray-50);
+            border-color: var(--color-primary);
+        }
+        
+        .formatting-btn--active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        /* Text Field Size Controls */
+        .text-field-size-controls {
+            display: flex;
+            border: 1px solid var(--colors--border);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        
+        .text-field-size-controls__option {
+            background: white;
+            border: none;
+            padding: var(--space-xs) var(--space-sm);
+            cursor: pointer;
+            color: var(--color-text);
+            font-size: var(--font-size-xs);
+            transition: all var(--transition-fast);
+            border-right: 1px solid var(--colors--border);
+        }
+        
+        .text-field-size-controls__option:last-child {
+            border-right: none;
+        }
+        
+        .text-field-size-controls__option:hover {
+            background: var(--gray-50);
+        }
+        
+        .text-field-size-controls__option--active {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Text Input */
+        .text-input-container {
+            position: relative;
+        }
+        
+        .text-input {
+            width: 100%;
+            min-height: 80px;
+            padding: var(--space-md);
+            border: 1px solid var(--colors--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-md);
+            color: var(--color-text);
+            background: white;
+            resize: vertical;
+            transition: all var(--transition-fast);
+        }
+        
+        .text-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-primary-focus);
+        }
+        
+        .text-input--small {
+            min-height: 60px;
+        }
+        
+        .text-input--large {
+            min-height: 120px;
+        }
+        
+        .text-input--warning {
+            border-color: var(--color-warning);
+        }
+        
+        .text-input--error {
+            border-color: var(--color-error);
+        }
+
+        /* Character Counter */
+        .character-counter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--space-sm);
+        }
+        
+        .character-counter__count {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-muted);
+        }
+        
+        .character-counter__count--warning {
+            color: var(--color-warning);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .character-counter__count--error {
+            color: var(--color-error);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .character-counter__actions {
+            display: flex;
+            gap: var(--space-sm);
+        }
+
+        /* Field Actions */
+        .field-actions {
+            margin-top: var(--space-md);
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        /* Section divider for Context section */
+        .section-divider {
+            height: 1px;
+            background: var(--colors--border);
+            margin: var(--space-lg) 0;
+        }
+
+        /* Material Symbols Support */
+        .material-symbols-outlined {
+            font-size: 20px;
+            line-height: 1;
+        }
+        
+        .material-symbols-outlined--sm {
+            font-size: 16px;
+        }
+
+        /* Collapsed state */
+        .section-card--collapsed {
+            background: var(--gray-50);
+            border: 1px solid var(--colors--border);
+        }
+
+        /* ===== MODAL STYLES ===== */
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-base);
+        }
+        
+        .modal-overlay--open {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-modal);
+            max-width: 600px;
+            width: 90vw;
+            max-height: 80vh;
+            overflow: auto;
+        }
+        
+        .modal__header {
+            padding: var(--space-xl);
+            border-bottom: 1px solid var(--colors--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .modal__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0;
+        }
+        
+        .modal__close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--color-text-muted);
+            padding: var(--space-xs);
+        }
+        
+        .modal__content {
+            padding: var(--space-xl);
+        }
+        
+        .modal__description {
+            color: var(--color-text-muted);
+            margin: 0 0 var(--space-lg) 0;
+        }
+        
+        .modal__textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: var(--space-md);
+            border: 1px solid var(--colors--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            font-size: var(--font-size-md);
+            resize: vertical;
+        }
+        
+        .modal__actions {
+            padding: var(--space-xl);
+            border-top: 1px solid var(--colors--border);
+            display: flex;
+            gap: var(--space-md);
+            justify-content: flex-end;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-actions {
+                gap: var(--space-sm);
+            }
+            
+            .page-header {
+                padding: var(--space-xl) var(--space-lg);
+            }
+            
+            .main-content {
+                padding: var(--space-xl) var(--space-lg);
+            }
+            
+            .modal {
+                width: 95vw;
+                margin: var(--space-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="prompt-builder-container">
+        <!-- Application Header -->
+        <header class="app-header">
+            <div class="app-logo">
+                StrategyMethod.AI
+            </div>
+            <div class="header-actions">
+                <button class="btn btn--secondary" onclick="handleClosePrompt()">Close prompt</button>
+                <button class="btn btn--primary" onclick="handleSavePrompt()">Save</button>
+            </div>
+        </header>
+        
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="page-header__content">
+                <h1 class="page-header__title">Prompt builder</h1>
+                <p class="page-header__description">This tool supports iterative development of StrategyMethod.AI prompts.</p>
+                <div class="page-header__actions">
+                    <button class="btn btn--secondary" onclick="openPromptNotesModal()">Prompt notes</button>
+                    <button class="btn btn--secondary" onclick="openExamplePromptModal()">Example prompt</button>
+                    <button class="btn btn--secondary" onclick="handleSupportRequest()">Support</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="sections-container">
+                <!-- Required Sections -->
+                <div id="required-sections"></div>
+                
+                <!-- Optional Sections Header -->
+                <div class="optional-sections-header">
+                    <h2>Optional section</h2>
+                    <p>Add fields for more precise control of prompt outputs.</p>
+                </div>
+                
+                <!-- Optional Sections -->
+                <div id="optional-sections"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ===== ACTUAL SECTION CARD COMPONENT INTEGRATION =====
+        // Using the exact HTML structure and classes from SectionCard.html
+        
+        function createSectionCard(config) {
+            const {
+                id, title, badge, badgeType = 'required', description, additionalDescription,
+                collapsed = false, references = { enabled: false }, richText = { enabled: false },
+                fieldSizeControls = { enabled: false }, dynamicFields = { enabled: false },
+                characterLimit = null, placeholder = '', alertContent = null,
+                learnMore = { enabled: false }, addToPromptButton = false
+            } = config;
+
+            const sectionId = `section-${id}`;
+            const textareaId = `${id}-textarea`;
+            
+            // Build header controls exactly like SectionCard.html
+            let headerControls = '';
+            if (learnMore.enabled) {
+                headerControls += `<a href="#" class="btn btn--secondary" onclick="showContextLearnMoreModal()">Learn more</a>`;
+            }
+            if (addToPromptButton && collapsed) {
+                headerControls += `<button class="btn btn--primary" onclick="expandOptionalSection('${id}')">Add to prompt</button>`;
+            } else if (!collapsed) {
+                headerControls += `<button class="btn btn--primary">Save</button>`;
+            }
+            
+            // Build alert component exactly like SectionCard.html
+            let alertHtml = '';
+            if (alertContent) {
+                alertHtml = `
+                    <div class="alert">
+                        <div class="alert__icon">
+                            <span class="material-symbols-outlined material-symbols-outlined--sm">lightbulb</span>
+                        </div>
+                        <div class="alert__content">
+                            <p class="alert__description">${alertContent}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Build reference controls exactly like SectionCard.html
+            let referenceControlsHtml = '';
+            if (references.enabled && references.counters) {
+                referenceControlsHtml = `
+                    <div class="reference-controls-section">
+                        <a href="#" class="add-reference-btn" onclick="openReferenceSidebar('${id}', 'add')">
+                            <span class="material-symbols-outlined material-symbols-outlined--sm">add</span>
+                            Add reference
+                        </a>
+                        <div class="reference-chips">
+                            <a href="#" class="reference-chip" onclick="openReferenceSidebar('${id}', 'prompt')" aria-label="Edit prompt references">
+                                <span id="${id}-prompt-count">0 prompt references</span>
+                                <span class="reference-chip__edit" aria-hidden="true">
+                                    <span class="material-symbols-outlined material-symbols-outlined--sm">edit</span>
+                                </span>
+                            </a>
+                            <a href="#" class="reference-chip" onclick="openReferenceSidebar('${id}', 'field')" aria-label="Edit field references">
+                                <span id="${id}-field-count">0 field references</span>
+                                <span class="reference-chip__edit" aria-hidden="true">
+                                    <span class="material-symbols-outlined material-symbols-outlined--sm">edit</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    ${id === 'context' ? '<div class="section-divider"></div>' : ''}
+                `;
+            }
+            
+            // Build rich text toolbar exactly like SectionCard.html
+            let richTextToolbar = '';
+            if (richText.enabled) {
+                richTextToolbar = `
+                    <div class="rich-text-toolbar">
+                        <div class="rich-text-toolbar__group">
+                            <button class="formatting-btn" title="Bold" aria-pressed="false" onclick="toggleFormat('${textareaId}', 'bold')">
+                                <span class="material-symbols-outlined">format_bold</span>
+                            </button>
+                            <button class="formatting-btn" title="Italic" aria-pressed="false" onclick="toggleFormat('${textareaId}', 'italic')">
+                                <span class="material-symbols-outlined">format_italic</span>
+                            </button>
+                        </div>
+                        <div class="rich-text-toolbar__group">
+                            <button class="formatting-btn" title="Bullet List" aria-pressed="false" onclick="toggleFormat('${textareaId}', 'list')">
+                                <span class="material-symbols-outlined">format_list_bulleted</span>
+                            </button>
+                            <button class="formatting-btn" title="Add Link" aria-pressed="false" onclick="toggleFormat('${textareaId}', 'link')">
+                                <span class="material-symbols-outlined">link</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Build field size controls exactly like SectionCard.html
+            let fieldSizeControlsHtml = '';
+            if (fieldSizeControls.enabled) {
+                fieldSizeControlsHtml = `
+                    <div class="text-field-size-controls">
+                        <button class="text-field-size-controls__option">Small</button>
+                        <button class="text-field-size-controls__option text-field-size-controls__option--active">Medium</button>
+                        <button class="text-field-size-controls__option">Large</button>
+                    </div>
+                `;
+            }
+            
+            // Build input controls exactly like SectionCard.html
+            let inputControls = '';
+            if (richTextToolbar || fieldSizeControlsHtml) {
+                inputControls = `
+                    <div class="input-controls">
+                        ${richTextToolbar}
+                        ${fieldSizeControlsHtml}
+                    </div>
+                `;
+            }
+            
+            // Build character counter exactly like SectionCard.html
+            let characterCounter = '';
+            if (characterLimit) {
+                const referenceButton = references.enabled && !references.counters ? 
+                    `<div class="character-counter__actions">
+                        <a href="#" class="btn btn--secondary" onclick="openReferenceSidebar('${id}', 'field')">Add field reference</a>
+                    </div>` : '';
+                    
+                characterCounter = `
+                    <div class="character-counter">
+                        <span class="character-counter__count" id="${id}-char-count">0 / ${characterLimit} characters</span>
+                        ${referenceButton}
+                    </div>
+                `;
+            }
+            
+            // Build main input field exactly like SectionCard.html
+            const textareaClasses = ['text-input'];
+            if (id === 'prompt-name') textareaClasses.push('text-input--small');
+            
+            const mainInputField = `
+                <div class="input-field">
+                    <div class="field-header">
+                        <span class="field-label">${title}</span>
+                    </div>
+                    
+                    ${inputControls}
+                    
+                    <div class="text-input-container">
+                        <textarea 
+                            id="${textareaId}"
+                            class="${textareaClasses.join(' ')}" 
+                            placeholder="${placeholder}"
+                            data-section="${id}"
+                            data-references="${references.enabled ? 'true' : 'false'}"
+                            data-reference-types="${references.types ? references.types.join(',') : ''}"
+                            ${characterLimit ? `data-char-limit="${characterLimit}"` : ''}
+                        ></textarea>
+                    </div>
+                    
+                    ${characterCounter}
+                </div>
+            `;
+            
+            // Build dynamic fields for User Input section exactly like SectionCard.html
+            let dynamicFieldsHtml = '';
+            if (dynamicFields.enabled) {
+                dynamicFieldsHtml = `
+                    <div id="${id}-dynamic-fields">
+                        ${createDynamicField(id, 1, 'Input field 1', fieldSizeControls.enabled)}
+                    </div>
+                    <div class="field-actions">
+                        <button class="btn btn--secondary" onclick="addDynamicField('${id}')">
+                            <span class="material-symbols-outlined material-symbols-outlined--sm">add</span>
+                            + Add input field
+                        </button>
+                    </div>
+                `;
+            }
+            
+            // Build content section
+            let contentHtml = '';
+            if (!collapsed) {
+                contentHtml = `
+                    <div class="section-card__content">
+                        ${referenceControlsHtml}
+                        ${alertHtml}
+                        ${dynamicFields.enabled ? dynamicFieldsHtml : mainInputField}
+                    </div>
+                `;
+            }
+            
+            // Build description section
+            let descriptionHtml = '';
+            if (description) {
+                descriptionHtml = `<p class="section-card__description">${description}</p>`;
+                if (additionalDescription) {
+                    descriptionHtml += `<p class="section-card__description">${additionalDescription}</p>`;
+                }
+            }
+            
+            // Build the complete section card exactly like SectionCard.html structure
+            const sectionClasses = ['section-card'];
+            if (collapsed) sectionClasses.push('section-card--collapsed');
+            
+            return `
+                <article class="${sectionClasses.join(' ')}" id="${sectionId}" data-section-id="${id}">
+                    <header class="section-card__header">
+                        <div class="section-card__header-row">
+                            <div class="section-card__title-group">
+                                <h3 class="section-card__title">${title}</h3>
+                                <span class="section-card__badge section-card__badge--${badgeType}">${badge}</span>
+                            </div>
+                            <div class="section-card__controls">
+                                ${headerControls}
+                            </div>
+                        </div>
+                        ${descriptionHtml}
+                    </header>
+                    ${contentHtml}
+                </article>
+            `;
+        }
+
+        function createDynamicField(sectionId, fieldNumber, label, hasSizeControls = false) {
+            const fieldId = `${sectionId}-field-${fieldNumber}`;
+            const textareaId = `${sectionId}-textarea-${fieldNumber}`;
+            
+            const sizeControls = hasSizeControls ? `
+                <div class="input-controls">
+                    <div class="text-field-size-controls">
+                        <button class="text-field-size-controls__option">Small</button>
+                        <button class="text-field-size-controls__option text-field-size-controls__option--active">Medium</button>
+                        <button class="text-field-size-controls__option">Large</button>
+                    </div>
+                </div>
+            ` : '';
+            
+            const removeButton = fieldNumber > 1 ? `
+                <button class="field-remove" aria-label="Remove field" onclick="removeDynamicField('${fieldId}')">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            ` : '';
+            
+            return `
+                <div class="input-field" id="${fieldId}">
+                    <div class="field-header">
+                        <input type="text" class="field-label field-label--editable" value="${label}">
+                        ${removeButton}
+                    </div>
+                    
+                    ${sizeControls}
+                    
+                    <div class="text-input-container">
+                        <textarea 
+                            id="${textareaId}"
+                            class="text-input" 
+                            placeholder="Enter field description or requirements..."
+                            data-section="${sectionId}"
+                            data-field-number="${fieldNumber}"
+                        ></textarea>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Section configurations that match exactly with the existing Section Card component
+        const sectionConfigs = {
+            'prompt-name': {
+                id: 'prompt-name',
+                title: 'Prompt name',
+                badge: 'REQUIRED',
+                badgeType: 'required',
+                description: 'Help users understand what they can expect from this prompt\'s output.',
+                collapsed: false,
+                references: { enabled: false },
+                richText: { enabled: false },
+                fieldSizeControls: { enabled: false },
+                dynamicFields: { enabled: false },
+                characterLimit: 40,
+                placeholder: 'Enter a descriptive name for this prompt...'
+            },
+            
+            'user-input': {
+                id: 'user-input',
+                title: 'User input',
+                badge: 'REQUIRED', 
+                badgeType: 'required',
+                description: 'Add text input fields to collect parameters and other information from users.',
+                collapsed: false,
+                references: { enabled: false },
+                richText: { enabled: false },
+                fieldSizeControls: { enabled: true },
+                dynamicFields: { enabled: true }
+            },
+            
+            'objectives': {
+                id: 'objectives',
+                title: 'Objectives',
+                badge: 'REQUIRED',
+                badgeType: 'required', 
+                description: 'Describe the objectives for this prompt. Be descriptive, but concise.',
+                collapsed: false,
+                references: { 
+                    enabled: true,
+                    types: ['field']
+                },
+                richText: { enabled: false },
+                fieldSizeControls: { enabled: false },
+                dynamicFields: { enabled: false },
+                placeholder: 'Describe the objectives for this prompt...',
+                alertContent: 'Tip: use the \'@\' symbol to reference other fields in this workflow.'
+            },
+            
+            'output-format': {
+                id: 'output-format',
+                title: 'Output format',
+                badge: 'REQUIRED',
+                badgeType: 'required',
+                collapsed: false,
+                references: { enabled: false },
+                richText: { enabled: true },
+                fieldSizeControls: { enabled: false },
+                dynamicFields: { enabled: false },
+                placeholder: 'Specify the desired output format...'
+            },
+            
+            'context': {
+                id: 'context',
+                title: 'Context', 
+                badge: 'REQUIRED',
+                badgeType: 'required',
+                description: 'Provide background information and context for this prompt.',
+                additionalDescription: 'Use the @ key to reference other fields or prompts. The complete context of referenced prompts will be added to the context window of this prompt.',
+                collapsed: false,
+                references: { 
+                    enabled: true,
+                    types: ['field', 'prompt'],
+                    counters: true
+                },
+                richText: { enabled: false },
+                fieldSizeControls: { enabled: false }, 
+                dynamicFields: { enabled: false },
+                placeholder: 'Provide background information and context...',
+                learnMore: { enabled: true }
+            },
+            
+            'sequential-instructions': {
+                id: 'sequential-instructions',
+                title: 'Sequential instructions',
+                badge: 'OPTIONAL',
+                badgeType: 'optional',
+                description: 'Define the step-by-step process the agent should follow when responding to this prompt.',
+                collapsed: true,
+                references: { 
+                    enabled: true,
+                    types: ['field', 'prompt']
+                },
+                richText: { enabled: false },
+                fieldSizeControls: { enabled: false },
+                dynamicFields: { enabled: false },
+                placeholder: 'Define the step-by-step process...',
+                addToPromptButton: true
+            },
+            
+            'constraints': {
+                id: 'constraints',
+                title: 'Constraints',
+                badge: 'OPTIONAL', 
+                badgeType: 'optional',
+                description: 'List actions and behaviors the agent should avoid.',
+                collapsed: true,
+                references: { 
+                    enabled: true,
+                    types: ['field', 'prompt']
+                },
+                richText: { enabled: false },
+                fieldSizeControls: { enabled: false },
+                dynamicFields: { enabled: false },
+                placeholder: 'List actions and behaviors to avoid...',
+                addToPromptButton: true
+            }
+        };
+
+        // ===== PROMPT BUILDER IMPLEMENTATION =====
+        
+        // Global state
+        let hasUnsavedChanges = false;
+        let currentUser = "Current User";
+        
+        // Optional section state tracking
+        const optionalSectionStates = {
+            'sequential-instructions': false,
+            'constraints': false
+        };
+        
+        function expandOptionalSection(sectionId) {
+            optionalSectionStates[sectionId] = true;
+            sectionConfigs[sectionId].collapsed = false;
+            renderSections();
+        }
+        
+        // Placeholder functions for integration
+        function openReferenceSidebar(sectionId, mode) {
+            alert(`Opening reference sidebar for ${sectionId} in ${mode} mode`);
+        }
+        
+        function showContextLearnMoreModal() {
+            alert('Context help modal - to be implemented');
+        }
+        
+        function toggleFormat(textareaId, format) {
+            console.log(`Applying ${format} formatting to ${textareaId}`);
+        }
+        
+        function addDynamicField(sectionId) {
+            const container = document.getElementById(`${sectionId}-dynamic-fields`);
+            const currentFields = container.children.length;
+            const newFieldNumber = currentFields + 1;
+            const newField = createDynamicField(sectionId, newFieldNumber, `Input field ${newFieldNumber}`, true);
+            container.insertAdjacentHTML('beforeend', newField);
+        }
+        
+        function removeDynamicField(fieldId) {
+            const field = document.getElementById(fieldId);
+            if (field) field.remove();
+        }
+        
+        // Header Actions
+        function handleClosePrompt() {
+            if (hasUnsavedChanges) {
+                alert('You have unsaved changes!');
+            } else {
+                window.location.href = 'prompt-library.html';
+            }
+        }
+        
+        function handleSavePrompt() {
+            alert('Save functionality - to be implemented');
+        }
+        
+        function openPromptNotesModal() {
+            alert('Prompt notes modal - to be implemented');
+        }
+        
+        function openExamplePromptModal() {
+            alert('Example prompt modal - to be implemented');
+        }
+        
+        function handleSupportRequest() {
+            window.location.href = 'mailto:support@strategymethod.ai';
+        }
+        
+        // Main Rendering Function using the exact Section Card component
+        function renderSections() {
+            const requiredContainer = document.getElementById('required-sections');
+            const optionalContainer = document.getElementById('optional-sections');
+            
+            // Required sections
+            const requiredSections = ['prompt-name', 'user-input', 'objectives', 'output-format', 'context'];
+            requiredContainer.innerHTML = requiredSections.map(sectionId => 
+                createSectionCard(sectionConfigs[sectionId])
+            ).join('');
+            
+            // Optional sections with state-aware rendering
+            const optionalSections = ['sequential-instructions', 'constraints'];
+            optionalContainer.innerHTML = optionalSections.map(sectionId => {
+                const config = { ...sectionConfigs[sectionId] };
+                config.collapsed = !optionalSectionStates[sectionId];
+                return createSectionCard(config);
+            }).join('');
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderSections();
+        });
+    </script>
+</body>
+</html>

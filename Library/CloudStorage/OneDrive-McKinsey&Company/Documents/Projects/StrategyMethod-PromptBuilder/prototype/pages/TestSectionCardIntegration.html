@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section Card Integration Test</title>
+    <link rel="stylesheet" href="../shared/variables.css">
+    <link rel="stylesheet" href="../shared/base.css">
+    <style>
+        body {
+            background: var(--gray-50);
+            padding: var(--space-xl);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--color-text);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .test-status {
+            background: var(--color-success-bg);
+            border: 1px solid var(--color-success);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-xl);
+            color: var(--color-success-dark);
+        }
+        
+        .error-status {
+            background: var(--color-error-bg);
+            border: 1px solid var(--color-error);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-xl);
+            color: var(--color-error-dark);
+        }
+        
+        /* Include minimal Section Card styles for testing */
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            margin-bottom: var(--space-lg);
+            padding: var(--space-xl);
+        }
+        
+        .section-card__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0 0 var(--space-sm) 0;
+        }
+        
+        .section-card__description {
+            color: var(--color-text-muted);
+            margin-bottom: var(--space-md);
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: var(--space-md);
+            border: 1px solid var(--colors--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Section Card Integration Test</h1>
+        
+        <div id="test-status" class="test-status">
+            ✅ Testing Section Card component integration...
+        </div>
+        
+        <div id="section-container">
+            <!-- Section Cards will be rendered here -->
+        </div>
+    </div>
+
+    <!-- Include Section Card Component -->
+    <script src="../components/SectionCardComponent.js" onerror="handleScriptError()" onload="console.log('SectionCardComponent.js loaded successfully')"></script>
+    
+    <script>
+        function handleScriptError() {
+            const statusDiv = document.getElementById('test-status');
+            statusDiv.className = 'error-status';
+            statusDiv.innerHTML = '❌ <strong>Script Load Error:</strong> Could not load SectionCardComponent.js';
+            console.error('Failed to load SectionCardComponent.js');
+        }
+        
+        // Test the Section Card integration
+        function runTest() {
+            const container = document.getElementById('section-container');
+            const statusDiv = document.getElementById('test-status');
+            
+            // Add debugging information
+            console.log('=== Section Card Integration Test ===');
+            console.log('typeof sectionConfigs:', typeof sectionConfigs);
+            console.log('typeof createSectionCard:', typeof createSectionCard);
+            
+            if (typeof sectionConfigs !== 'undefined') {
+                console.log('sectionConfigs keys:', Object.keys(sectionConfigs));
+            }
+            
+            try {
+                // Test 1: Check if sectionConfigs is loaded
+                if (typeof sectionConfigs === 'undefined') {
+                    throw new Error('sectionConfigs not loaded from SectionCardComponent.js - check browser console for script loading errors');
+                }
+                
+                // Test 2: Check if createSectionCard function exists
+                if (typeof createSectionCard !== 'function') {
+                    throw new Error('createSectionCard function not found');
+                }
+                
+                // Test 3: Try to render a simple section
+                const promptNameConfig = sectionConfigs['prompt-name'];
+                if (!promptNameConfig) {
+                    throw new Error('prompt-name configuration not found');
+                }
+                
+                const promptNameHtml = createSectionCard(promptNameConfig);
+                if (!promptNameHtml || typeof promptNameHtml !== 'string') {
+                    throw new Error('createSectionCard did not return valid HTML string');
+                }
+                
+                // Test 4: Try to render all 7 sections
+                const allSections = ['prompt-name', 'user-input', 'objectives', 'output-format', 'context', 'sequential-instructions', 'constraints'];
+                let allSectionsHtml = '';
+                
+                allSections.forEach(sectionId => {
+                    const config = sectionConfigs[sectionId];
+                    if (!config) {
+                        throw new Error(`Configuration not found for section: ${sectionId}`);
+                    }
+                    const html = createSectionCard(config);
+                    allSectionsHtml += html;
+                });
+                
+                // Render all sections
+                container.innerHTML = allSectionsHtml;
+                
+                // Success!
+                statusDiv.className = 'test-status';
+                statusDiv.innerHTML = `
+                    ✅ <strong>All tests passed!</strong><br>
+                    • Section Card component loaded successfully<br>
+                    • All 7 section configurations found<br>
+                    • Section rendering working correctly<br>
+                    • Ready for integration with Prompt Builder
+                `;
+                
+                console.log('✅ Section Card integration test: PASSED');
+                
+            } catch (error) {
+                statusDiv.className = 'error-status';
+                statusDiv.innerHTML = `
+                    ❌ <strong>Test failed:</strong> ${error.message}<br>
+                    Check the browser console for more details.
+                `;
+                console.error('❌ Section Card integration test: FAILED', error);
+            }
+        }
+        
+        // Run test when page loads, with a small delay to ensure script is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Small delay to ensure external script is fully loaded
+            setTimeout(runTest, 100);
+        });
+    </script>
+</body>
+</html>

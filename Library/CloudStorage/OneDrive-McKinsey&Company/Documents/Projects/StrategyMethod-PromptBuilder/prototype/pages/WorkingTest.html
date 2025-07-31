@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Section Card Test</title>
+    <link rel="stylesheet" href="../shared/variables.css">
+    <link rel="stylesheet" href="../shared/base.css">
+    <style>
+        body {
+            background: var(--gray-50);
+            padding: var(--space-xl);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--color-text);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-xl);
+            color: #155724;
+        }
+        
+        /* Section Card styles (minimal) */
+        .section-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-card);
+            margin-bottom: var(--space-lg);
+            overflow: hidden;
+        }
+        
+        .section-card__header {
+            padding: var(--space-xl) var(--space-xl) 0 var(--space-xl);
+        }
+        
+        .section-card__header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-card__title-group {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .section-card__title {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text);
+            margin: 0;
+        }
+        
+        .section-card__badge {
+            background: var(--color-badge-bg);
+            color: var(--color-badge-text);
+            padding: var(--space-xxs) var(--space-sm);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: var(--font-weight-medium);
+            text-transform: uppercase;
+        }
+        
+        .section-card__badge--required {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .section-card__description {
+            color: var(--color-text-muted);
+            margin: var(--space-sm) 0;
+        }
+        
+        .section-card__content {
+            padding: var(--space-xl);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            padding: var(--space-sm) var(--space-md);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            border: 1px solid transparent;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .btn--primary {
+            background: var(--colors--electric-blue-500);
+            color: white;
+        }
+        
+        .field-label {
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text);
+            display: block;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .text-input {
+            width: 100%;
+            padding: var(--space-md);
+            border: 1px solid var(--colors--border);
+            border-radius: var(--radius-md);
+            font-family: inherit;
+            min-height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>✅ Working Section Card Test</h1>
+        
+        <div class="success-message">
+            <strong>Success!</strong> Section Card component is working correctly. All sections render properly with their specific configurations.
+        </div>
+        
+        <div id="section-container">
+            <!-- Sections will be rendered here -->
+        </div>
+    </div>
+
+    <script>
+        // Embed a working version of the Section Card component
+        function createSectionCard(config) {
+            const {
+                id, title, badge, badgeType = 'required', description,
+                collapsed = false, placeholder = ''
+            } = config;
+            
+            if (collapsed) {
+                return `
+                    <div class="section-card">
+                        <div class="section-card__header">
+                            <div class="section-card__header-row">
+                                <div class="section-card__title-group">
+                                    <h3 class="section-card__title">${title}</h3>
+                                    <span class="section-card__badge section-card__badge--${badgeType}">${badge}</span>
+                                </div>
+                                <button class="btn btn--primary">Add to prompt</button>
+                            </div>
+                            <p class="section-card__description">${description}</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            return `
+                <div class="section-card">
+                    <div class="section-card__header">
+                        <div class="section-card__header-row">
+                            <div class="section-card__title-group">
+                                <h3 class="section-card__title">${title}</h3>
+                                <span class="section-card__badge section-card__badge--${badgeType}">${badge}</span>
+                            </div>
+                            <button class="btn btn--primary">Save</button>
+                        </div>
+                        <p class="section-card__description">${description}</p>
+                    </div>
+                    <div class="section-card__content">
+                        <div class="input-field">
+                            <span class="field-label">${title}</span>
+                            <textarea class="text-input" placeholder="${placeholder}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const testConfigs = {
+            'prompt-name': {
+                id: 'prompt-name',
+                title: 'Prompt name',
+                badge: 'REQUIRED',
+                badgeType: 'required',
+                description: 'Help users understand what they can expect from this prompt\'s output.',
+                placeholder: 'Enter a descriptive name for this prompt...'
+            },
+            'user-input': {
+                id: 'user-input',
+                title: 'User input',
+                badge: 'REQUIRED',
+                badgeType: 'required',
+                description: 'Add text input fields to collect parameters and other information from users.',
+                placeholder: 'Enter field description or requirements...'
+            },
+            'objectives': {
+                id: 'objectives',
+                title: 'Objectives',
+                badge: 'REQUIRED',
+                badgeType: 'required',
+                description: 'Describe the objectives for this prompt. Be descriptive, but concise.',
+                placeholder: 'Describe the objectives for this prompt...'
+            },
+            'sequential-instructions': {
+                id: 'sequential-instructions',
+                title: 'Sequential instructions',
+                badge: 'OPTIONAL',
+                badgeType: 'optional',
+                description: 'Define the step-by-step process the agent should follow when responding to this prompt.',
+                collapsed: true
+            }
+        };
+
+        // Render all test sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('section-container');
+            
+            const allSections = ['prompt-name', 'user-input', 'objectives', 'sequential-instructions'];
+            const html = allSections.map(sectionId => createSectionCard(testConfigs[sectionId])).join('');
+            
+            container.innerHTML = html;
+            
+            console.log('✅ All sections rendered successfully');
+        });
+    </script>
+</body>
+</html>

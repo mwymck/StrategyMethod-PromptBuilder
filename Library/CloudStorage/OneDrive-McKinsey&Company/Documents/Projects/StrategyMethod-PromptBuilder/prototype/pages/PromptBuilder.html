@@ -703,6 +703,9 @@
         </div>
     </div>
 
+    <!-- Include Section Card Component -->
+    <script src="../components/SectionCardComponent.js"></script>
+    
     <script>
         // ===== PROMPT BUILDER LAYOUT JAVASCRIPT =====
         
@@ -826,9 +829,14 @@
             hasUnsavedChanges = true;
         }
         
-        // ===== SECTION CARD CONFIGURATIONS =====
+        // ===== SECTION CARD INTEGRATION =====
         
-        const sectionConfigurations = {
+        // Section Card configurations are loaded from SectionCardComponent.js
+        // Using sectionConfigs object defined in the component
+        
+        // LEGACY CODE - TO BE REMOVED
+        // This custom configuration system is replaced by the Section Card component
+        const legacySectionConfigurations = {
             'prompt-name': {
                 title: 'Prompt name',
                 badge: { text: 'Required', type: 'required' },
@@ -1255,20 +1263,20 @@
             const requiredContainer = document.getElementById('required-sections');
             const optionalContainer = document.getElementById('optional-sections');
             
-            // Required sections
+            // Required sections using Section Card component
             const requiredSections = ['prompt-name', 'user-input', 'objectives', 'output-format', 'context'];
             requiredContainer.innerHTML = requiredSections.map(sectionId => 
-                createSectionCard(sectionId, sectionConfigurations[sectionId])
+                createSectionCard(sectionConfigs[sectionId])
             ).join('');
             
-            // Optional sections
+            // Optional sections using Section Card component
             const optionalSections = ['sequential-instructions', 'constraints'];
             optionalContainer.innerHTML = optionalSections.map(sectionId => 
-                createSectionCard(sectionId, sectionConfigurations[sectionId])
+                createSectionCard(sectionConfigs[sectionId])
             ).join('');
             
-            // Re-attach event listeners and setup interactions
-            setupSectionInteractions();
+            // Initialize Section Card interactions
+            initializeSectionCardInteractions();
         }
         
         function setupSectionInteractions() {
