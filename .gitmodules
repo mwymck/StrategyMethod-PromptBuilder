@@ -1,0 +1,3 @@
+[submodule "Library/CloudStorage/OneDrive-McKinsey&Company/Documents/Projects/import-from-webflow/design-system"]
+	path = Library/CloudStorage/OneDrive-McKinsey&Company/Documents/Projects/import-from-webflow/design-system
+	url = https://github.com/mwyuwono/m3-guidelines.git

@@ -1,0 +1,144 @@
+/* CSS Reset */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--md-sys-color-on-surface-variant);
+  background-color: var(--md-sys-color-surface-container);
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+  font-size: var(--md-sys-typescale-body-medium, 14px);
+  line-height: 1.43; /* 20px / 14px */
+}
+
+img {
+  vertical-align: middle;
+  max-width: 100%;
+  display: inline-block;
+  border: 0;
+}
+
+a {
+  background-color: transparent;
+  text-decoration: none;
+}
+
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* CSS Variables */
+/* Design system color tokens are loaded from design-system/preview/colors-config.js */
+/* Palette tokens are loaded from design-system/tokens/material3.web.css */
+/* Spacing and typography tokens defined here (colors-config.js handles colors) */
+:root {
+  /* Spacing tokens - aligned with design system (colors-config.js) */
+  /* Note: xxl not defined in colors-config.js, keeping for backward compatibility */
+  --md-sys-spacing-xs: 4px;
+  --md-sys-spacing-sm: 8px;
+  --md-sys-spacing-md: 16px;
+  --md-sys-spacing-lg: 24px;
+  --md-sys-spacing-xl: 32px;
+  --md-sys-spacing-xxl: 48px;
+  
+  /* Typography tokens - simple size tokens for backward compatibility */
+  /* More detailed typography tokens available from colors-config.js */
+  --md-sys-typescale-body-medium: 14px;
+  --md-sys-typescale-body-large: 16px;
+  --md-sys-typescale-title-medium: 20px;
+  --md-sys-typescale-title-large: 24px;
+}
+
+/* Page Container */
+.page-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero-section {
+  grid-column-gap: var(--md-sys-spacing-lg, 32px);
+  grid-row-gap: var(--md-sys-spacing-lg, 32px);
+  background-color: var(--md-sys-color-surface-variant);
+  background-image: none;
+  flex-flow: column;
+  justify-content: center;
+  align-self: stretch;
+  align-items: center;
+  min-height: 90vh;
+  padding: var(--md-sys-spacing-xxl, 48px);
+  font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+  display: flex;
+}
+
+/* Header */
+.header {
+  grid-column-gap: var(--md-sys-spacing-xs, 8px);
+  grid-row-gap: var(--md-sys-spacing-xs, 8px);
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: var(--md-sys-spacing-xl, 40px);
+  padding-bottom: var(--md-sys-spacing-xl, 40px);
+  display: flex;
+}
+
+/* Logo */
+.logo {
+  flex: none;
+  height: 48px;
+  margin: 0;
+}
+
+/* Main Content */
+.main-content {
+  width: 100%;
+}
+
+/* Project Grid */
+.project-grid {
+  grid-column-gap: var(--md-sys-spacing-md, 24px);
+  grid-row-gap: var(--md-sys-spacing-md, 24px);
+  flex-flow: wrap;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Responsive Breakpoints */
+
+/* Mobile Landscape and below (max-width: 767px) */
+@media screen and (max-width: 767px) {
+  .hero-section {
+    padding-left: var(--md-sys-spacing-md, 16px);
+    padding-right: var(--md-sys-spacing-md, 16px);
+  }
+}
+
+/* Mobile Portrait (max-width: 479px) */
+@media screen and (max-width: 479px) {
+  .project-grid {
+    flex-flow: column;
+  }
+
+  .header {
+    grid-column-gap: var(--md-sys-spacing-sm, 16px);
+    grid-row-gap: var(--md-sys-spacing-sm, 16px);
+    text-align: center;
+    padding: var(--md-sys-spacing-md, 24px);
+    line-height: 1.3em;
+  }
+}
+

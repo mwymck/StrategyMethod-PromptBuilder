@@ -1,0 +1,127 @@
+/**
+ * Project Card Component Styles
+ * Self-contained styles for the project card component
+ * Uses Material Design 3 design tokens with fallbacks
+ */
+
+/* Project Card */
+.project-card {
+  background-color: var(--md-sys-color-surface-container); 
+  color: var(--md-sys-color-on-surface-variant);
+  text-align: center;
+  cursor: pointer;
+  flex-flow: column;
+  flex: 1;
+  justify-content: center;
+  align-self: stretch;
+  align-items: center;
+  min-width: 20vw;
+  font-family: Noto Serif, sans-serif;
+  font-size: var(--md-sys-typescale-body-large, 16px);
+  font-weight: 400;
+  line-height: 1.5em;
+  text-decoration: none;
+  display: flex;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover {
+  border-color: var(--md-sys-color-primary);
+  outline-color: var(--md-sys-color-primary);
+  color: var(--md-sys-color-primary);
+  background-color: var(--md-sys-color-surface-container);
+}
+
+/* Project Card Content */
+.project-card__content {
+  grid-column-gap: var(--md-sys-spacing-xs, 8px);
+  grid-row-gap: var(--md-sys-spacing-xs, 8px);
+  text-align: left;
+  flex: 1;
+  justify-content: flex-start;
+  align-self: stretch;
+  align-items: flex-start;
+  padding: var(--md-sys-spacing-md, 24px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Project Card Title */
+.project-card__title {
+  color: var(--md-sys-color-on-surface);
+  font-family: Palatino Linotype, Book Antiqua, Palatino, serif;
+  font-size: var(--md-sys-typescale-title-large, 24px);
+  font-weight: 400;
+  line-height: 1.4em;
+}
+
+/* Project Card Subtitle */
+.project-card__subtitle {
+  color: var(--md-sys-color-primary);
+  text-transform: uppercase;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  font-family: Noto Sans, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2em;
+  display: flex;
+}
+
+/* Project Card Image */
+.project-card__image {
+  aspect-ratio: 1;
+  mix-blend-mode: multiply;
+  object-fit: cover;
+  object-position: 50% 50%;
+  border-radius: 0;
+  display: flex;
+  width: 100%;
+}
+
+/* Responsive Breakpoints */
+
+/* Tablet and below (max-width: 991px) */
+@media screen and (max-width: 991px) {
+  .project-card {
+    min-width: 200px;
+  }
+
+
+}
+
+/* Mobile Portrait (max-width: 479px) */
+@media screen and (max-width: 479px) {
+  .project-card__title {
+    text-align: left;
+    font-size: var(--md-sys-typescale-title-medium, 20px);
+    line-height: 1.5em;
+  }
+
+  .project-card__content {
+    grid-column-gap: var(--md-sys-spacing-xs, 8px);
+    grid-row-gap: var(--md-sys-spacing-xs, 8px);
+    padding-top: var(--md-sys-spacing-sm, 16px);
+    padding-bottom: var(--md-sys-spacing-sm, 16px);
+  }
+
+  .project-card {
+    grid-column-gap: var(--md-sys-spacing-sm, 16px);
+    grid-row-gap: var(--md-sys-spacing-sm, 16px);
+    background-color: var(--md-sys-color-surface-container);
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: center;
+    min-width: 40vw;
+    padding: 0 var(--md-sys-spacing-xs, 8px) 0 0;
+  }
+
+  .project-card__image {
+    object-fit: cover;
+    order: -1;
+    align-self: stretch;
+  }
+}
+
